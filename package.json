@@ -1,0 +1,29 @@
+{
+  "name": "minejs",
+  "version": "1.0.0",
+  "description": "MineJS is a server software for Minecraft : Pocket Edition, MineJS is based Node JS.",
+  "main": "mine.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/organization/MineJS.git"
+  },
+  "keywords": [
+    "MineJS"
+  ],
+  "author": "Organization",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/organization/MineJS/issues"
+  },
+  "homepage": "https://github.com/organization/MineJS#readme",
+  "dependencies": {
+    "cluster": "^0.7.7",
+    "fs": "0.0.2",
+    "morgan": "^1.7.0",
+    "os": "^0.1.1",
+    "path": "^0.12.7"
+  }
+}
