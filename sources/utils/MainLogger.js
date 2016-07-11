@@ -16,6 +16,7 @@ module.exports = {
                 this.logDebug = debug;
                 this.tag = process.pid;
                 this.lcolor = minejs.utils.TextFormat.YELLOW;
+                this.messgaeFormat = "%rcolor[%time][%tag] [%level] %msg";
                 
                 if(minejs.Server.getServer().getCluster().isMaster){
                     let now = new Date();
@@ -45,6 +46,10 @@ module.exports = {
             __send(message){ this.__send(message, -1); }
             __send(message, level){
                 if(level == minejs.utils.LogLevel.DEBUG && !this.logDebug) return;
+                if(minejs.Server.getServer().getCluster().isWorker){
+                    process.send([minejs.network.ProcessProtocol.LOG, level, message, process.pid]);
+                    return;
+                }
                 
                 let now = new Date();
                 let timeFormat = String();
@@ -90,10 +95,8 @@ module.exports = {
                         break;
                 }
                 
-                let messgaeFormat = "%rcolor[%time][%tag] [%level] %msg";
                 message = minejs.utils.TextFormat.WHITE + message;
-                
-                let cleanMessage = messgaeFormat
+                let cleanMessage = this.messgaeFormat
                 .replace('%lcolor', '')
                 .replace('%time', timeFormat)
                 .replace('%tag', this.tag)
@@ -101,7 +104,7 @@ module.exports = {
                 .replace('%level', levelMsg)
                 .replace('%msg', minejs.utils.TextFormat.clean(message));
                 
-                let colorMessage = messgaeFormat
+                let colorMessage = this.messgaeFormat
                 .replace('%lcolor', this.lcolor)
                 .replace('%time', timeFormat)
                 .replace('%tag', this.tag)

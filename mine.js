@@ -5,6 +5,8 @@ let path = require('path');
 
 /* global minejs */
 global.minejs = {};
+minejs.command = {};
+minejs.command.defaults = {};
 minejs.network = {};
 minejs.utils = {};
 minejs.ANSI = true;
