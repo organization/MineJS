@@ -35,6 +35,9 @@ module.exports = {
             getCommandManager() {
                 return this._commandManager;
             }
+            getDatabase(){
+                return minejs.database.Datastore.getInstance();
+            }
             _init(path) {
                 this.datapath = path;
                 this.logger = new minejs.utils.MainLogger(null, this.datapath, false);
@@ -62,6 +65,8 @@ module.exports = {
                         this.getCluster().fork();
                     }
                     
+                    /** Embedded Memcached Database initialize **/
+                    this.getDatabase().setup();
                     
                     /** 워커 메시지 처리 함수 시작 **/
                     let workerProcess = (message)=>{
@@ -167,6 +172,17 @@ module.exports = {
                                 for (let key in minejs.modules)
                                     if (typeof(minejs.modules[key].onEnable) === 'function') minejs.modules[key].onEnable();
                                 minejs.Server.getServer().getLogger().notice('instance is started');
+                                
+                                var raknet = require("raknet");
+                                var server = raknet.createServer({
+                                  host: process.env.IP,
+                                  port: process.env.PORT
+                                });
+                                server.on("connection",client => {
+                                  client.on("login",() => {
+                                    console.log("A client has login");
+                                  })
+                                });
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
                                 break;
                                 

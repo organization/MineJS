@@ -8,11 +8,16 @@ global.minejs = {};
 minejs.command = {};
 minejs.command.defaults = {};
 minejs.network = {};
+minejs.database = {};
+
+minejs.raknet = {};
+minejs.raknet.protocol = {};
+minejs.raknet.p0_15 = {};
+minejs.raknet.p0_15.protocol = {};
+
+minejs.raknet.server = {};
 minejs.utils = {};
 minejs.ANSI = true;
-
-/** 인코딩 관련 확장을 추가합니다. **/
-var iconv = require('iconv-lite');
 
 /** 로딩된 모듈들이 담깁니다. **/
 global.minejs.modules = {};
