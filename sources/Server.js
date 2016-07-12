@@ -60,6 +60,9 @@ module.exports = {
                     /** 워커의 프로세스 아이디 명단이 여기에 저장됩니다. **/
                     var workerPids = {};
                     
+                    /** 순환적으로 명령어를 실행할 워커번호를 기록합니다. **/
+                    var workerIndex = 1;
+                    
                     /** CPU 수 만큼 워커를 생성합니다. **/
                     for (var i = 0; i < this.getOs().cpus().length; i++) {
                         this.getCluster().fork();
@@ -95,13 +98,11 @@ module.exports = {
                                 logger.logStream.write('/' + input);
                                 logger.logStream.write('\r\n');
                                 if (isOnceRun) {
-                                for (let wid in cluster.workers) {
-                                    cluster.workers[wid].send([minejs.network.ProcessProtocol.COMMAND, input]);
-                                    break;
-                                }
+                                    if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
+                                    cluster.workers[workerIndex++].send([minejs.network.ProcessProtocol.COMMAND, input]);
                                 } else {
-                                for (let wid in cluster.workers)
-                                    cluster.workers[wid].send([minejs.network.ProcessProtocol.COMMAND, input]);
+                                    for (let wid in cluster.workers)
+                                        cluster.workers[wid].send([minejs.network.ProcessProtocol.COMMAND, input]);
                                 }
                                 break;
                                 
@@ -132,6 +133,14 @@ module.exports = {
                                     process.exit(0);
                                 }
                                 break;
+                                
+                            /** UDP 패킷을 받아서 처리합니다. **/
+                            case minejs.network.ProcessProtocol.UDP:
+                                let packet = message[1];
+                                let address = message[2];
+                                let port = message[3];
+                                minejs.raknet.server.UDPServerSocket.getInstance().receivePacket(packet, address, port);
+                                break;
                         }
                     }
                     /** 워커 메시지 처리 함수 끝 **/
@@ -158,6 +167,25 @@ module.exports = {
                             break;
                         }
                     });
+                    
+                    /** UDP 소켓을 생성합니다. **/
+                    var udpSocket = require('dgram').createSocket('udp4');
+                    
+                    /** UDP 소켓에서 에러가 발생시 디버깅 메시지를 발생시킵니다. **/
+                    udpSocket.on('error', (err) => {
+                      minejs.Server.getServer().getLogger().debug(err.stack);
+                      udpSocket.close();
+                    });
+                    
+                    /** UDP 메시지를 전달 받으면 인스턴스로 전달합니다. **/
+                    udpSocket.on('message', (msg, rinfo) => {
+                        if(msg == null || rinfo.address == null || rinfo.port == null) return;
+                        if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
+                        this.getCluster().workers[workerIndex++].send([minejs.network.ProcessProtocol.UDP, msg, rinfo.address, rinfo.port]);
+                    });
+                    
+                    /** UDP 포트를 엽니다. **/
+                    udpSocket.bind(19132);
                 }
                 /** 마스터 서버 처리 구현 끝. **/
                 

@@ -28,6 +28,14 @@ module.exports = {
             /** 콘솔에 보이는 로그가 인스턴스간
              * 겹치지 않게 MASTER에서 관리하게 할 때 사용 **/
             static get LOG(){ return 0x06; }
+            
+            /** UDP 패킷을 마스터에서 받아서
+            인스턴스로 보낼때 사용합니다. **/
+            static get UDP(){ return 0x07; }
+            
+            /** UDP 패킷을 인스턴스에서 원하는
+            클라이언트로 전송시 사용합니다. **/
+            static get UDP_WRITE(){ return 0x08; }
         };
     }
 }

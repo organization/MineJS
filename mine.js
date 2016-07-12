@@ -2,6 +2,7 @@
 
 let fs = require('fs');
 let path = require('path');
+let jsoncomments = require('json-comments');
 
 /* global minejs */
 global.minejs = {};
@@ -12,8 +13,7 @@ minejs.database = {};
 
 minejs.raknet = {};
 minejs.raknet.protocol = {};
-minejs.raknet.p0_15 = {};
-minejs.raknet.p0_15.protocol = {};
+minejs.raknet.server = {};
 
 minejs.raknet.server = {};
 minejs.utils = {};

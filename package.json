@@ -24,6 +24,7 @@
     "external-ip": "^0.2.4",
     "fs": "0.0.2",
     "iconv-lite": "^0.4.13",
+    "json-comments": "^0.2.1",
     "memored": "^0.1.0",
     "os": "^0.1.1",
     "path": "^0.12.7",

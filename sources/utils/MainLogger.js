@@ -25,6 +25,7 @@ module.exports = {
                     timeFormat += '-' + (String(now.getMonth()).length > 1 ? now.getMonth() : '0' + now.getMonth());
                     timeFormat += '-' + (String(now.getDate()).length > 1 ? now.getDate() : '0' + now.getDate() + "");
                     
+                    try{ minejs.Server.getServer().getFs().mkdirSync(path + '/log/'); } catch(e) {}
                     if(!logFile) logFile = require('iconv-lite').encode(String(timeFormat + '.log'), 'utf8');
                     this.logStream = require('fs').createWriteStream(path + '/log/' + logFile, {flags: 'a'});
                     
