@@ -5,10 +5,10 @@ module.exports = {
     onLoad: ()=>{
         var serverInstance = null;
         minejs.Server = class Server{
-            constructor(path){
+            constructor(path, settings){
                 if(!serverInstance) {
                     serverInstance = this;
-                    this._init(path);
+                    this._init(path, settings);
                 }
                 return serverInstance;
             }
@@ -17,6 +17,41 @@ module.exports = {
                     new this();
                 return serverInstance;
             }
+            
+            getName(){
+                return "MineJS";
+            }
+            getCodeName(){
+                return minejs.CODENAME;
+            }
+            getMineJSVersion(){
+                return minejs.VERSION;
+            }
+            getMinecraftVersion(){
+                return minejs.MINECRAFT_VERSION;
+            }
+            getDatapath(){
+                return this._datapath;
+            }
+            getPluginPath(){
+                return minejs.PLUGIN_PATH;
+            }
+            getMaxPlayers(){
+                return this.getSettings().properties.max_players;
+            }
+            getPort(){
+                return this.getSettings().properties.server_port;
+            }
+            getViewDistance(){
+                return this.getSettings().properties.view_distance;
+            }
+            getIp(){
+                return this.getSettings().properties.server_ip;
+            }
+            getServerUniqueId(){
+                return this.getSettings().server_uuid;
+            }
+            
             getOs(){
                 return require('os');
             }
@@ -38,9 +73,14 @@ module.exports = {
             getDatabase(){
                 return minejs.database.Datastore.getInstance();
             }
-            _init(path) {
-                this.datapath = path;
-                this.logger = new minejs.utils.MainLogger(null, this.datapath, false);
+            getSettings(){
+                return this._settings;
+            }
+                        
+            _init(path, settings) {
+                this._datapath = path;
+                this._settings = settings;
+                this.logger = new minejs.utils.MainLogger(null, this._datapath, false);
                 
                 /** 마스터 서버의 처리를 구현합니다. **/
                 if(this.getCluster().isMaster){
@@ -125,9 +165,7 @@ module.exports = {
                                 delete workerPids[ShutdownCheckWorkerPid];
                                 
                                 let count = 0;
-                                for(let workerPidCheckOnly in workerPids)
-                                    count++;
-                                
+                                for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
                                     logger.notice('master deactivated');
                                     process.exit(0);
@@ -185,7 +223,10 @@ module.exports = {
                     });
                     
                     /** UDP 포트를 엽니다. **/
-                    udpSocket.bind(19132);
+                    udpSocket.bind({
+                        address: settings.properties.server_ip,
+                        port: settings.properties.server_port
+                    });
                 }
                 /** 마스터 서버 처리 구현 끝. **/
                 
@@ -200,17 +241,6 @@ module.exports = {
                                 for (let key in minejs.modules)
                                     if (typeof(minejs.modules[key].onEnable) === 'function') minejs.modules[key].onEnable();
                                 minejs.Server.getServer().getLogger().notice('instance is started');
-                                
-                                var raknet = require("raknet");
-                                var server = raknet.createServer({
-                                  host: process.env.IP,
-                                  port: process.env.PORT
-                                });
-                                server.on("connection",client => {
-                                  client.on("login",() => {
-                                    console.log("A client has login");
-                                  })
-                                });
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
                                 break;
                                 
@@ -240,5 +270,9 @@ module.exports = {
                 /** 워커 서버 처리 구현 끝. **/
             }
         };
+    },
+    onDisable: ()=>{
+        //let server = minejs.Server.getServer();
+        //
     }
 }

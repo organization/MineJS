@@ -36,7 +36,6 @@ module.exports = {
              * @param {function(err, expirationTime){}} callback
              **/
             store(key, value, ttl, callback){
-                console.log(this._db.store);
                 this._db.store(key, value, ttl, callback);
             }
             

@@ -2,7 +2,6 @@
 
 let fs = require('fs');
 let path = require('path');
-let jsoncomments = require('json-comments');
 
 /* global minejs */
 global.minejs = {};
@@ -19,6 +18,12 @@ minejs.raknet.server = {};
 minejs.utils = {};
 minejs.ANSI = true;
 
+minejs.VERSION = "1.0";
+minejs.MINECRAFT_VERSION = "0.15";
+minejs.API_VERSION = "1.0.0";
+minejs.CODENAME = "유성(meteor)";
+minejs.PLUGIN_PATH = __dirname + '/plugins';
+
 /** 로딩된 모듈들이 담깁니다. **/
 global.minejs.modules = {};
 let loader = {
@@ -26,11 +31,13 @@ let loader = {
         fs.readdirSync(sourceFolderPath).forEach(function (file) {
             let filePath = path.join(sourceFolderPath, file);
             let stat = fs.statSync(filePath);
-            if (stat.isFile()) {
-                global.minejs.modules[filePath] = require(filePath);
-            } else {
-                loader.sourceLoader(filePath);
-            }
+            try{
+                if (stat.isFile()) {
+                    global.minejs.modules[filePath] = require(filePath);
+                } else {
+                    loader.sourceLoader(filePath);
+                }
+            }catch(e){}
         });
     }
 };
@@ -43,5 +50,43 @@ for (let key in global.minejs.modules) {
     if (typeof(global.minejs.modules[key].onLoad) === 'function') global.minejs.modules[key].onLoad();
 }
 
-/** Run Server init method **/
-new minejs.Server(__dirname);
+/** 서버를 시작시킬때 해당 함수를 실행합니다. **/
+var start = () => {
+    /** Run Server init method **/
+    new minejs.Server(__dirname, require(__dirname + '/settings.json'));
+}
+
+/** 서버에서 사용할 언어를 선택합니다. **/
+try{
+    let stat = fs.statSync(__dirname + '/settings.json');
+    start();
+}catch(e){
+    var langList = require(__dirname + "/resources/language-list.json");
+    
+    console.log('Please select the language you want to use.');
+    for(let lang in langList) console.log(lang + " (" + langList[lang] + ")");
+    
+    /** 언어선택을 위해 콘솔 입력을 구현합니다. **/
+    var readline = require('readline');
+    var line = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    
+    line.on('line', function (input) {
+        if(!langList[input]){
+            console.log('These language is not support. please check up the list.\n');
+            console.log('Please select the language you want to use.');
+            for(let lang in langList) console.log(lang + " (" + langList[lang] + ")");
+        }else{
+            /** 서버의 UUID를 생성합니다. **/
+            let settings = require(__dirname + "/resources/lang/" + input + "/settings.json");
+            if(!settings.server_uuid)
+                settings.server_uuid = require('node-uuid').v4();
+                
+            fs.writeFileSync(__dirname + '/settings.json', JSON.stringify(settings, null, 4), 'utf8');
+            line.close();
+            start();
+        }
+    });
+}
