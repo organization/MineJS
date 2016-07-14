@@ -1,0 +1,143 @@
+{
+  "_1": "Advanced configuration file for MineJS",
+  "_2": "Some of these settings are safe, others can break your server if modified incorrectly",
+  "_3": "New settings/defaults won't appear automatically on this file when upgrading.",
+
+  "server_uuid": "",
+  
+  "properties":{
+    "motd": "#MineJS#",
+    "server_port": 19132,
+    "server_ip": "0.0.0.0",
+    "view_distance": 4,
+    "white_list": "off",
+    "announce_player_achievements": "on",
+    "spawn_protection": 16,
+    "max_players": 20,
+    "allow_flight": "off",
+    "spawn_animals": "on",
+    "spawn_mobs": "on",
+    "gamemode": 0,
+    "force_gamemode": "off",
+    "hardcore": "off",
+    "pvp": "on",
+    "difficulty": 1,
+    "generator_settings": "",
+    "level_name": "world",
+    "level_seed": "",
+    "level_type": "DEFAULT",
+    "enable_query": "on"
+  },
+  
+  "settings":{
+    "_1": "Multi_language setting",
+    "_2": "Available: eng, kor",
+    "language": "eng",
+
+    "_3": "Whether to send all strings translated to server locale or let the device handle them",
+    "force_language": false,
+    "shutdown_message": "Server closed",
+
+    "_4": "Allow listing plugins via Query",
+    "query_plugins": true,
+
+    "_5": "Show a console message when a plugin uses deprecated API methods",
+    "deprecated_verbose": true,
+
+    "_6": "Number of Cluster Works",
+    "_7": "If set to auto, it'll try to detect the number of cores (and at least 1)",
+    "cluster_workers": "auto"
+  },
+
+  "network":{
+    "_1": "Threshold for batching packets, in bytes. Only these packets will be compressed",
+    "_2": "Set to 0 to compress everything, _1 to disable.",
+    "batch_threshold": 256,
+
+    "_3": "Compression level used of Zlib when sending batched packets. Higher = more CPU, less bandwidth usage",
+    "compression_level": 7
+  },
+
+  "debug":{
+    "_1": "If > 1, it will show debug messages in the console",
+    "level": 1
+  },
+
+  "level_settings":{
+    "_1": "The default format that levels will use when created",
+    "default_format": "leveldb",
+
+    "_2": "Automatically change levels tick rate to maintain 20 ticks per second",
+    "auto_tick_rate": true,
+    "auto_tick_rate_limit": 20,
+
+    "_3": "Sets the base tick rate (1 = 20 ticks per second, 2 = 10 ticks per second, etc.)",
+    "base_tick_rate": 1,
+
+    "_4": "Tick all players each tick even when other settings disallow this.",
+    "always_tick_players": false
+  },
+
+  "chunk_sending":{
+    "_1": "Amount of chunks sent to players per tick",
+    "per_tick": 4,
+
+    "_2": "Amount of chunks sent around each player",
+    "max_chunks": 192,
+
+    "_3": "Amount of chunks that need to be sent before spawning the player",
+    "spawn_threshold": 56,
+
+    "_4": "Save a serialized copy of the chunk in memory for faster sending",
+    "_5": "Useful in mostly_static worlds where lots of players join at the same time",
+    "cache_chunks": false,
+  },
+
+  "chunk_ticking":{
+    "_1": "Max amount of chunks processed each tick",
+    "per_tick": 40,
+
+    "_2": "Radius of chunks around a player to tick",
+    "tick_radius": 3,
+    "light_updates": false,
+    "clear_tick_list": false,
+  },
+
+  "chunk_generation":{
+    "_1": "Max. amount of chunks in the waiting queue to be generated",
+    "queue_size": 8,
+    "_2": "Max. amount of chunks in the waiting queue to be populated",
+    "population_queue_size": 8,
+  },
+
+  "ticks_per":{
+   "animal_spawns": 400,
+   "monster_spawns": 1,
+   "autosave": 6000,
+   "cache_cleanup": 900,
+  },
+
+  "spawn_limits":{
+    "_1": "Max amount of these entities",
+    "monsters": 70,
+    "animals": 15,
+    "water_animals": 5,
+    "ambient": 15,
+  },
+
+  "aliases":{
+    "_1": "Aliases for commands",
+    "_2": "Examples:",
+    "_3": "showtheversion: version",
+    "_4": "savestop: [save_all, stop]"
+  },
+
+  "worlds":{
+    "_1": "These settings will override the generator set in server.properties and allows loading multiple levels",
+    "_2": "Example:",
+    "_3": "world:{",
+    "_4": " seed: 404",
+    "_5": " generator: FLAT:2;7,59x1,3x3,2;1;decoration(treecount=80 grasscount=45)",
+    "_6": "}"
+  }
+}
