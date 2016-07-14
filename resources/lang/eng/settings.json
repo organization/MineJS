@@ -1,117 +1,143 @@
 {
-  "": "Advanced configuration file for MineJS",
-  "": "Some of these settings are safe, others can break your server if modified incorrectly",
-  "": "New settings/defaults won't appear automatically on this file when upgrading.",
+  "_1": "Advanced configuration file for MineJS",
+  "_2": "Some of these settings are safe, others can break your server if modified incorrectly",
+  "_3": "New settings/defaults won't appear automatically on this file when upgrading.",
 
+  "server_uuid": "",
+  
+  "properties":{
+    "motd": "#MineJS#",
+    "server_port": 19132,
+    "server_ip": "0.0.0.0",
+    "view_distance": 4,
+    "white_list": "off",
+    "announce_player_achievements": "on",
+    "spawn_protection": 16,
+    "max_players": 20,
+    "allow_flight": "off",
+    "spawn_animals": "on",
+    "spawn_mobs": "on",
+    "gamemode": 0,
+    "force_gamemode": "off",
+    "hardcore": "off",
+    "pvp": "on",
+    "difficulty": 1,
+    "generator_settings": "",
+    "level_name": "world",
+    "level_seed": "",
+    "level_type": "DEFAULT",
+    "enable_query": "on"
+  },
+  
   "settings":{
-    "": "Multi-language setting",
-    "": "Available: eng, kor",
+    "_1": "Multi_language setting",
+    "_2": "Available: eng, kor",
     "language": "eng",
 
-    "": "Whether to send all strings translated to server locale or let the device handle them",
-    "force-language": false,
-    "shutdown-message": "Server closed",
+    "_3": "Whether to send all strings translated to server locale or let the device handle them",
+    "force_language": false,
+    "shutdown_message": "Server closed",
 
-    "": "Allow listing plugins via Query",
-    "query-plugins": true,
+    "_4": "Allow listing plugins via Query",
+    "query_plugins": true,
 
-    "": "Show a console message when a plugin uses deprecated API methods",
-    "deprecated-verbose": true,
+    "_5": "Show a console message when a plugin uses deprecated API methods",
+    "deprecated_verbose": true,
 
-    "": "Number of Cluster Works",
-    "": "If set to auto, it'll try to detect the number of cores (and at least 1)",
-    "cluster-workers": "auto"
+    "_6": "Number of Cluster Works",
+    "_7": "If set to auto, it'll try to detect the number of cores (and at least 1)",
+    "cluster_workers": "auto"
   },
 
   "network":{
-    "": "Threshold for batching packets, in bytes. Only these packets will be compressed",
-    "": "Set to 0 to compress everything, -1 to disable.",
-    "batch-threshold": 256,
+    "_1": "Threshold for batching packets, in bytes. Only these packets will be compressed",
+    "_2": "Set to 0 to compress everything, minus 1 to disable.",
+    "batch_threshold": 256,
 
-    "": "Compression level used of Zlib when sending batched packets. Higher = more CPU, less bandwidth usage",
-    "compression-level": 7
+    "_3": "Compression level used of Zlib when sending batched packets. Higher = more CPU, less bandwidth usage",
+    "compression_level": 7
   },
 
   "debug":{
-    "": "If > 1, it will show debug messages in the console",
+    "_1": "If > 1, it will show debug messages in the console",
     "level": 1
   },
 
-  "level-settings":{
-    "": "The default format that levels will use when created",
-    "default-format": "leveldb",
+  "level_settings":{
+    "_1": "The default format that levels will use when created",
+    "default_format": "leveldb",
 
-    "": "Automatically change levels tick rate to maintain 20 ticks per second",
-    "auto-tick-rate": true,
-    "auto-tick-rate-limit": 20,
+    "_2": "Automatically change levels tick rate to maintain 20 ticks per second",
+    "auto_tick_rate": true,
+    "auto_tick_rate_limit": 20,
 
-    "": "Sets the base tick rate (1 = 20 ticks per second, 2 = 10 ticks per second, etc.)",
-    "base-tick-rate": 1,
+    "_3": "Sets the base tick rate (1 = 20 ticks per second, 2 = 10 ticks per second, etc.)",
+    "base_tick_rate": 1,
 
-    "": "Tick all players each tick even when other settings disallow this.",
-    "always-tick-players": false
+    "_4": "Tick all players each tick even when other settings disallow this.",
+    "always_tick_players": false
   },
 
-  "chunk-sending":{
-    "": "Amount of chunks sent to players per tick",
-    "per-tick": 4,
+  "chunk_sending":{
+    "_1": "Amount of chunks sent to players per tick",
+    "per_tick": 4,
 
-    "": "Amount of chunks sent around each player",
-    "max-chunks": 192,
+    "_2": "Amount of chunks sent around each player",
+    "max_chunks": 192,
 
-    "": "Amount of chunks that need to be sent before spawning the player",
-    "spawn-threshold": 56,
+    "_3": "Amount of chunks that need to be sent before spawning the player",
+    "spawn_threshold": 56,
 
-    "": "Save a serialized copy of the chunk in memory for faster sending",
-    "": "Useful in mostly-static worlds where lots of players join at the same time",
-    "cache-chunks": false,
+    "_4": "Save a serialized copy of the chunk in memory for faster sending",
+    "_5": "Useful in mostly_static worlds where lots of players join at the same time",
+    "cache_chunks": false,
   },
 
-  "chunk-ticking":{
-    "": "Max amount of chunks processed each tick",
-    "per-tick": 40,
+  "chunk_ticking":{
+    "_1": "Max amount of chunks processed each tick",
+    "per_tick": 40,
 
-    "": "Radius of chunks around a player to tick",
-    "tick-radius": 3,
-    "light-updates": false,
-    "clear-tick-list": false,
+    "_2": "Radius of chunks around a player to tick",
+    "tick_radius": 3,
+    "light_updates": false,
+    "clear_tick_list": false,
   },
 
-  "chunk-generation":{
-    "": "Max. amount of chunks in the waiting queue to be generated",
-    "queue-size": 8,
-    "": "Max. amount of chunks in the waiting queue to be populated",
-    "population-queue-size": 8,
+  "chunk_generation":{
+    "_1": "Max. amount of chunks in the waiting queue to be generated",
+    "queue_size": 8,
+    "_2": "Max. amount of chunks in the waiting queue to be populated",
+    "population_queue_size": 8,
   },
 
-  "ticks-per":{
-   "animal-spawns": 400,
-   "monster-spawns": 1,
+  "ticks_per":{
+   "animal_spawns": 400,
+   "monster_spawns": 1,
    "autosave": 6000,
-   "cache-cleanup": 900,
+   "cache_cleanup": 900,
   },
 
-  "spawn-limits":{
-    "": "Max amount of these entities",
+  "spawn_limits":{
+    "_1": "Max amount of these entities",
     "monsters": 70,
     "animals": 15,
-    "water-animals": 5,
+    "water_animals": 5,
     "ambient": 15,
   },
 
   "aliases":{
-    "": "Aliases for commands",
-    "": "Examples:",
-    "": "showtheversion: version",
-    "": "savestop: [save-all, stop]"
+    "_1": "Aliases for commands",
+    "_2": "Examples:",
+    "_3": "showtheversion: version",
+    "_4": "savestop: [save_all, stop]"
   },
 
   "worlds":{
-    "": "These settings will override the generator set in server.properties and allows loading multiple levels",
-    "": "Example:",
-    "": "world:{",
-    "": " seed: 404",
-    "": " generator: FLAT:2;7,59x1,3x3,2;1;decoration(treecount=80 grasscount=45)",
-    "": "}"
+    "_1": "These settings will override the generator set in server.properties and allows loading multiple levels",
+    "_2": "Example:",
+    "_3": "world:{",
+    "_4": " seed: 404",
+    "_5": " generator: FLAT:2;7,59x1,3x3,2;1;decoration(treecount=80 grasscount=45)",
+    "_6": "}"
   }
 }
