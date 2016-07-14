@@ -51,7 +51,7 @@
 
   "network":{
     "_1": "Threshold for batching packets, in bytes. Only these packets will be compressed",
-    "_2": "Set to 0 to compress everything, minus 1 to disable.",
+    "_2": "Set to 0 to compress everything, _1 to disable.",
     "batch_threshold": 256,
 
     "_3": "Compression level used of Zlib when sending batched packets. Higher = more CPU, less bandwidth usage",
