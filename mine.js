@@ -54,7 +54,7 @@ for (let key in global.minejs.modules) {
 var start = () => {
     /** Run Server init method **/
     new minejs.Server(__dirname, require(__dirname + '/settings.json'));
-}
+};
 
 /** 서버에서 사용할 언어를 선택합니다. **/
 try{
@@ -81,10 +81,12 @@ try{
         }else{
             /** 서버의 UUID를 생성합니다. **/
             let settings = require(__dirname + "/resources/lang/" + input + "/settings.json");
+            let lang = require(__dirname + "/resources/lang/" + input + "/lang.json");
             if(!settings.server_uuid)
                 settings.server_uuid = require('node-uuid').v4();
                 
             fs.writeFileSync(__dirname + '/settings.json', JSON.stringify(settings, null, 4), 'utf8');
+            fs.writeFileSync(__dirname + '/lang.json', JSON.stringify(lang, null, 4), 'utf8');
             line.close();
             start();
         }
