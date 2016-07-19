@@ -21,7 +21,7 @@ module.exports = {
             }
             
             receivePacket(buffer, source, port){
-                len = buffer.length;
+                let len = buffer.length;
                 if(len > 0){
                     let pid = buffer[0];
                     
