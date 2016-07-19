@@ -155,7 +155,7 @@ module.exports = {
             }
             
             clone(){
-                var clone = require('clone');
+                let clone = require('clone');
                 return clone(this);
             }
             

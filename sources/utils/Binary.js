@@ -222,11 +222,12 @@ module.exports = {
             }
             
             static subBytes(bytes, start, length){
-                // TODO
+                let len = Math.min(bytes.length, start + length);
+                return this.copyOfRange(bytes, start, len);
             }
             
             static subBytes(bytes, start){
-                // TODO
+                return this.subBytes(bytes, start, bytes.length - start);
             }
             
             static splitBytes(bytes, chunkSize){
@@ -247,6 +248,18 @@ module.exports = {
                     appendArray.push(byte);
                     
                 return appendArray;
+            }
+            
+            static copyOfRange(original, from, to){
+                let copy = [];
+                for(let i = (from -1) ; i < to ; i++){
+                    if(original[i] == null){
+                        copy.push(0);
+                        continue;
+                    }
+                    copy.push(original[i]);
+                }
+                return copy;
             }
         }
     }
