@@ -32,13 +32,14 @@ module.exports = {
             }
             
             process(commandName, args) {
+                var lang = minejs.Server.getServer().getLang();
                 commandName = this.__slashRemove(commandName);
                 commandName = commandName.toLowerCase();
                 /** 등록된 명령어라면 실행하고 아니면 /help 명령어 사용을 유도합니다. **/
                 if(typeof(this.__commandMap[commandName]) == 'function'){
                     this.__commandMap[commandName](args);
                 }else{
-                    minejs.Server.getServer().getLogger().notice('Unknown command. Try /help for a list of commands.');
+                    minejs.Server.getServer().getLogger().notice(lang.unknown_command);
                 }
             }
             

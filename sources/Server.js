@@ -64,6 +64,9 @@ module.exports = {
             getCluster(){
                 return require('cluster');
             }
+            getUtil(){
+                return require('util');
+            }
             getLogger() {
                 return this.logger;
             }
@@ -76,24 +79,28 @@ module.exports = {
             getSettings(){
                 return this._settings;
             }
+            getLang(){
+                return this._lang;
+            }
                         
             _init(path, settings) {
                 this._datapath = path;
                 this._settings = settings;
+                this._lang = require(this._datapath + '/lang.json');
+                var lang = this._lang;
                 this.logger = new minejs.utils.MainLogger(null, this._datapath, false);
-                
                 /** 마스터 서버의 처리를 구현합니다. **/
                 if(this.getCluster().isMaster){
                     this.getLogger().tag = "MASTER";
-                    this.getLogger().notice('MineJS has activated: ' + process.pid);
+                    this.getLogger().notice(lang.minejs_has_activated + process.pid);
                     
                     /** 외부아이피를 얻어와서 출력해줍니다. **/
                     var getIp = require('external-ip')();
                     getIp(function(err, ip){
                         if(err){
-                            minejs.Server.getServer().getLogger().notice("IP Address: undefined");
+                            minejs.Server.getServer().getLogger().notice(lang.IP_Address + "undefined");
                         }else{
-                            minejs.Server.getServer().getLogger().notice("IP Address: " + ip);
+                            minejs.Server.getServer().getLogger().notice(lang.IP_Address + ip);
                         }
                     });
                     
@@ -167,7 +174,7 @@ module.exports = {
                                 let count = 0;
                                 for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
-                                    logger.notice('master deactivated');
+                                    logger.notice(lang.minejs_has_deactivated);
                                     process.exit(0);
                                 }
                                 break;
@@ -180,7 +187,7 @@ module.exports = {
                                 minejs.raknet.server.UDPServerSocket.getInstance().receivePacket(packet, address, port);
                                 break;
                         }
-                    }
+                    };
                     /** 워커 메시지 처리 함수 끝 **/
                     
                     /** 워커가 켜지고 꺼질때 워커에게 알려줍니다. **/
@@ -240,7 +247,7 @@ module.exports = {
                             case minejs.network.ProcessProtocol.START:
                                 for (let key in minejs.modules)
                                     if (typeof(minejs.modules[key].onEnable) === 'function') minejs.modules[key].onEnable();
-                                minejs.Server.getServer().getLogger().notice('instance is started');
+                                minejs.Server.getServer().getLogger().notice(lang.instance_is_started);
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
                                 break;
                                 
@@ -248,7 +255,7 @@ module.exports = {
                             case minejs.network.ProcessProtocol.SHUTDOWN:
                                 for (let key in minejs.modules)
                                     if (typeof(minejs.modules[key].onDisable) === 'function') minejs.modules[key].onDisable();
-                                minejs.Server.getServer().getLogger().notice('instance deactivated');
+                                minejs.Server.getServer().getLogger().notice(lang.instance_deactivated);
                                 process.send([minejs.network.ProcessProtocol.SHUTDOWN_CHECK, process.pid]);
                                 process.exit(0);
                                 break;
@@ -275,4 +282,4 @@ module.exports = {
         //let server = minejs.Server.getServer();
         //
     }
-}
+};
