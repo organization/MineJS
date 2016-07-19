@@ -1,0 +1,175 @@
+[11:41:04][MASTER] [NOTICE] MineJS has activated: 2777
+[11:41:06][2794] [NOTICE] instance is started
+[11:41:06][2818] [NOTICE] instance is started
+[11:41:06][2795] [NOTICE] instance is started
+[11:41:06][2824] [NOTICE] instance is started
+[11:41:06][2787] [NOTICE] instance is started
+[11:41:06][2807] [NOTICE] instance is started
+[11:41:06][2801] [NOTICE] instance is started
+[11:41:07][2793] [NOTICE] instance is started
+[11:41:08][MASTER] [NOTICE] IP Address: 130.211.250.203
+/stop
+[11:41:09][2787] [NOTICE] instance deactivated
+[11:41:09][2793] [NOTICE] instance deactivated
+[11:41:09][2794] [NOTICE] instance deactivated
+[11:41:09][2795] [NOTICE] instance deactivated
+[11:41:09][2807] [NOTICE] instance deactivated
+[11:41:09][2801] [NOTICE] instance deactivated
+[11:41:09][2818] [NOTICE] instance deactivated
+[11:56:28][MASTER] [NOTICE] MineJS has activated: 3799
+[11:56:29][3809] [NOTICE] instance is started
+[11:56:29][3828] [NOTICE] instance is started
+[11:56:29][3815] [NOTICE] instance is started
+[11:56:29][3827] [NOTICE] instance is started
+[11:56:29][3816] [NOTICE] instance is started
+[11:56:29][3840] [NOTICE] instance is started
+[11:56:29][3834] [NOTICE] instance is started
+[11:56:29][3846] [NOTICE] instance is started
+[11:56:30][MASTER] [NOTICE] IP Address: 130.211.250.203
+/stop
+[11:56:47][3809] [NOTICE] instance deactivated
+[11:56:47][3827] [NOTICE] instance deactivated
+[11:56:47][3816] [NOTICE] instance deactivated
+[11:56:47][3828] [NOTICE] instance deactivated
+[11:56:47][3840] [NOTICE] instance deactivated
+[11:56:47][3834] [NOTICE] instance deactivated
+[11:56:47][3846] [NOTICE] instance deactivated
+[11:57:06][MASTER] [NOTICE] MineJS has activated: 3867
+[11:57:07][3878] [NOTICE] instance is started
+[11:57:08][3891] [NOTICE] instance is started
+[11:57:08][3892] [NOTICE] instance is started
+[11:57:08][3884] [NOTICE] instance is started
+[11:57:08][3915] [NOTICE] instance is started
+[11:57:08][3890] [NOTICE] instance is started
+[11:57:08][3909] [NOTICE] instance is started
+[11:57:08][3903] [NOTICE] instance is started
+[11:57:08][MASTER] [NOTICE] IP Address: 130.211.250.203
+/stop
+[11:57:16][3878] [NOTICE] instance deactivated
+[11:57:35][MASTER] [NOTICE] MineJS has activated: 3939
+[11:57:36][3961] [NOTICE] instance is started
+[11:57:36][3967] [NOTICE] instance is started
+[11:57:36][3955] [NOTICE] instance is started
+[11:57:36][3980] [NOTICE] instance is started
+[11:57:36][3949] [NOTICE] instance is started
+[11:57:36][3986] [NOTICE] instance is started
+[11:57:36][3968] [NOTICE] instance is started
+[11:57:36][3974] [NOTICE] instance is started
+[11:57:37][MASTER] [NOTICE] IP Address: 130.211.250.203
+/stop
+[11:57:38][3949] [NOTICE] instance deactivated
+[11:57:38][3955] [NOTICE] instance deactivated
+[11:57:38][3961] [NOTICE] instance deactivated
+[11:57:38][3980] [NOTICE] instance deactivated
+[11:57:38][3986] [NOTICE] instance deactivated
+[11:57:38][3967] [NOTICE] instance deactivated
+[11:57:44][MASTER] [NOTICE] MineJS has activated: 4006
+[11:57:45][4023] [NOTICE] instance is started
+[11:57:45][4016] [NOTICE] instance is started
+[11:57:45][4017] [NOTICE] instance is started
+[11:57:45][4053] [NOTICE] instance is started
+[11:57:45][4041] [NOTICE] instance is started
+[11:57:46][4035] [NOTICE] instance is started
+[11:57:46][4047] [NOTICE] instance is started
+[11:57:46][4034] [NOTICE] instance is started
+[11:57:46][MASTER] [NOTICE] IP Address: 130.211.250.203
+/stop
+[11:57:49][4016] [NOTICE] instance deactivated
+[11:57:57][MASTER] [NOTICE] MineJS has activated: 4070
+[11:57:58][4086] [NOTICE] instance is started
+[11:57:58][4087] [NOTICE] instance is started
+[11:57:58][4099] [NOTICE] instance is started
+[11:57:58][4098] [NOTICE] instance is started
+[11:57:59][4105] [NOTICE] instance is started
+[11:57:59][4111] [NOTICE] instance is started
+[11:57:59][4080] [NOTICE] instance is started
+[11:57:59][4117] [NOTICE] instance is started
+[11:57:59][MASTER] [NOTICE] IP Address: 130.211.250.203
+[11:58:30][MASTER] [NOTICE] MineJS has activated: 4138
+[11:58:31][4148] [NOTICE] instance is started
+[11:58:31][4174] [NOTICE] instance is started
+[11:58:31][4166] [NOTICE] instance is started
+[11:58:31][4185] [NOTICE] instance is started
+[11:58:32][4173] [NOTICE] instance is started
+[11:58:32][4155] [NOTICE] instance is started
+[11:58:32][4172] [NOTICE] instance is started
+[11:58:32][4154] [NOTICE] instance is started
+[11:58:32][MASTER] [NOTICE] IP Address: 130.211.250.203
+[11:59:16][MASTER] [NOTICE] MineJS has activated: 4203
+[11:59:16][4213] [NOTICE] instance is started
+[11:59:16][4232] [NOTICE] instance is started
+[11:59:16][4219] [NOTICE] instance is started
+[11:59:17][4243] [NOTICE] instance is started
+[11:59:17][4220] [NOTICE] instance is started
+[11:59:17][4244] [NOTICE] instance is started
+[11:59:17][4250] [NOTICE] instance is started
+[11:59:17][4226] [NOTICE] instance is started
+[11:59:17][MASTER] [NOTICE] IP Address: 130.211.250.203
+[11:59:25][MASTER] [NOTICE] MineJS has activated: 4269
+[11:59:26][4315] [NOTICE] instance is started
+[11:59:26][4285] [NOTICE] instance is started
+[11:59:26][4304] [NOTICE] instance is started
+[11:59:27][4279] [NOTICE] instance is started
+[11:59:27][4316] [NOTICE] instance is started
+[11:59:27][4286] [NOTICE] instance is started
+[11:59:27][4297] [NOTICE] instance is started
+[11:59:27][4298] [NOTICE] instance is started
+[11:59:27][MASTER] [NOTICE] IP Address: 130.211.250.203
+[12:07:33][MASTER] [NOTICE] MineJS has activated: 4369
+[12:07:34][4385] [NOTICE] instance is started
+[12:07:34][4397] [NOTICE] instance is started
+[12:07:34][4379] [NOTICE] instance is started
+[12:07:34][4391] [NOTICE] instance is started
+[12:07:34][4416] [NOTICE] instance is started
+[12:07:34][4410] [NOTICE] instance is started
+[12:07:34][4404] [NOTICE] instance is started
+[12:07:34][4398] [NOTICE] instance is started
+[12:07:35][MASTER] [NOTICE] IP Address: 130.211.250.203
+/stop
+[12:07:36][4379] [NOTICE] instance deactivated
+[12:07:36][4391] [NOTICE] instance deactivated
+[12:07:36][4385] [NOTICE] instance deactivated
+[12:07:36][4398] [NOTICE] instance deactivated
+[12:07:36][4397] [NOTICE] instance deactivated
+[12:07:36][4404] [NOTICE] instance deactivated
+[12:07:36][4416] [NOTICE] instance deactivated
+[12:08:37][MASTER] [NOTICE] MineJS has activated: 4435
+[12:08:38][4446] [NOTICE] instance is started
+[12:08:38][4456] [NOTICE] instance is started
+[12:08:38][4452] [NOTICE] instance is started
+[12:08:38][4459] [NOTICE] instance is started
+[12:08:38][4465] [NOTICE] instance is started
+[12:08:38][4477] [NOTICE] instance is started
+[12:08:38][4471] [NOTICE] instance is started
+[12:08:38][4478] [NOTICE] instance is started
+[12:08:39][MASTER] [NOTICE] IP Address: 130.211.250.203
+[12:08:57][MASTER] [NOTICE] MineJS has activated: 4503
+[12:08:58][4519] [NOTICE] instance is started
+[12:08:58][4550] [NOTICE] instance is started
+[12:08:58][4538] [NOTICE] instance is started
+[12:08:58][4526] [NOTICE] instance is started
+[12:08:58][4549] [NOTICE] instance is started
+[12:08:58][4532] [NOTICE] instance is started
+[12:08:58][4513] [NOTICE] instance is started
+[12:08:58][4520] [NOTICE] instance is started
+[12:08:59][MASTER] [NOTICE] IP Address: 130.211.250.203
+[12:09:07][MASTER] [NOTICE] MineJS has activated: 4567
+[12:09:08][4589] [NOTICE] instance is started
+[12:09:08][4583] [NOTICE] instance is started
+[12:09:08][4577] [NOTICE] instance is started
+[12:09:08][4608] [NOTICE] instance is started
+[12:09:09][4609] [NOTICE] instance is started
+[12:09:09][4590] [NOTICE] instance is started
+[12:09:09][4602] [NOTICE] instance is started
+[12:09:09][4596] [NOTICE] instance is started
+[12:09:09][MASTER] [NOTICE] IP Address: 130.211.250.203
+[12:09:24][MASTER] [NOTICE] MineJS has activated: 4630
+[12:09:25][4654] [NOTICE] instance is started
+[12:09:25][4655] [NOTICE] instance is started
+[12:09:25][4661] [NOTICE] instance is started
+[12:09:25][4648] [NOTICE] instance is started
+[12:09:25][4642] [NOTICE] instance is started
+[12:09:25][4680] [NOTICE] instance is started
+[12:09:25][4667] [NOTICE] instance is started
+[12:09:25][4673] [NOTICE] instance is started
+[12:09:26][MASTER] [NOTICE] IP Address: 130.211.250.203

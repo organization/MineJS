@@ -20,10 +20,12 @@
   },
   "homepage": "https://github.com/organization/MineJS#readme",
   "dependencies": {
+    "clone": "^1.0.2",
     "cluster": "^0.7.7",
     "external-ip": "^0.2.4",
     "fs": "0.0.2",
     "iconv-lite": "^0.4.13",
+    "int-bits": "^1.0.0",
     "memored": "^0.1.0",
     "node-uuid": "^1.4.7",
     "os": "^0.1.1",

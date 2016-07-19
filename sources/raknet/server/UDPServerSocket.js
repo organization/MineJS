@@ -20,11 +20,17 @@ module.exports = {
                 return udpServerSocketInstance;
             }
             
-            receivePacket(packet, address, port){
+            receivePacket(buffer, source, port){
+                len = buffer.length;
+                if(len > 0){
+                    let pid = buffer[0];
+                    
+                }
                 //TODO
+                
             }
             
-            sendPacket(packet, address, port){
+            sendPacket(buffer, source, port){
                 //TODO
             }
         }
