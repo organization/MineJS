@@ -2,7 +2,7 @@
 
 /* global minejs */
 module.exports = {
-    onLoad: ()=>{
+    onInit: ()=>{
         minejs.raknet.protocol.Packet = class Packet{
             constructor(){
                 this.__offset=0;

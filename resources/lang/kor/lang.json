@@ -4,8 +4,8 @@
     "minejs_has_activated": "MineJS를 활성화했습니다: ",
     "minejs_has_deactivated": "MineJS가 비활성화되었습니다",
     
-    "instance_is_started": "instance가 시작되었습니다",
-    "instance_deactivated": "instance가 비활성화되었습니다",
+    "instance_is_started": "인스턴스가 시작되었습니다",
+    "instance_deactivated": "인스턴스가 비활성화되었습니다",
     
     "IP_Address": "IP 주소: ",
     

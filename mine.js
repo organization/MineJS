@@ -46,9 +46,11 @@ let loader = {
 loader.sourceLoader(path.join(__dirname, "sources"));
 
 /** 서버가 로딩될 때 해당 코드를 실행합니다. **/
-for (let key in global.minejs.modules) {
+for (let key in global.minejs.modules)
+    if (typeof(global.minejs.modules[key].onInit) === 'function') global.minejs.modules[key].onInit();
+for (let key in global.minejs.modules)
     if (typeof(global.minejs.modules[key].onLoad) === 'function') global.minejs.modules[key].onLoad();
-}
+
 
 /** 서버를 시작시킬때 해당 함수를 실행합니다. **/
 var start = () => {

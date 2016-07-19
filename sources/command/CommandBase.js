@@ -2,7 +2,7 @@
 
 module.exports = {
     /* global minejs */
-    onLoad: ()=>{
+    onInit: ()=>{
         minejs.command.CommandBase = class CommandBase{
             constructor(commandName){
                 this.commandName = commandName;
