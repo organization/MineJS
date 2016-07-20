@@ -5,13 +5,14 @@ let path = require('path');
 
 /* global minejs */
 global.minejs = {};
-minejs.ANSI = true;
 
 minejs.VERSION = "1.0";
 minejs.MINECRAFT_VERSION = "0.15";
 minejs.API_VERSION = "1.0.0";
 minejs.CODENAME = "유성(meteor)";
 minejs.PLUGIN_PATH = __dirname + '/plugins';
+
+minejs.ANSI = true;
 
 /** OOP 형태로 노드 프로그램 소스파일 체계를
 관리할 수 있도록 돕는 프로그램 로더입니다. **/
@@ -23,7 +24,7 @@ global.minejs.loader = {
     '경로명': (불려와진모듈) 의 형태로 저장됩니다. **/
     modules: {},
     
-    /** 글로벌 변수 minejs에 실제 폴더계층대로 하위 변수를 생성합니다. **/
+    /** 글로벌 변수에 실제 폴더계층대로 하위 변수를 생성합니다. **/
     treeLoader : (sourceFolderPath, originPath, prefix) => {
         fs.readdirSync(sourceFolderPath).forEach(function (file) {
             let filePath = path.join(sourceFolderPath, file);
