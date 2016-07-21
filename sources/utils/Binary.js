@@ -238,15 +238,11 @@ module.exports = {
                 // TODO
             }
             
-            static appendBytes(bytes1, bytes2){
-                let length = bytes1.length + bytes2.length;
+            static appendBytes(){
                 let appendArray = [];
-                
-                for(let byte in bytes1)
-                    appendArray.push(byte);
-                for(let byte in bytes2)
-                    appendArray.push(byte);
-                    
+                for(let key in arguments)
+                    for(let byte in arguments[key])
+                        appendArray.push(byte);
                 return appendArray;
             }
             

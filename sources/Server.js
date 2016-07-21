@@ -82,13 +82,14 @@ module.exports = {
             getLang(){
                 return this._lang;
             }
-                        
+            
             _init(path, settings) {
                 this._datapath = path;
                 this._settings = settings;
                 this._lang = require(this._datapath + '/lang.json');
                 var lang = this._lang;
                 this.logger = new minejs.utils.MainLogger(null, this._datapath, false);
+                
                 /** 마스터 서버의 처리를 구현합니다. **/
                 if(this.getCluster().isMaster){
                     this.getLogger().tag = "MASTER";
@@ -118,7 +119,7 @@ module.exports = {
                     /** Embedded Memcached Database initialize **/
                     this.getDatabase().setup();
                     
-                    /** 워커 메시지 처리 함수 시작 **/
+                    /** 워커로부터 전달받은 메시지를 처리합니다. **/
                     let workerProcess = (message)=>{
                         let cluster = minejs.Server.getServer().getCluster();
                         let logger = minejs.Server.getServer().getLogger();
@@ -179,18 +180,23 @@ module.exports = {
                                 }
                                 break;
                                 
-                            /** UDP 패킷을 받아서 처리합니다. **/
-                            case minejs.network.ProcessProtocol.UDP:
-                                let packet = message[1];
+                            /** UDP 패킷을 인스턴스로부터
+                             * 받아서 클라이언트로 전송합니다. **/
+                            case minejs.network.ProcessProtocol.UDP_WRITE:
+                                let buffer = message[1];
                                 let address = message[2];
                                 let port = message[3];
-                                minejs.raknet.server.UDPServerSocket.getInstance().receivePacket(packet, address, port);
+                                
+                                this.udpSocket.send(buffer, port, address, (err) => {
+                                    this.getLogger.debug(err);
+                                });
                                 break;
                         }
                     };
-                    /** 워커 메시지 처리 함수 끝 **/
+                    /** 워커로부터 전달받은 메시지를 처리합니다. **/
                     
                     /** 워커가 켜지고 꺼질때 워커에게 알려줍니다. **/
+                    /** 워커의 메시지를 받아 처리할 마스터의 처리함수를 전달합니다. **/
                     this.getCluster().on('online', function (worker) {
                         worker.send([minejs.network.ProcessProtocol.START]);
                         worker.on('message', workerProcess);
@@ -214,23 +220,23 @@ module.exports = {
                     });
                     
                     /** UDP 소켓을 생성합니다. **/
-                    var udpSocket = require('dgram').createSocket('udp4');
+                    this.udpSocket = require('dgram').createSocket('udp4');
                     
                     /** UDP 소켓에서 에러가 발생시 디버깅 메시지를 발생시킵니다. **/
-                    udpSocket.on('error', (err) => {
+                    this.udpSocket.on('error', (err) => {
                       minejs.Server.getServer().getLogger().debug(err.stack);
-                      udpSocket.close();
+                      this.udpSocket.close();
                     });
                     
                     /** UDP 메시지를 전달 받으면 인스턴스로 전달합니다. **/
-                    udpSocket.on('message', (msg, rinfo) => {
+                    this.udpSocket.on('message', (msg, rinfo) => {
                         if(msg == null || rinfo.address == null || rinfo.port == null) return;
                         if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
                         this.getCluster().workers[workerIndex++].send([minejs.network.ProcessProtocol.UDP, msg, rinfo.address, rinfo.port]);
                     });
                     
                     /** UDP 포트를 엽니다. **/
-                    udpSocket.bind({
+                    this.udpSocket.bind({
                         address: settings.properties.server_ip,
                         port: settings.properties.server_port
                     });
@@ -270,6 +276,15 @@ module.exports = {
                             case minejs.network.ProcessProtocol.COMMAND_CHECK:
                                 var args = message[1].split(' ');
                                 process.send([minejs.network.ProcessProtocol.COMMAND_CHECK, minejs.command.CommandManager.getInstance().checkIsOnceRun(args.splice(0, 1)), message[1]]);
+                                break;
+                                
+                            /** UDP 패킷을 클라이언트로부터
+                             * 받아서 인스턴스로 전송합니다. **/
+                            case minejs.network.ProcessProtocol.UDP:
+                                let packet = message[1];
+                                let address = message[2];
+                                let port = message[3];
+                                minejs.raknet.server.UDPServerSocket.getInstance().receivePacket(packet, address, port);
                                 break;
                         }
                     });
