@@ -1,4 +1,5 @@
 {
+    "version": "1",
     "_1": "MineJS를 위한 언어 구성 파일입니다.",
     
     "minejs_has_activated": "MineJS를 활성화했습니다: ",

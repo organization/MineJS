@@ -1,4 +1,5 @@
 {
+    "version": "1",
     "_1": "The language configuration file for MineJS.",
     
     "minejs_has_activated": "MineJS has activated: ",
@@ -6,6 +7,8 @@
     
     "instance_is_started": "instance is started",
     "instance_deactivated": "instance deactivated",
+    "instance_all_activated": "A total %count% of instances have been activated.",
+    "instance_all_deactivated": "A total %count% of instances have been deactivated.",
     
     "IP_Address": "IP Address: ",
     

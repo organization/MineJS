@@ -112,9 +112,8 @@ module.exports = {
                     var workerIndex = 1;
                     
                     /** CPU 수 만큼 워커를 생성합니다. **/
-                    for (var i = 0; i < this.getOs().cpus().length; i++) {
+                    for (var i = 0; i < this.getOs().cpus().length; i++)
                         this.getCluster().fork();
-                    }
                     
                     /** Embedded Memcached Database initialize **/
                     this.getDatabase().setup();
@@ -182,6 +181,11 @@ module.exports = {
                                 for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
                                     logger.notice(lang.instance_all_deactivated.replace('%count%', this.getOs().cpus().length));
+                                    
+                                    /** 마스터 서버에서의 onDisable 작동 **/
+                                    for (let key in minejs.loader.modules)
+	                                    if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
+                                    
                                     logger.notice(lang.minejs_has_deactivated);
                                     process.exit(0);
                                 }
@@ -256,6 +260,10 @@ module.exports = {
                         address: settings.properties.server_ip,
                         port: settings.properties.server_port
                     });
+                    
+                    /** 마스터 서버에서의 onEnable 작동 **/
+                    for (let key in minejs.loader.modules)
+	                    if (typeof(minejs.loader.modules[key].onEnable) === 'function') minejs.loader.modules[key].onEnable();
                 }
                 /** 마스터 서버 처리 구현 끝. **/
                 
@@ -267,8 +275,8 @@ module.exports = {
                             
                             /** 서버가 활성화될 때 해당 코드를 실행합니다. **/
                             case minejs.network.ProcessProtocol.START:
-                                for (let key in minejs.modules)
-                                    if (typeof(minejs.modules[key].onEnable) === 'function') minejs.modules[key].onEnable();
+                                for (let key in minejs.loader.modules)
+                                    if (typeof(minejs.loader.modules[key].onEnable) === 'function') minejs.loader.modules[key].onEnable();
                                 if(minejs.Server.getServer().getOs().cpus().length <= 8)
                                     minejs.Server.getServer().getLogger().notice(lang.instance_is_started);
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
@@ -276,8 +284,8 @@ module.exports = {
                                 
                             /** 서버가 비활성화될 때 해당 코드를 실행합니다. **/
                             case minejs.network.ProcessProtocol.SHUTDOWN:
-                                for (let key in minejs.modules)
-                                    if (typeof(minejs.modules[key].onDisable) === 'function') minejs.modules[key].onDisable();
+                                for (let key in minejs.loader.modules)
+                                    if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
                                 if(minejs.Server.getServer().getOs().cpus().length <= 8)
                                     minejs.Server.getServer().getLogger().notice(lang.instance_deactivated);
                                 process.send([minejs.network.ProcessProtocol.SHUTDOWN_CHECK, process.pid]);

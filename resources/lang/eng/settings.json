@@ -1,4 +1,5 @@
 {
+    "version": "1",
 	"_1": "Advanced configuration file for MineJS",
 	"_2": "Some of these settings are safe, others can break your server if modified incorrectly",
 	"_3": "New settings/defaults won't appear automatically on this file when upgrading.",
