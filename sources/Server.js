@@ -119,6 +119,9 @@ module.exports = {
                     /** Embedded Memcached Database initialize **/
                     this.getDatabase().setup();
                     
+                    /** 정상적으로 켜진 워커수를 기록합니다. **/
+                    var onlineWorkerCount = 0;
+                    
                     /** 워커로부터 전달받은 메시지를 처리합니다. **/
                     let workerProcess = (message)=>{
                         let cluster = minejs.Server.getServer().getCluster();
@@ -164,6 +167,9 @@ module.exports = {
                             case minejs.network.ProcessProtocol.START_CHECK:
                                 let startCheckWorkerPid = message[1];
                                 workerPids[startCheckWorkerPid] = true;
+                                
+                                if(++onlineWorkerCount == this.getOs().cpus().length)
+                                    logger.notice(lang.instance_all_activated.replace('%count%', this.getOs().cpus().length));
                                 break;
                                 
                             /** 인스턴스가 서버종료를 실행한 후 마지막
@@ -175,6 +181,7 @@ module.exports = {
                                 let count = 0;
                                 for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
+                                    logger.notice(lang.instance_all_deactivated.replace('%count%', this.getOs().cpus().length));
                                     logger.notice(lang.minejs_has_deactivated);
                                     process.exit(0);
                                 }
@@ -228,11 +235,20 @@ module.exports = {
                       this.udpSocket.close();
                     });
                     
+                    var sessionLoadBalance = {};
+                    
                     /** UDP 메시지를 전달 받으면 인스턴스로 전달합니다. **/
                     this.udpSocket.on('message', (msg, rinfo) => {
                         if(msg == null || rinfo.address == null || rinfo.port == null) return;
-                        if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
-                        this.getCluster().workers[workerIndex++].send([minejs.network.ProcessProtocol.UDP, msg, rinfo.address, rinfo.port]);
+                        let balancedWorkerIndex = 1;
+                        if(!sessionLoadBalance[rinfo.address + ':' + rinfo.port]){
+                            if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
+                            balancedWorkerIndex = workerIndex++;
+                        }else{
+                            balancedWorkerIndex = sessionLoadBalance[rinfo.address + ':' + rinfo.port];
+                        }
+                        
+                        this.getCluster().workers[balancedWorkerIndex].send([minejs.network.ProcessProtocol.UDP, msg, rinfo.address, rinfo.port]);
                     });
                     
                     /** UDP 포트를 엽니다. **/
@@ -253,7 +269,8 @@ module.exports = {
                             case minejs.network.ProcessProtocol.START:
                                 for (let key in minejs.modules)
                                     if (typeof(minejs.modules[key].onEnable) === 'function') minejs.modules[key].onEnable();
-                                minejs.Server.getServer().getLogger().notice(lang.instance_is_started);
+                                if(minejs.Server.getServer().getOs().cpus().length <= 8)
+                                    minejs.Server.getServer().getLogger().notice(lang.instance_is_started);
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
                                 break;
                                 
@@ -261,7 +278,8 @@ module.exports = {
                             case minejs.network.ProcessProtocol.SHUTDOWN:
                                 for (let key in minejs.modules)
                                     if (typeof(minejs.modules[key].onDisable) === 'function') minejs.modules[key].onDisable();
-                                minejs.Server.getServer().getLogger().notice(lang.instance_deactivated);
+                                if(minejs.Server.getServer().getOs().cpus().length <= 8)
+                                    minejs.Server.getServer().getLogger().notice(lang.instance_deactivated);
                                 process.send([minejs.network.ProcessProtocol.SHUTDOWN_CHECK, process.pid]);
                                 process.exit(0);
                                 break;

@@ -6,6 +6,8 @@
     
     "instance_is_started": "인스턴스가 시작되었습니다",
     "instance_deactivated": "인스턴스가 비활성화되었습니다",
+    "instance_all_activated": "총 %count%개의 인스턴스가 활성화되었습니다.",
+    "instance_all_deactivated": "총 %count%개의 인스턴스가 비활성화되었습니다.",
     
     "IP_Address": "IP 주소: ",
     

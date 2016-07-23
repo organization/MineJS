@@ -12,6 +12,9 @@ module.exports = {
                     
                 this.registerPackets();
                 this.serverId = Math.floor(Math.pow(10, 18) + Math.random() * 9 * Math.pow(10, 18));
+                
+                /** UDP 패킷을 전달받습니다. **/
+                minejs.raknet.server.UDPServerSocket.getInstance().registerListener(this);
             }
             
             receivePacket(buffer, source, port){
@@ -190,7 +193,7 @@ module.exports = {
                             let port = Binary.readShort(Binary.subBytes(packet, offset, 2));
                             offset += 2;
                             let payload = Binary.subBytes(packet, offset);
-                            minejs.raknet.server.UDPServerSocket.sendPacket(payload, address, port);
+                            minejs.raknet.server.UDPServerSocket.getInstance().sendPacket(payload, address, port);
                             break;
                         case RakNet.PACKET_CLOSE_SESSION:
                             len = packet[offset++];
