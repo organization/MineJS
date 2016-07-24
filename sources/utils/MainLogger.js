@@ -17,6 +17,7 @@ module.exports = {
                 this.tag = process.pid;
                 this.lcolor = minejs.utils.TextFormat.YELLOW;
                 this.messgaeFormat = "%rcolor[%time][%tag] [%level] %msg";
+                this.pastRequest = null;
                 
                 if(minejs.Server.getServer().getCluster().isMaster){
                     let now = new Date();
@@ -47,14 +48,19 @@ module.exports = {
             
             __send(message){ this.__send(message, -1, null, null); }
             __send(message, level, tag, needDuplicate){
-                //TODO DoS Prevent
+                /** Prevent an abnormal speed logging **/
+                if(this.pastRequest == null){
+                    this.pastRequest = new Date().getTime();
+                }else{
+                    if( (new Date().getTime() - this.pastRequest) < 200) return;
+                }
                 
                 if(level == minejs.utils.LogLevel.DEBUG && !this.logDebug) return;
                 if(tag == null) tag = this.tag;
                 
                 if(minejs.Server.getServer().getCluster().isWorker){
-                    /** 명령어가 중복되지 않게 해달라는 요청이 있을경우
-                    해당 명령어를 실행한 소스파일의 이름과 줄을 해시화해서
+                    /** 메시지가 중복되지 않게 해달라는 요청이 있을경우
+                    해당 메시지를 전송한 소스파일의 이름과 줄을 해시화해서
                     비교할 대상값으로 needDuplicate 값에 넣어 전달합니다.**/
                     if(needDuplicate == null){
                         let defaultPath = minejs.Server.getServer().getDatapath();
