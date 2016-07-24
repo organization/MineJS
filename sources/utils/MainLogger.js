@@ -18,6 +18,7 @@ module.exports = {
                 this.lcolor = minejs.utils.TextFormat.YELLOW;
                 this.messgaeFormat = "%rcolor[%time][%tag] [%level] %msg";
                 this.pastRequest = null;
+                this.tooMuchFastRequestCount = 0;
                 
                 if(minejs.Server.getServer().getCluster().isMaster){
                     let now = new Date();
@@ -49,10 +50,18 @@ module.exports = {
             __send(message){ this.__send(message, -1, null, null); }
             __send(message, level, tag, needDuplicate){
                 /** Prevent an abnormal speed logging **/
-                if(this.pastRequest == null){
-                    this.pastRequest = new Date().getTime();
-                }else{
-                    if( (new Date().getTime() - this.pastRequest) < 200) return;
+                if(minejs.Server.getServer().getCluster().isWorker && level != minejs.utils.LogLevel.DEBUG){
+                    if(this.pastRequest == null){
+                        this.pastRequest = new Date().getTime();
+                    }else{
+                        if( (new Date().getTime() - this.pastRequest) < 10){
+                            this.pastRequest = new Date().getTime();
+                            if(++this.tooMuchFastRequestCount >= 50) return;
+                        }else{
+                            this.pastRequest = new Date().getTime();
+                            this.tooMuchFastRequestCount = 0;
+                        }
+                    }
                 }
                 
                 if(level == minejs.utils.LogLevel.DEBUG && !this.logDebug) return;
