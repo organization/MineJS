@@ -107,6 +107,8 @@ module.exports = {
                     
                     for(let key in currentSettings.worlds)
                         resourceSettings.worlds[key] = currentSettings.worlds[key];
+                    
+                    fs.writeFileSync(serverPath + "settings.json", JSON.stringify(resourceSettings, null, 4), 'utf8');
                 }
             }
         }

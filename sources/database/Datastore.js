@@ -50,6 +50,16 @@ module.exports = {
             }
             
             /**
+             * This function removes an entry from the cache.
+             * It is intended to be called from a worker process.
+             * @param {String} key
+             * @param {function(){}} callback
+             **/
+            remove(key, callback){
+                this._db.remove(key, callback);
+            }
+            
+            /**
              * This function removes all the entries from the cache.
              * It is intended to be called from a worker process.
              * @param {Function} callback

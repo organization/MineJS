@@ -83,6 +83,23 @@ module.exports = {
                 return this._lang;
             }
             
+            /**
+             * 함수를 받아서 무작위로 워커를 지정해 실행시킵니다.
+             * @param {Function} func
+             **/
+            randomExecute(func){
+                let server = minejs.Server.getServer();
+                let pid = minejs.network.ProcessProtocol.WORKER_WORK_PUSH;
+                
+                func = func.toString();
+                if(server.getCluster().isMaster){
+                    let randomIndex = Math.floor(Math.random() * (server.getOs().cpus().length - 1));
+                    server.getCluster().workers[randomIndex].send([pid, func]);
+                }else{
+                    process.send([pid, func]);
+                }
+            }
+            
             _init(path, settings) {
                 this._datapath = path;
                 this._settings = settings;
@@ -167,8 +184,18 @@ module.exports = {
                                 let startCheckWorkerPid = message[1];
                                 workerPids[startCheckWorkerPid] = true;
                                 
-                                if(++onlineWorkerCount == this.getOs().cpus().length)
+                                if(++onlineWorkerCount == this.getOs().cpus().length){
                                     logger.notice(lang.instance_all_activated.replace('%count%', this.getOs().cpus().length));
+                                    
+                                    /** PIDS 목록을 워커에 전송합니다. **/
+                                    let pidList = [];
+                                    for(let pid in workerPids) pidList.push(pid);
+                                    
+                                    minejs.loader.putPids(pidList);
+                                    
+                                    for (let wid in cluster.workers)
+                                        cluster.workers[wid].send([minejs.network.ProcessProtocol.WORKER_PIDS, pidList]);
+                                }
                                 break;
                                 
                             /** 인스턴스가 서버종료를 실행한 후 마지막
@@ -201,6 +228,14 @@ module.exports = {
                                 this.udpSocket.send(buffer, port, address, (err) => {
                                     this.getLogger.debug(err);
                                 });
+                                break;
+                                
+                            /** 워커에서 실행시킬 함수를 받아서
+                            무작위로 인스턴스에 전달시킵니다. **/
+                            case minejs.network.ProcessProtocol.WORKER_WORK_PUSH:
+                                let func = message[1];
+                                if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
+                                cluster.workers[workerIndex++].send([minejs.network.ProcessProtocol.WORKER_WORK_PUSH, func]);
                                 break;
                         }
                     };
@@ -311,6 +346,15 @@ module.exports = {
                                 let address = message[2];
                                 let port = message[3];
                                 minejs.raknet.server.UDPServerSocket.getInstance().receivePacket(packet, address, port);
+                                break;
+                            
+                            case minejs.network.ProcessProtocol.WORKER_PIDS:
+                                let pidList = message[1];
+                                minejs.loader.putPids(pidList);
+                                break;
+                                
+                            case minejs.network.ProcessProtocol.WORKER_WORK_PUSH:
+                                try{ eval('(' + message[1] + ')')(); }catch(e){}
                                 break;
                         }
                     });

@@ -96,6 +96,31 @@ global.minejs.loader = {
     같이 개발자명 뒤에 플러그인이름을 붙이는 것도 가능합니다. **/
     registerSourceFolder : (prefix, directory) => {
         global.minejs.loader.sources[prefix] = directory;
+    },
+    
+    /** 워커들의 PID목록이 여기에 담깁니다. **/
+    pids: {},
+    
+    putPids: (pidList) => {
+        for(let key in pidList)
+            if(!global.minejs.loader.pids[pidList[key]])
+                global.minejs.loader.pids[pidList[key]] = true;
+    },
+    
+    getPids: () => {
+        let list = [];
+        for(let key in global.minejs.loader.pids)
+            list.push(key);
+        return list;
+    },
+    
+    getRandomPid(){
+        let pidList = global.minejs.loader.getPids();
+        
+        if(!pidList) return process.pid;
+        
+        let randomIndex = Math.floor(Math.random() * (pidList.length - 1));
+        return pidList[randomIndex];
     }
 };
 
@@ -111,7 +136,6 @@ global.minejs.loader.treeLoader(sourceFolder, sourceFolder, "minejs");
 
 /** 소스파일들을 불러옵니다. **/
 global.minejs.loader.sourceLoader(sourceFolder);
-
 
 /** 서버가 로딩될 때 해당 코드를 실행합니다. **/
 for (let key in global.minejs.loader.modules)

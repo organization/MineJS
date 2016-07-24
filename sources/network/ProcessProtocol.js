@@ -36,6 +36,14 @@ module.exports = {
             /** UDP 패킷을 인스턴스에서 원하는
             클라이언트로 전송시 사용합니다. **/
             static get UDP_WRITE(){ return 0x08; }
+            
+            /** 마스터가 워커에게 현재 켜져있는
+            모든 워커의 PID 목록을 보낼때 사용합니다. **/
+            static get WORKER_PIDS(){ return 0x09; }
+            
+            /** 마스터가 특정함수를 랜덤한 인스턴스에
+            전달시켜서 실행할 때 해당 PID를 사용합니다. **/
+            static get WORKER_WORK_PUSH(){ return 0x10; }
         };
     }
 }
