@@ -148,12 +148,10 @@ module.exports = {
                             MASTER에서 출력시키도록 합니다.**/
                             case minejs.network.ProcessProtocol.LOG:
                                 let level = message[1];
-                                let logMessage = message[2]; 
+                                let logMessage = message[2];
                                 let pid = message[3];
-                                
-                                this.getLogger().tag = pid;
-                                logger.log(level, logMessage);
-                                this.getLogger().tag = "MASTER";
+                                let needDuplicate = message[4];
+                                logger.log(level, logMessage, pid, needDuplicate);
                                 break;
                                 
                             /** 임의의 인스턴스에서 한번만 실행되야하는
@@ -312,8 +310,10 @@ module.exports = {
                             case minejs.network.ProcessProtocol.START:
                                 for (let key in minejs.loader.modules)
                                     if (typeof(minejs.loader.modules[key].onEnable) === 'function') minejs.loader.modules[key].onEnable();
-                                if(minejs.Server.getServer().getOs().cpus().length <= 8)
-                                    minejs.Server.getServer().getLogger().notice(lang.instance_is_started);
+                                
+                                minejs.Server.getServer().getLogger().notice(lang.instance_is_started, 
+                                (minejs.Server.getServer().getOs().cpus().length <= 8) ? false: true);
+                                
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
                                 break;
                                 
@@ -321,8 +321,10 @@ module.exports = {
                             case minejs.network.ProcessProtocol.SHUTDOWN:
                                 for (let key in minejs.loader.modules)
                                     if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
-                                if(minejs.Server.getServer().getOs().cpus().length <= 8)
-                                    minejs.Server.getServer().getLogger().notice(lang.instance_deactivated);
+                                
+                                minejs.Server.getServer().getLogger().notice(lang.instance_deactivated,
+                                (minejs.Server.getServer().getOs().cpus().length <= 8) ? false: true);
+                                
                                 process.send([minejs.network.ProcessProtocol.SHUTDOWN_CHECK, process.pid]);
                                 process.exit(0);
                                 break;
@@ -364,7 +366,7 @@ module.exports = {
         };
     },
     onDisable: ()=>{
+        //TODO save
         //let server = minejs.Server.getServer();
-        //
     }
 };
