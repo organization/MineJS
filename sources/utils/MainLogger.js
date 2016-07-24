@@ -14,27 +14,33 @@ module.exports = {
                     return loggers[logFile];
                 
                 this.logDebug = debug;
+                this.logDefaultPath = path;
                 this.tag = process.pid;
                 this.lcolor = minejs.utils.TextFormat.YELLOW;
                 this.messgaeFormat = "%rcolor[%time][%tag] [%level] %msg";
                 this.pastRequest = null;
                 this.tooMuchFastRequestCount = 0;
                 
-                if(minejs.Server.getServer().getCluster().isMaster){
-                    let now = new Date();
-                    let timeFormat = String();
-                    timeFormat += now.getFullYear();
-                    timeFormat += '-' + (String(now.getMonth()).length > 1 ? now.getMonth() : '0' + now.getMonth());
-                    timeFormat += '-' + (String(now.getDate()).length > 1 ? now.getDate() : '0' + now.getDate() + "");
-                    
-                    try{ minejs.Server.getServer().getFs().mkdirSync(path + '/log/'); } catch(e) {}
-                    if(!logFile) logFile = require('iconv-lite').encode(String(timeFormat + '.log'), 'utf8');
-                    this.logStream = require('fs').createWriteStream(path + '/log/' + logFile, {flags: 'a'});
-                    this.duplicateCheck = {};
-                    
-                    logStreams[logFile] = this.logStream;
-                    loggers[logFile] = this;
-                }
+                if(minejs.Server.getServer().getCluster().isMaster)
+                    this.createDefaultLogStream(logFile, path);
+            }
+            
+            createDefaultLogStream(logFile, path){
+                let now = new Date();
+                let timeFormat = String();
+                timeFormat += now.getFullYear();
+                timeFormat += '-' + (String(now.getMonth()).length > 1 ? now.getMonth() : '0' + now.getMonth());
+                timeFormat += '-' + (String(now.getDate()).length > 1 ? now.getDate() : '0' + now.getDate() + "");
+                
+                try{ minejs.Server.getServer().getFs().mkdirSync(path + '/log/'); } catch(e) {}
+                if(!logFile) logFile = require('iconv-lite').encode(String(timeFormat + '.log'), 'utf8');
+                if(!path) path = this.logDefaultPath;
+                this.logStream = require('fs').createWriteStream(path + '/log/' + logFile, {flags: 'a'});
+                this.duplicateCheck = {};
+                this.logDate = now.getDate();
+                
+                logStreams[logFile] = this.logStream;
+                loggers[logFile] = this;
             }
             
             emergency(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.EMERGENCY, null, needDuplicate) };
@@ -152,6 +158,13 @@ module.exports = {
                 .replace('%msg', message);
                 
                 let sendMessage = (minejs.ANSI) ? colorMessage : cleanMessage;
+                
+                /** 서버 동작중 날짜가 변경된 경우
+                이전 로그를 저장하고, 새 로그를 열음 **/
+                if(this.logDate != (new Date()).getDate()){
+                    this.logStream.end();
+                    this.createDefaultLogStream();
+                }
                 
                 if(!needDuplicate){
                     console.log( minejs.utils.TextFormat.toANSI(sendMessage));
