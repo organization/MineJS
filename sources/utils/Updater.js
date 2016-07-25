@@ -24,26 +24,26 @@ module.exports = {
                     devmode: false
                 });
                 this.updater.on('check.up-to-date', function(v) {
-                    logger.info(lang.updater_now_latest_version.replace('%version%', v));
+                    logger.info(String(lang.updater_now_latest_version).replace('%version%', v));
                 });
                 this.updater.on('check.out-dated', function(v_old, v) {
-                    logger.info(lang.updater_now_outdated_version.replace('%version%', v_old));
+                    logger.info(String(lang.updater_now_outdated_version).replace('%version%', v_old));
                     logger.info(lang.updater_you_can_use_update_command);
                 });
                 this.updater.on('update.downloaded', function() {
                     logger.info(lang.updater_download_complete_now_extract);
-                    this.updater.fire('extract');
+                    minejs.utils.Updater.getInstance().updater.fire('extract');
                 });
                 this.updater.on('update.not-installed', function() {
                     logger.info(lang.updater_download_complete_now_extract);
-                    this.updater.fire('extract');
+                    minejs.utils.Updater.getInstance().updater.fire('extract');
                 });
                 this.updater.on('update.extracted', function() {
                     logger.info(lang.updater_update_complete);
                     logger.info(lang.updater_please_restart_app);
                 });
                 this.updater.on('download.start', function(name) {
-                    logger.info(lang.updater_now_downloading.replace('%file%', name));
+                    logger.info(String(lang.updater_now_downloading).replace('%file%', name));
                 });
                 this.updater.on('download.error', function(err) {
                     logger.info(lang.updater_error_in_download);

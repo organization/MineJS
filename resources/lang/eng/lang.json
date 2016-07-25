@@ -20,6 +20,7 @@
     "updater_download_complete_now_extract": "Download complete. is being uncompressed...",
     "updater_update_complete": "Has completed the update successfully.",
     "updater_please_restart_app": "Please reboot the server for the apply.",
+    "updater_now_downloading": "Downloading: %file% ..",
     "updater_error_in_download": "The error occurred during download.",
     "updater_error_in_update": "The error occurred during update."
 }
