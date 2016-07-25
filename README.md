@@ -26,6 +26,7 @@ __MineJS is a server software for Minecraft : Pocket Edition, MineJS is based No
 - It is made by node js. node.js has an event-driven architecture capable of asynchronous I/O. and use node js cluster, so it can be support multi-core environment.
 - Conventional PE server platforms there is a problem to can't derive the best performance of the multi-core CPU. Because most software using synchronous i/o. Conventional solution to this problem was a run many servers by the same number of CPU cores. But users does not want to reconnect the server every time select to server, different port their self. Mine is just need only one server. because it has using node js cluster. that's why doesn't matter how many cores exist.
 - No need to build or compile, You can run the plug-in and server immediately using their original source files. and doesn't need to program close to apply the update changes. it support /restart command and it can simply update using /update command. (it automatically report version check.)
+
 -------------
 #### How to use MineJS?
 - Install Node JS 6.x.x -> https://nodejs.org/
