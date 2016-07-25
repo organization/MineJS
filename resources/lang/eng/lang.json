@@ -12,7 +12,7 @@
     
     "IP_Address": "IP Address: ",
     
-    "unknown_command": "Unknown command. Try /help for a list of commands."
+    "unknown_command": "Unknown command. Try /help for a list of commands.",
     
     "updater_now_latest_version": "This is the latest version. (%version%)",
     "updater_now_outdated_version": "This is the out-date version. (%version%)",
