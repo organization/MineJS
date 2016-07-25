@@ -11,28 +11,6 @@ let init = () => {
         console.log(defaultFormat.replace('%time%', timeFormat).replace('%log%', log));
     }
     
-    let cp = require('child_process');
-    let packageList = require(__dirname + '/package.json');
-    
-    let notInstalledModules = [];
-    for(let packageName in packageList.dependencies){
-        let loadTest;
-        try{
-            loadTest = require(packageName);
-        }catch(e){
-            if(!loadTest) notInstalledModules.push(packageName);
-        }
-    }
-    
-    let moduleCount = notInstalledModules.length;
-    let modulesInstallChecker = (body)=>{
-        tempLogger("Module Installed : " + body);
-        if(--moduleCount == 0){
-            tempLogger('All modules prepared. MineJS now started..');
-            load();
-        }
-    };
-    
     let load = ()=>{
         let fs = require('fs');
         let path = require('path');
@@ -178,8 +156,8 @@ let init = () => {
         for (let key in global.minejs.loader.modules)
             if (typeof(global.minejs.loader.modules[key].onLoad) === 'function') global.minejs.loader.modules[key].onLoad();
         
-        var restart = ()=> {
-            
+        var restart = (func)=> {
+            setup(false, func);
         };
         
         /** 서버를 시작시킬때 해당 함수를 실행합니다. **/
@@ -233,32 +211,63 @@ let init = () => {
         }
     };
     
-    /** 노드 모듈이 준비되어있지 않은 경우 노드모듈을
-    자동으로 다운로드 및 설치한 후 서버를 켭니다. **/
-    if(notInstalledModules.length > 0){
-        tempLogger("MineJS new node module update has detected!");
-        tempLogger("MineJS will be started in few second (or few minute later)\r\n");
-        
-        for(let key in notInstalledModules)
-            tempLogger("Download '" + notInstalledModules[key] + "' module...");
-        console.log('');
-        tempLogger("Download the node modules (" + notInstalledModules.length + "'s)...");
-        
-        for(let key in notInstalledModules){
-            cp.exec('npm install ' + notInstalledModules[key], (err, body)=>{
-                if(err != null){
-                    tempLogger('An error occurred while preparing a base module.');
-                    tempLogger('Can not execute the program. The base module was not prepared.');
-                    tempLogger(err);
-                    process.exit();
-                    return;
-                }
-                modulesInstallChecker(body);
-            })
+    
+    let cp = require('child_process');
+    let packageList = require(__dirname + '/package.json');
+    
+    let notInstalledModules = [];
+    for(let packageName in packageList.dependencies){
+        let loadTest;
+        try{
+            loadTest = require(packageName);
+        }catch(e){
+            if(!loadTest) notInstalledModules.push(packageName);
         }
-    }else{
-        load();
     }
+    
+    let moduleCount = notInstalledModules.length;
+    let modulesInstallChecker = (body)=>{
+        tempLogger("Module Installed : " + body);
+        if(--moduleCount == 0){
+            tempLogger('All modules prepared. MineJS now started..');
+            load();
+        }
+    };
+    
+    let setup = (needLoad, func)=>{
+        /** 노드 모듈이 준비되어있지 않은 경우 노드모듈을
+        자동으로 다운로드 및 설치한 후 서버를 켭니다. **/
+        if(notInstalledModules.length > 0){
+            tempLogger("MineJS new node module update has detected!");
+            tempLogger("MineJS will be started in few second (or few minute later)\r\n");
+            
+            for(let key in notInstalledModules)
+                tempLogger("Download '" + notInstalledModules[key] + "' module...");
+            console.log('');
+            tempLogger("Download the node modules (" + notInstalledModules.length + "'s)...");
+            
+            for(let key in notInstalledModules){
+                cp.exec('npm install ' + notInstalledModules[key], (err, body)=>{
+                    if(err != null){
+                        tempLogger('An error occurred while preparing a base module.');
+                        tempLogger('Can not execute the program. The base module was not prepared.');
+                        tempLogger(err);
+                        process.exit();
+                        return;
+                    }
+                    modulesInstallChecker(body);
+                })
+            }
+        }else{
+            if(needLoad){
+                load();
+            }else{
+                if(func != null) func();
+            }
+        }
+    };
+    
+    setup(true);
 };
 
 init();

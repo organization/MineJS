@@ -39,7 +39,7 @@ module.exports = {
                 if(typeof(this.__commandMap[commandName]) == 'function'){
                     this.__commandMap[commandName](args);
                 }else{
-                    minejs.Server.getServer().getLogger().notice(lang.unknown_command);
+                    minejs.Server.getServer().getLogger().notice(lang.unknown_command, true);
                 }
             }
             

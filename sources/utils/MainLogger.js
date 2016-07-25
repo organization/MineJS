@@ -77,7 +77,7 @@ module.exports = {
                     /** 메시지가 중복되지 않게 해달라는 요청이 있을경우
                     해당 메시지를 전송한 소스파일의 이름과 줄을 해시화해서
                     비교할 대상값으로 needDuplicate 값에 넣어 전달합니다.**/
-                    if(needDuplicate == null){
+                    if(needDuplicate != true){
                         let defaultPath = minejs.Server.getServer().getDatapath();
                         let trace = require('stack-trace').parse(new Error());
                         let filePath = (trace[2].fileName + ':' + trace[2].lineNumber).replace(defaultPath, '');
@@ -94,7 +94,7 @@ module.exports = {
                 /** 중복되지 않는 메시지의 경우 모든 인스턴스에서 작동된 메시지가
                 중복되지 않게 출력해달라는 요청이므로, 개별적으로 붙은 PID는
                 의미가 없으므로 출력되는 PID 태그는 INSTANCE 로 교체해서 출력합니다.**/
-                if(needDuplicate != null && needDuplicate != false){ tag = "INSTANCE"; }
+                if(needDuplicate != true && needDuplicate != null){ tag = "INSTANCE"; }
                 
                 let now = new Date();
                 let timeFormat = String();
@@ -166,7 +166,7 @@ module.exports = {
                     this.createDefaultLogStream();
                 }
                 
-                if(!needDuplicate){
+                if(needDuplicate == true || needDuplicate == null){
                     console.log( minejs.utils.TextFormat.toANSI(sendMessage));
                     this.logStream.write(cleanMessage + '\r\n');
                 }else{

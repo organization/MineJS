@@ -8,6 +8,9 @@ module.exports = {
                 super('stop');
             }
             process(){
+                minejs.Server.getServer().masterExecute(()=>{
+                    minejs.Server.getServer().restartFlag = false;
+                });
                 process.send([minejs.network.ProcessProtocol.SHUTDOWN]);
             }
             isOnceRun(){

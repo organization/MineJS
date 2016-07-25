@@ -64,6 +64,21 @@ module.exports = {
             getCluster(){
                 return require('cluster');
             }
+            getWorker(index){
+                let count = 0;
+                let workers = {};
+                for(let key in this.getCluster().workers)
+                    workers[count++] = this.getCluster().workers[key];
+                
+                let target = workers[index];
+                if(target == null){
+                    for(let key in this.getCluster().workers){
+                        target = this.getCluster().workers[key];
+                        break;
+                    }
+                }
+                return target;
+            }
             getUtil(){
                 return require('util');
             }
@@ -94,7 +109,7 @@ module.exports = {
                 func = func.toString();
                 if(server.getCluster().isMaster){
                     let randomIndex = Math.floor(Math.random() * (server.getOs().cpus().length - 1));
-                    server.getCluster().workers[randomIndex].send([pid, func]);
+                    minejs.Server.getServer().getWorker(randomIndex).send([pid, func]);
                 }else{
                     process.send([pid, func]);
                 }
@@ -180,7 +195,7 @@ module.exports = {
                                 logger.logStream.write('\r\n');
                                 if (isOnceRun) {
                                     if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
-                                    cluster.workers[workerIndex++].send([minejs.network.ProcessProtocol.COMMAND, input]);
+                                    minejs.Server.getServer().getWorker(workerIndex++).send([minejs.network.ProcessProtocol.COMMAND, input]);
                                 } else {
                                     for (let wid in cluster.workers)
                                         cluster.workers[wid].send([minejs.network.ProcessProtocol.COMMAND, input]);
@@ -223,13 +238,22 @@ module.exports = {
                                 let count = 0;
                                 for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
-                                    logger.notice(lang.instance_all_deactivated.replace('%count%', this.getOs().cpus().length));
-                                    logger.notice(lang.minejs_has_deactivated);
-                                    /** 마스터 서버에서의 onDisable 작동 **/
-                                    for (let key in minejs.loader.modules)
-	                                    if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
-                                    
-                                    (this.restartFlag == true) ? (this._restart)() : process.exit(0);
+                                    if(this.restartFlag == true){
+                                        this._restart(()=>{
+                                            /** CPU 수 만큼 워커를 생성합니다. **/
+                                            for (let i = 0; i < minejs.Server.getServer().getOs().cpus().length; i++)
+                                                minejs.Server.getServer().getCluster().fork();
+                                        });
+                                    }else{
+                                        logger.notice(lang.instance_all_deactivated.replace('%count%', this.getOs().cpus().length));
+                                        logger.notice(lang.minejs_has_deactivated);
+                                        
+                                        /** 마스터 서버에서의 onDisable 작동 **/
+                                        for (let key in minejs.loader.modules)
+    	                                    if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
+                                        
+                                        process.exit(0);
+                                    }
                                 }
                                 break;
                                 
@@ -250,7 +274,7 @@ module.exports = {
                             case minejs.network.ProcessProtocol.WORKER_WORK_PUSH:
                                 let func = message[1];
                                 if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
-                                cluster.workers[workerIndex++].send([minejs.network.ProcessProtocol.WORKER_WORK_PUSH, func]);
+                                minejs.Server.getServer().getWorker(workerIndex++).send([minejs.network.ProcessProtocol.WORKER_WORK_PUSH, func]);
                                 break;
                                 
                             case minejs.network.ProcessProtocol.MASTER_WORK_PUSH:
@@ -270,15 +294,15 @@ module.exports = {
                     /** 콘솔 입력을 구현합니다. **/
                     /** 콘솔 입력은 마스터에서만 구현됩니다. **/
                     var readline = require('readline');
-                    var line = readline.createInterface({
+                    this.line = readline.createInterface({
                         input: process.stdin,
                         output: process.stdout
                     });
                     
                     /** 마스터 서버가 명령어를 입력받아서
                     필요시 모든 워커로 명령어를 전송합니다. **/
-                    line.on('line', function (input) {
-                        for (var wid in minejs.Server.getServer().getCluster().workers) {
+                    this.line.on('line', function (input) {
+                        for (let wid in minejs.Server.getServer().getCluster().workers) {
                             minejs.Server.getServer().getCluster().workers[wid].send([minejs.network.ProcessProtocol.COMMAND_CHECK, input]);
                             break;
                         }
@@ -306,7 +330,7 @@ module.exports = {
                             balancedWorkerIndex = sessionLoadBalance[rinfo.address + ':' + rinfo.port];
                         }
                         
-                        this.getCluster().workers[balancedWorkerIndex].send([minejs.network.ProcessProtocol.UDP, msg, rinfo.address, rinfo.port]);
+                        minejs.Server.getServer().getWorker(balancedWorkerIndex).send([minejs.network.ProcessProtocol.UDP, msg, rinfo.address, rinfo.port]);
                     });
                     
                     /** UDP 포트를 엽니다. **/
@@ -333,7 +357,7 @@ module.exports = {
                                     if (typeof(minejs.loader.modules[key].onEnable) === 'function') minejs.loader.modules[key].onEnable();
                                 
                                 minejs.Server.getServer().getLogger().notice(lang.instance_is_started, 
-                                (minejs.Server.getServer().getOs().cpus().length <= 8) ? false: true);
+                                (minejs.Server.getServer().getOs().cpus().length <= 8) ? true: false);
                                 
                                 process.send([minejs.network.ProcessProtocol.START_CHECK, process.pid]);
                                 break;
@@ -344,7 +368,7 @@ module.exports = {
                                     if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
                                 
                                 minejs.Server.getServer().getLogger().notice(lang.instance_deactivated,
-                                (minejs.Server.getServer().getOs().cpus().length <= 8) ? false: true);
+                                (minejs.Server.getServer().getOs().cpus().length <= 8) ? true: false);
                                 
                                 process.send([minejs.network.ProcessProtocol.SHUTDOWN_CHECK, process.pid]);
                                 process.exit(0);
