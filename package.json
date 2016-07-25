@@ -1,6 +1,6 @@
 {
   "name": "minejs",
-  "version": "0.0.1",
+  "version": "0.0.0.1",
   "description": "MineJS is a server software for Minecraft : Pocket Edition, MineJS is based Node JS.",
   "main": "mine.js",
   "scripts": {
@@ -14,16 +14,17 @@
     "MineJS"
   ],
   "author": "Organization",
-  "license": "MIT",
+  "license": "LGPL",
   "bugs": {
     "url": "https://github.com/organization/MineJS/issues"
   },
-  "auto-updater":{
-  	"repo":"organization/MineJS",
-  	"branch":"master"
+  "auto-updater": {
+    "repo": "organization/MineJS",
+    "branch": "master"
   },
   "homepage": "https://github.com/organization/MineJS#readme",
   "dependencies": {
+    "auto-updater": "^1.0.2",
     "clone": "^1.0.2",
     "cluster": "^0.7.7",
     "crypto": "0.0.3",
