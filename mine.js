@@ -65,6 +65,7 @@ let init = ()=>{
                 try{
                     let tree = sourceFolderPath.split(originPath)[1];
                     tree = prefix + tree.replace(new RegExp("/", 'g'), '.');
+                    tree = tree.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
                     if(eval("!" + tree))
                         eval(tree + " = {};");
                     if (stat.isDirectory())

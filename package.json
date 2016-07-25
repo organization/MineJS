@@ -19,7 +19,7 @@
     "url": "https://github.com/organization/MineJS/issues"
   },
   "auto-updater":{
-  	"repo":"/organization/MineJS",
+  	"repo":"organization/MineJS",
   	"branch":"master"
   },
   "homepage": "https://github.com/organization/MineJS#readme",

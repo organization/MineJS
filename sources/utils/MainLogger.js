@@ -126,7 +126,7 @@ module.exports = {
                         levelMsg = 'WARNING';
                         break;
                     case minejs.utils.LogLevel.INFO:
-                        rcolor = minejs.utils.TextFormat.WHITE;
+                        rcolor = minejs.utils.TextFormat.AQUA;
                         levelMsg = 'INFO';
                         break;
                     case minejs.utils.LogLevel.DEBUG:

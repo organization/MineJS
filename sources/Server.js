@@ -100,6 +100,15 @@ module.exports = {
                 }
             }
             
+            masterExecute(func){
+                if(minejs.Server.getServer().getCluster().isMaster){
+                    func();
+                }else{
+                    func = func.toString();
+                    process.send([minejs.network.ProcessProtocol.MASTER_WORK_PUSH, func]);
+                }
+            }
+            
             _init(path, settings) {
                 this._datapath = path;
                 this._settings = settings;
@@ -234,6 +243,10 @@ module.exports = {
                                 let func = message[1];
                                 if(workerIndex > this.getOs().cpus().length) workerIndex = 1;
                                 cluster.workers[workerIndex++].send([minejs.network.ProcessProtocol.WORKER_WORK_PUSH, func]);
+                                break;
+                                
+                            case minejs.network.ProcessProtocol.MASTER_WORK_PUSH:
+                                try{ eval('(' + message[1] + ')')(); }catch(e){};
                                 break;
                         }
                     };

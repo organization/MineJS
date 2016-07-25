@@ -44,6 +44,10 @@ module.exports = {
             /** 마스터가 특정함수를 랜덤한 인스턴스에
             전달시켜서 실행할 때 해당 PID를 사용합니다. **/
             static get WORKER_WORK_PUSH(){ return 0x10; }
+            
+            /** 인스턴스가 특정함수를 마스터에
+            전달시켜서 실행할 때 해당 PID를 사용합니다.**/
+            static get MASTER_WORK_PUSH(){ return 0x11; }
         };
     }
 }
