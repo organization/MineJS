@@ -5,10 +5,10 @@ module.exports = {
     onLoad: ()=>{
         var serverInstance = null;
         minejs.Server = class Server{
-            constructor(path, settings){
+            constructor(path, settings, restart){
                 if(!serverInstance) {
                     serverInstance = this;
-                    this._init(path, settings);
+                    this._init(path, settings, restart);
                 }
                 return serverInstance;
             }
@@ -100,6 +100,10 @@ module.exports = {
                 }
             }
             
+            /**
+             * 워커에서 함수를 받아서 마스터에서 실행시킵니다.
+             * @param {Function} func
+             **/
             masterExecute(func){
                 if(minejs.Server.getServer().getCluster().isMaster){
                     func();
@@ -109,9 +113,12 @@ module.exports = {
                 }
             }
             
-            _init(path, settings) {
+            _init(path, settings, restart) {
                 this._datapath = path;
                 this._settings = settings;
+                this._restart = restart;
+                this.restartFlag = false;
+                
                 this._lang = require(this._datapath + '/lang.json');
                 var lang = this._lang;
                 this.logger = new minejs.utils.MainLogger(null, this._datapath, false);
@@ -183,8 +190,10 @@ module.exports = {
                             /** 서버종료 명령이 실행되면 각 인스턴스에
                             인스턴스 종료 신호를 전달합니다.**/
                             case minejs.network.ProcessProtocol.SHUTDOWN:
-                                for (let wid in cluster.workers)
+                                for (let wid in cluster.workers){
                                     cluster.workers[wid].send([minejs.network.ProcessProtocol.SHUTDOWN]);
+                                    cluster.workers[wid].disconnect();
+                                }
                                 break;
                                 
                             case minejs.network.ProcessProtocol.START_CHECK:
@@ -215,13 +224,12 @@ module.exports = {
                                 for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
                                     logger.notice(lang.instance_all_deactivated.replace('%count%', this.getOs().cpus().length));
-                                    
+                                    logger.notice(lang.minejs_has_deactivated);
                                     /** 마스터 서버에서의 onDisable 작동 **/
                                     for (let key in minejs.loader.modules)
 	                                    if (typeof(minejs.loader.modules[key].onDisable) === 'function') minejs.loader.modules[key].onDisable();
                                     
-                                    logger.notice(lang.minejs_has_deactivated);
-                                    process.exit(0);
+                                    (this.restartFlag == true) ? (this._restart)() : process.exit(0);
                                 }
                                 break;
                                 
