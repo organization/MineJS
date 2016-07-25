@@ -239,6 +239,9 @@ module.exports = {
                                 for(let workerPidCheckOnly in workerPids)count++;
                                 if(count == 0){
                                     if(this.restartFlag == true){
+                                        workerPids = {};
+                                        minejs.loader.pids = {};
+                                        onlineWorkerCount = 0;
                                         this._restart(()=>{
                                             /** CPU 수 만큼 워커를 생성합니다. **/
                                             for (let i = 0; i < minejs.Server.getServer().getOs().cpus().length; i++)
