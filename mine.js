@@ -179,6 +179,7 @@ let init = () => {
             if (typeof(global.minejs.loader.modules[key].onLoad) === 'function') global.minejs.loader.modules[key].onLoad();
         
         var restart = ()=> {
+            
         };
         
         /** 서버를 시작시킬때 해당 함수를 실행합니다. **/
