@@ -17,7 +17,7 @@ module.exports = {
                 this.logDefaultPath = path;
                 this.tag = process.pid;
                 this.lcolor = minejs.utils.TextFormat.YELLOW;
-                this.messgaeFormat = "%rcolor[%time][%tag] [%level] %msg";
+                this.messageFormat = "%rcolor[%time][%tag] [%level] %msg";
                 this.pastRequest = null;
                 this.tooMuchFastRequestCount = 0;
                 
@@ -141,7 +141,7 @@ module.exports = {
                 }
                 
                 message = minejs.utils.TextFormat.WHITE + message;
-                let cleanMessage = this.messgaeFormat
+                let cleanMessage = this.messageFormat
                 .replace('%lcolor', '')
                 .replace('%time', timeFormat)
                 .replace('%tag', tag)
@@ -149,7 +149,7 @@ module.exports = {
                 .replace('%level', levelMsg)
                 .replace('%msg', minejs.utils.TextFormat.clean(message));
                 
-                let colorMessage = this.messgaeFormat
+                let colorMessage = this.messageFormat
                 .replace('%lcolor', this.lcolor)
                 .replace('%time', timeFormat)
                 .replace('%tag', tag)
