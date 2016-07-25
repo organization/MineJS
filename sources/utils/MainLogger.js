@@ -28,14 +28,23 @@ module.exports = {
             createDefaultLogStream(logFile, path){
                 let now = new Date();
                 let timeFormat = String();
+                
                 timeFormat += now.getFullYear();
                 timeFormat += '-' + (String(now.getMonth()).length > 1 ? now.getMonth() : '0' + now.getMonth());
                 timeFormat += '-' + (String(now.getDate()).length > 1 ? now.getDate() : '0' + now.getDate() + "");
                 
-                try{ minejs.Server.getServer().getFs().mkdirSync(path + '/log/'); } catch(e) {}
+                let logPath = path + '/log/';
+                try{ minejs.Server.getServer().getFs().mkdirSync(logPath); } catch(e) { }
+                
+                logPath += now.getFullYear() + '/';
+                try{ minejs.Server.getServer().getFs().mkdirSync(logPath); } catch(e) { }
+                
+                logPath += (String(now.getMonth()).length > 1 ? now.getMonth() : '0' + now.getMonth()) + '/';
+                try{ minejs.Server.getServer().getFs().mkdirSync(logPath); } catch(e) { }
+                
                 if(!logFile) logFile = require('iconv-lite').encode(String(timeFormat + '.log'), 'utf8');
                 if(!path) path = this.logDefaultPath;
-                this.logStream = require('fs').createWriteStream(path + '/log/' + logFile, {flags: 'a'});
+                this.logStream = require('fs').createWriteStream(logPath + logFile, {flags: 'a'});
                 this.duplicateCheck = {};
                 this.logDate = now.getDate();
                 
