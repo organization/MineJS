@@ -347,6 +347,10 @@ let init = () => {
     let packageList = require(__dirname + '/package.json');
 
     let notInstalledModules = [];
+    let baseCache = {};
+    
+    for(let key in require.cache) baseCache[key] = true;
+    
     for(let packageName in packageList.dependencies){
         let loadTest;
         try{
@@ -355,6 +359,9 @@ let init = () => {
             if(!loadTest) notInstalledModules.push(packageName);
         }
     }
+    
+    for(let key in require.cache) if(!baseCache[key]) delete require.cache[key];
+    baseCache = null;
 
     /**
      * @description
