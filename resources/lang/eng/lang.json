@@ -16,6 +16,7 @@
     
     "updater_now_latest_version": "This is the latest version. (%version%)",
     "updater_now_outdated_version": "This is the out-date version. (%version%)",
+    "updater_now_version_and_new_version": "(Current version %old_version%)(Newest version %version%)",
     "updater_you_can_use_update_command": "You can update using '/update' command.",
     "updater_download_complete_now_extract": "Download complete. is being uncompressed...",
     "updater_update_complete": "Has completed the update successfully.",

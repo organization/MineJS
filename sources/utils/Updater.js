@@ -27,7 +27,9 @@ module.exports = {
                     logger.info(String(lang.updater_now_latest_version).replace('%version%', v));
                 });
                 this.updater.on('check.out-dated', function(v_old, v) {
-                    logger.info(String(lang.updater_now_outdated_version).replace('%version%', v_old));
+                    logger.info(String(lang.updater_now_outdated_version));
+                    logger.info(String(lang.updater_now_version_and_new_version)
+                        .replace('%old_version%', v_old).replace('%version%', v));
                     logger.info(lang.updater_you_can_use_update_command);
                 });
                 this.updater.on('update.downloaded', function() {
