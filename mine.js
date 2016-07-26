@@ -340,55 +340,55 @@ let init = () => {
 
     /**
      * @description
-     * Bring up a list of modules, and examine the list of modules that are not ready.
-     * 모듈목록을 불러온 후, 준비되지 않은 모듈목록을 조사합니다.
-     */
-    let cp = require('child_process');
-    let packageList = require(__dirname + '/package.json');
-
-    let notInstalledModules = [];
-    let baseCache = {};
-    
-    for(let key in require.cache) baseCache[key] = true;
-    
-    for(let packageName in packageList.dependencies){
-        let packageVersion = packageList.dependencies[packageName];
-        packageVersion = packageVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
-        let loadTest;
-        let loadVersion;
-        try{
-            loadTest = require(packageName);
-            loadVersion = require(__dirname + `/node_modules/${packageName}/package.json`).version;
-            loadVersion = loadVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
-            if(packageVersion != loadVersion) notInstalledModules.push(packageName);
-        }catch(e){
-            if(!loadTest) notInstalledModules.push(packageName);
-        }
-    }
-    
-    for(let key in require.cache) if(!baseCache[key]) delete require.cache[key];
-    baseCache = null;
-
-    /**
-     * @description
-     * After installing the modules to load the program.
-     * 모듈을 모두 설치한 후 프로그램을 로드합니다.
-     */
-    let moduleCount = notInstalledModules.length;
-    let modulesInstallChecker = body => {
-        tempLogger(`Module installed: ${body}`);
-        if(--moduleCount == 0){
-            tempLogger('All modules prepared. MineJS now started..');
-            load();
-        }
-    };
-
-    /**
-     * @description
      * When need to install a module before server run, call this function.
      * 서버 실행 전 모듈을 설치할때 해당 함수를 호출합니다.
      */
     let setup = (needLoad, func) => {
+        /**
+         * @description
+         * Bring up a list of modules, and examine the list of modules that are not ready.
+         * 모듈목록을 불러온 후, 준비되지 않은 모듈목록을 조사합니다.
+         */
+        let cp = require('child_process');
+        let packageList = require(__dirname + '/package.json');
+    
+        let notInstalledModules = [];
+        let baseCache = {};
+        
+        for(let key in require.cache) baseCache[key] = true;
+        
+        for(let packageName in packageList.dependencies){
+            let packageVersion = packageList.dependencies[packageName];
+            packageVersion = packageVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
+            let loadTest;
+            let loadVersion;
+            try{
+                loadTest = require(packageName);
+                loadVersion = require(__dirname + `/node_modules/${packageName}/package.json`).version;
+                loadVersion = loadVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
+                if(packageVersion != loadVersion) notInstalledModules.push(packageName);
+            }catch(e){
+                if(!loadTest) notInstalledModules.push(packageName);
+            }
+        }
+        
+        for(let key in require.cache) if(!baseCache[key]) delete require.cache[key];
+        baseCache = null;
+    
+        /**
+         * @description
+         * After installing the modules to load the program.
+         * 모듈을 모두 설치한 후 프로그램을 로드합니다.
+         */
+        let moduleCount = notInstalledModules.length;
+        let modulesInstallChecker = body => {
+            tempLogger(`Module installed: ${body}`);
+            if(--moduleCount == 0){
+                tempLogger('All modules prepared. MineJS now started..');
+                load();
+            }
+        };
+        
         /**
          * @description
          * If the node module is not ready then automatically
