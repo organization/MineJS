@@ -352,9 +352,15 @@ let init = () => {
     for(let key in require.cache) baseCache[key] = true;
     
     for(let packageName in packageList.dependencies){
+        let packageVersion = packageList.dependencies[packageName];
+        packageVersion = packageVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
         let loadTest;
+        let loadVersion;
         try{
             loadTest = require(packageName);
+            loadVersion = require(__dirname + `/node_modules/${packageName}/package.json`).version;
+            loadVersion = loadVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
+            if(packageVersion != loadVersion) notInstalledModules.push(packageName);
         }catch(e){
             if(!loadTest) notInstalledModules.push(packageName);
         }
