@@ -1,4 +1,5 @@
 'use strict';
+
 /**
  * @description
  * The program starting point.
@@ -11,7 +12,7 @@ let init = () => {
      * 임시로 사용할 로거입니다.
      * @param {string} log
      */
-    let tempLogger = (log)=>{
+    let tempLogger = log => {
         let now = new Date();
         let timeFormat = String();
         timeFormat += (String(now.getHours()).length > 1 ? now.getHours() : '0' + now.getHours());
@@ -26,7 +27,7 @@ let init = () => {
      * Load the data needs to run the app.
      * 앱을 실행하는데 필요한 자료들을 로드합니다.
      */
-    let load = ()=>{
+    let load = () => {
         let fs = require('fs');
         let path = require('path');
 
@@ -61,7 +62,7 @@ let init = () => {
              * This variable is stored plugins/programs sources folder address.
              * 이곳에 각 플러그인/프로그램의 소스폴더 주소가 담깁니다.
              */
-            sources : {},
+            sources: {},
 
             /**
              * @description
@@ -78,7 +79,7 @@ let init = () => {
              * @param {string} originPath
              * @param {string} prefix
              */
-            treeLoader : (sourceFolderPath, originPath, prefix) => {
+            treeLoader: (sourceFolderPath, originPath, prefix) => {
                 fs.readdirSync(sourceFolderPath).forEach(function (file) {
                     let filePath = path.join(sourceFolderPath, file);
                     let stat = fs.statSync(filePath);
@@ -100,7 +101,7 @@ let init = () => {
              * 지정된 폴더안에 있는 모든 소스파일들을 로드해옵니다.
              * @param {string} sourceFolderPath
              */
-            sourceLoader: (sourceFolderPath) => {
+            sourceLoader: sourceFolderPath => {
                 fs.readdirSync(sourceFolderPath).forEach(function (file) {
                     let filePath = path.join(sourceFolderPath, file);
                     let stat = fs.statSync(filePath);
@@ -121,14 +122,14 @@ let init = () => {
              * 종속성이 있는 소스가 있을때 필요한 소스를 바로 로드합니다.
              * @param {string} requireSourcePath
              */
-            requireLoader: (requireSourcePath) => {
+            requireLoader: requireSourcePath => {
                 let splitPath = requireSourcePath.split(".");
                 let prefix = null;
                 let prefixCount = 0;
 
-                for(let checkCount = 0 ; checkCount < splitPath.length ; checkCount++){
+                for(let checkCount = 0; checkCount < splitPath.length; checkCount++){
                     let checkPrefix = "";
-                    for(let i = 0 ; i <= checkCount ; i++){
+                    for(let i = 0; i <= checkCount; i++){
                         if(i != 0) checkPrefix += ".";
                         checkPrefix += splitPath[i];
                     }
@@ -175,7 +176,7 @@ let init = () => {
              * @param {string} prefix
              * @param {string} directory
              */
-            registerSourceFolder : (prefix, directory) => {
+            registerSourceFolder: (prefix, directory) => {
                 global.minejs.loader.sources[prefix] = directory;
             },
 
@@ -192,7 +193,7 @@ let init = () => {
              * 워커의 PID 목록을 이 함수를 이용해 저장합니다.
              * @param {array} pidList
              */
-            putPids: (pidList) => {
+            putPids: pidList => {
                 for(let key in pidList)
                     if(!global.minejs.loader.pids[pidList[key]])
                         global.minejs.loader.pids[pidList[key]] = true;
@@ -204,12 +205,7 @@ let init = () => {
              * 워커들의 PID목록을 반환합니다.
              * @returns {array}
              */
-            getPids: () => {
-                let list = [];
-                for(let key in global.minejs.loader.pids)
-                    list.push(key);
-                return list;
-            },
+            getPids: () => Object.keys(global.minejs.loader.pids),
 
             /**
              * @description
@@ -219,8 +215,7 @@ let init = () => {
              */
             getRandomPid(){
                 let pidList = global.minejs.loader.getPids();
-
-                if(!pidList) return process.pid;
+                if(!Array.isArray(pidList) || !pidList.length) return process.pid;
 
                 let randomIndex = Math.floor(Math.random() * (pidList.length - 1));
                 return pidList[randomIndex];
@@ -265,9 +260,7 @@ let init = () => {
         for (let key in global.minejs.loader.modules)
             if (typeof(global.minejs.loader.modules[key].onLoad) === 'function') global.minejs.loader.modules[key].onLoad();
 
-        var restart = (func)=> {
-            setup(false, func);
-        };
+        var restart = func => setup(false, func);
 
         /**
          * @description
@@ -301,7 +294,7 @@ let init = () => {
             }
 
             tempLogger('Please select the language you want to use.');
-            for(let lang in langList) tempLogger(lang + " (" + langList[lang] + ")");
+            for(let lang in langList) tempLogger(`${lang} (${langList[lang]})`);
 
             /**
              * @description
@@ -323,7 +316,7 @@ let init = () => {
                 if(!langList[input]){
                     tempLogger('These language is not support. please check up the list.\n');
                     tempLogger('Please select the language you want to use.');
-                    for(let lang in langList) tempLogger(lang + " (" + langList[lang] + ")");
+                    for(let lang in langList) tempLogger(`${lang} (${langList[lang]})`);
                 }else{
                     /**
                      * @description
@@ -368,8 +361,8 @@ let init = () => {
      * 모듈을 모두 설치한 후 프로그램을 로드합니다.
      */
     let moduleCount = notInstalledModules.length;
-    let modulesInstallChecker = (body)=>{
-        tempLogger("Module Installed : " + body);
+    let modulesInstallChecker = body => {
+        tempLogger(`Module installed: ${body}`);
         if(--moduleCount == 0){
             tempLogger('All modules prepared. MineJS now started..');
             load();
@@ -381,7 +374,7 @@ let init = () => {
      * When need to install a module before server run, call this function.
      * 서버 실행 전 모듈을 설치할때 해당 함수를 호출합니다.
      */
-    let setup = (needLoad, func)=>{
+    let setup = (needLoad, func) => {
         /**
          * @description
          * If the node module is not ready then automatically
@@ -390,30 +383,28 @@ let init = () => {
          * 자동으로 다운로드 및 설치한 후 서버를 켭니다.
          */
         if(notInstalledModules.length > 0){
-            tempLogger("MineJS new node module update has detected!");
-            tempLogger("MineJS will be started in few second (or few minute later)\r\n");
+            tempLogger(`MineJS new node module updates has detected! (total ${notInstalledModules.length})`);
+            tempLogger("MineJS will be started in few seconds later\r\n");
 
-            for(let key in notInstalledModules)
-                tempLogger("Download '" + notInstalledModules[key] + "' module...");
-            console.log('');
-            tempLogger("Download the node modules (" + notInstalledModules.length + "'s)...");
+            notInstalledModules.forEach(module => {
+                tempLogger(`Downloading module '${module}'...`);
 
-            for(let key in notInstalledModules){
-                cp.exec('npm install ' + notInstalledModules[key], (err, body)=>{
-                    if(err != null){
+                cp.exec(`npm install ${module}`, (err, body) => {
+                    if(err){
                         tempLogger('An error occurred while preparing a base module.');
                         tempLogger('Can not execute the program. The base module was not prepared.');
                         tempLogger(err);
                         process.exit();
                         return;
                     }
+
                     modulesInstallChecker(body);
-                })
-            }
-        }else{
-            if(needLoad){ load(); }
-              else{ if(func != null) func(); }
+                });
+            });
         }
+
+        else if(needLoad) load();
+        else if(func != null) func();
     };
 
     /**
