@@ -17,6 +17,8 @@
 
 __MineJS is a server software for Minecraft : Pocket Edition, MineJS is based Node JS.__
 
+#### [한국어 버전 설명서](https://github.com/organization/MineJS/resources/md/kor/읽어주세요.md)
+
 -------------
 #### Introducion
     MineJS is a server software for Minecraft : Pocket Edition,
