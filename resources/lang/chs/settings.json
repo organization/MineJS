@@ -1,0 +1,144 @@
+{
+    "version": "1",
+	"_1": "这是MineJS的高级配置文件",
+	"_2": "这些设置中的一些是安全的，如果修改不正确，有些可能会破坏你的服务器",
+	"_3": "升级时，新的设置或默认值不会自动出现在这个文件上。",
+
+	"server_uuid": "",
+
+	"properties": {
+		"motd": "#MineJS#",
+		"server_port": 19132,
+		"server_ip": "0.0.0.0",
+		"view_distance": 4,
+		"white_list": "off",
+		"announce_player_achievements": "on",
+		"spawn_protection": 16,
+		"max_players": 20,
+		"allow_flight": "off",
+		"spawn_animals": "on",
+		"spawn_mobs": "on",
+		"gamemode": 0,
+		"force_gamemode": "off",
+		"hardcore": "off",
+		"pvp": "on",
+		"difficulty": 1,
+		"generator_settings": "",
+		"level_name": "world",
+		"level_seed": "",
+		"level_type": "DEFAULT",
+		"enable_query": "on"
+	},
+
+	"settings": {
+		"_1": "多国语言设置",
+		"_2": "目前支持: eng, chs, kor",
+		"language": "chs",
+
+		"_3": "是否将所有的字符串转换为服务器区域设置或让设备处理它们",
+		"force_language": false,
+		"shutdown_message": "服务器已关闭",
+
+		"_4": "允许列表插件查询",
+		"query_plugins": true,
+
+		"_5": "当插件使用过时的API方法时显示控制台消息",
+		"deprecated_verbose": true,
+
+		"_6": "集群工程数量",
+		"_7": "如果设置为自动，它将尝试检测内核的数量（至少有1个）",
+		"cluster_workers": "auto"
+	},
+
+	"network": {
+		"_1": "批量包的阈值，以字节为单位。只有这些数据包将被压缩",
+		"_2": "设置为0，压缩所有文件，设置为_1禁用。",
+		"batch_threshold": 256,
+
+		"_3": "发送批量包时使用zlib压缩级别。设置越高使用CPU越多，但带宽使用率越少",
+		"compression_level": 7
+	},
+
+	"debug": {
+		"_1": "如果数值大于1，将会在控制台显示debug信息",
+		"level": 1
+	},
+
+	"level_settings": {
+		"_1": "存档创建时将使用的默认格式",
+		"default_format": "leveldb",
+
+		"_2": "自动改变区块刷新率，以保持每秒20 tick",
+		"auto_tick_rate": true,
+		"auto_tick_rate_limit": 20,
+
+		"_3": "设置基本区块更新率(1为每秒20 tick，2为每秒10 tick，以此类推)",
+		"base_tick_rate": 1,
+
+		"_4": "即使其他设置不允许也为每个玩家更新区块。",
+		"always_tick_players": false
+	},
+
+	"chunk_sending": {
+		"_1": "每tick发送给玩家的方块数量",
+		"per_tick": 4,
+
+		"_2": "发送给玩家周围的方块数量",
+		"max_chunks": 192,
+
+		"_3": "在玩家进入服务器前需要发送给玩家的方块数量",
+		"spawn_threshold": 56,
+
+		"_4": "在内存中保存方块的副本以更快速的发送",
+		"_5": "适用于在很多玩家加入的mostly_static的世界中",
+		"cache_chunks": false
+	},
+
+	"chunk_ticking": {
+		"_1": "每tick处理的方块的最大数量",
+		"per_tick": 40,
+
+		"_2": "玩家周围的区块更新半径",
+		"tick_radius": 3,
+		"light_updates": false,
+		"clear_tick_list": false
+	},
+
+	"chunk_generation": {
+		"_1": "在等待队列中生成的最大方块数量。",
+		"queue_size": 8,
+		"_2": "在等待队列中填充的最大方块数量。",
+		"population_queue_size": 8
+	},
+
+	"ticks_per": {
+		"animal_spawns": 400,
+		"monster_spawns": 1,
+		"autosave": 6000,
+		"cache_cleanup": 900
+	},
+
+	"spawn_limits": {
+		"_1": "这些实体的最大数量",
+		"monsters": 70,
+		"animals": 15,
+		"water_animals": 5,
+		"ambient": 15
+	},
+
+	"aliases": {
+		"_1": "自定义命令",
+		"_2": "示例:",
+		"_3": "showtheversion: version",
+		"_4": "savestop: [save_all, stop]"
+	},
+
+	"worlds": {
+		"_1": "这些设置将覆盖在server.properties文件并允许加载在多个存档",
+		"_2": "示例:",
+		"_3": "world:{",
+		"_4": " seed: 404",
+		"_5": " generator: FLAT:2;7,59x1,3x3,2;1;decoration(treecount=80 grasscount=45)",
+		"_6": "}"
+	}
+}
