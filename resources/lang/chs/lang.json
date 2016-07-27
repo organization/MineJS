@@ -1,0 +1,27 @@
+{
+    "version": "1",
+    "_1": "这是MineJS的语言配置文件。",
+    
+    "minejs_has_activated": "MineJS 已经启动: ",
+    "minejs_has_deactivated": "MineJS 已经关闭",
+    
+    "instance_is_started": "实例已开启",
+    "instance_deactivated": "实例已关闭",
+    "instance_all_activated": "总共 %count% 个实例已被开启。",
+    "instance_all_deactivated": "总共 %count% 个实例已被关闭。",
+    
+    "IP_Address": "IP 地址: ",
+    
+    "unknown_command": "未知命令。尝试使用 /help 命令查看所有帮助。",
+    
+    "updater_now_latest_version": "已经是最新版本。(%version%)",
+    "updater_now_outdated_version": "该版本已过期。(%version%)",
+    "updater_now_version_and_new_version": "(当前版本 %old_version%)(最新版本 %version%)",
+    "updater_you_can_use_update_command": "你可以通过使用 '/update' 命令来检查更新并升级。",
+    "updater_download_complete_now_extract": "下载完成。正在解压中。。。",
+    "updater_update_complete": "升级完成。",
+    "updater_please_restart_app": "请重启服务器以应用更改。",
+    "updater_now_downloading": "正在下载: %file% ..",
+    "updater_error_in_download": "下载时出错。",
+    "updater_error_in_update": "升级时出错。"
+}
