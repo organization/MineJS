@@ -46,8 +46,8 @@ module.exports = {
             /** /가 명령어 앞에 포함된 경우 /만 잘라냅니다. **/
             __slashRemove(commandName){
                 commandName = String(commandName);
-                if(commandName.substring(0, 1) == '/'){
-                    commandName = commandName.substring(1, commandName.length + 1);
+                if(commandName.substring[0] == '/'){
+                    commandName = commandName.substring(1);
                 }
                 return commandName;
             }
