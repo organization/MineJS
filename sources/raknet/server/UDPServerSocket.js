@@ -36,6 +36,6 @@ module.exports = {
             sendPacket(buffer, source, port){
                 process.send([minejs.network.ProcessProtocol.UDP_WRITE, buffer, source, port]);
             }
-        }
+        };
     }
-}
+};

@@ -81,6 +81,6 @@ module.exports = {
             close(){
                 //
             }
-        }
+        };
     }
-}
+};

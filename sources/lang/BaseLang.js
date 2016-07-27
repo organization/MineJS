@@ -111,7 +111,7 @@ module.exports = {
                     fs.writeFileSync(serverPath + "settings.json", JSON.stringify(resourceSettings, null, 4), 'utf8');
                 }
             }
-        }
+        };
         new minejs.lang.BaseLang();
     }
-}
+};

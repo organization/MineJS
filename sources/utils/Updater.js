@@ -69,7 +69,7 @@ module.exports = {
                     new this();
                 return updaterInstance;
             }
-        }
+        };
         minejs.utils.Updater.getInstance();
     }
-}
+};

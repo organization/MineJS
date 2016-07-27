@@ -90,6 +90,6 @@ module.exports = {
             keys(callback){
                 this._db.keys(callback);
             }
-        }
+        };
     }
-}
+};

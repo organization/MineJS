@@ -34,6 +34,6 @@ module.exports = {
                 this.clientPort = address[1];
                 this.mtuSize = this.__getSignedShort();
             }
-        }
+        };
     }
-}
+};

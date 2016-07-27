@@ -33,6 +33,6 @@ module.exports = {
                     this.sendPing = this.__getLong();
                     this.sendPong = this.__getLong();
             }
-        }
+        };
     }
-}
+};

@@ -16,7 +16,7 @@ module.exports = {
             isOnceRun(){
                 return true;
             }
-        }
+        };
         new minejs.command.defaults.RestartCommand();
     }
-}
+};

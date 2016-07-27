@@ -118,6 +118,6 @@ module.exports = {
                 let colors = "0123456789AaBbCcDdEeFf";
                 return colors.indexOf(c) != -1;
             }
-        }
+        };
     }
-}
+};

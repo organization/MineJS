@@ -34,6 +34,6 @@ module.exports = {
                 this.mtuSize = this.__getSignedShort();
                 this.clientID = this.__getLong();
             }
-        }
+        };
     }
-}
+};

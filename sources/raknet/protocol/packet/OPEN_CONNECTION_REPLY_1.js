@@ -29,6 +29,6 @@ module.exports = {
                 this.__getByte(); //skip security
                 this.mtuSize = this.__getSignedShort();
             }
-        }
+        };
     }
-}
+};

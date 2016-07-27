@@ -97,6 +97,6 @@ module.exports = {
                 let clone = require('clone');
                 return clone(this);
             }
-        }
+        };
     }
-}
+};

@@ -257,6 +257,6 @@ module.exports = {
                 }
                 return copy;
             }
-        }
+        };
     }
-}
+};

@@ -113,4 +113,4 @@ module.exports = {
             static get MASTER_WORK_PUSH(){ return 0x11; }
         };
     }
-}
+};

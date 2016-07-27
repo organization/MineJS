@@ -375,6 +375,6 @@ module.exports = {
 					keys: _keys
 				};
 			}
-		}
+		};
 	}
 };

@@ -30,6 +30,6 @@ module.exports = {
                 this.__offset += 16; //skip magic bytes TODO:check magic?
                 this.serverName = this.__getString();
             }
-        }
+        };
     }
-}
+};
