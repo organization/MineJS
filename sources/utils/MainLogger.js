@@ -52,15 +52,15 @@ module.exports = {
                 loggers[logFile] = this;
             }
             
-            emergency(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.EMERGENCY, null, needDuplicate) };
-            alert(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.ALERT, null, needDuplicate) };
-            critical(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.CRITICAL, null, needDuplicate) };
-            error(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.ERROR, null, needDuplicate) };
-            warning(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.WARNING, null, needDuplicate) };
-            notice(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.NOTICE, null, needDuplicate) };
-            info(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.INFO, null, needDuplicate) };
-            debug(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.DEBUG, null, needDuplicate) };
-            log(level, message, tag, needDuplicate){ this.__send(message, level, tag, needDuplicate, null, needDuplicate) };
+            emergency(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.EMERGENCY, null, needDuplicate) }
+            alert(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.ALERT, null, needDuplicate) }
+            critical(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.CRITICAL, null, needDuplicate) }
+            error(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.ERROR, null, needDuplicate) }
+            warning(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.WARNING, null, needDuplicate) }
+            notice(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.NOTICE, null, needDuplicate) }
+            info(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.INFO, null, needDuplicate) }
+            debug(message, needDuplicate){ this.__send(message, minejs.utils.LogLevel.DEBUG, null, needDuplicate) }
+            log(level, message, tag, needDuplicate){ this.__send(message, level, tag, needDuplicate, null, needDuplicate) }
             
             __send(message){ this.__send(message, -1, null, null); }
             __send(message, level, tag, needDuplicate){
@@ -191,11 +191,11 @@ module.exports = {
                     }
                 }
             }
-        }
+        };
     },
     onDisable: ()=>{
         for(let logStream in logStreams){
             if(!logStream) logStream.end();
         }
     }
-}
+};

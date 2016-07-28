@@ -28,6 +28,6 @@ module.exports = {
                 this.sendPing = this.__getLong();
                 this.useSecurity = this.__getByte() > 0;
             }
-        }
+        };
     }
-}
+};

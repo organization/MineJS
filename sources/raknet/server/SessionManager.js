@@ -323,6 +323,6 @@ module.exports = {
                 for(let key in packetMap)
                     this.registerPacket(packetMap[key].ID, packetMap[key]);
             }
-        }
+        };
     }
-}
+};

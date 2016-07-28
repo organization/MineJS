@@ -27,6 +27,6 @@ module.exports = {
                 this.protocol = this.__getByte();
                 this.mtuSize = (this.__get().length + 18);
             }
-        }
+        };
     }
-}
+};

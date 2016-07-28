@@ -162,6 +162,6 @@ module.exports = {
             static create(){
                 return new this();
             }
-        }
+        };
     }
-}
+};

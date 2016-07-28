@@ -42,6 +42,6 @@ module.exports = {
             decode(){
                 super.decode();
             }
-        }
+        };
     }
-}
+};

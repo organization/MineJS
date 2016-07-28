@@ -13,6 +13,6 @@ module.exports = {
             isOnceRun(){
                 return true;
             }
-        }
+        };
     }
-}
+};

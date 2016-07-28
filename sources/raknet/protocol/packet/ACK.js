@@ -8,6 +8,6 @@ module.exports = {
         class ACK extends minejs.raknet.protocol.AcknowledgePacket{
             static get ID() { return 0xc0; }
             getID(){ return this.ID; }
-        }
+        };
     }
-}
+};

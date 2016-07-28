@@ -99,6 +99,6 @@ module.exports = {
              * Leaves everything as-is and halts, other Threads can be in a post-crash condition.
              */
             static get PACKET_EMERGENCY_SHUTDOWN() { return 0x7f; }
-        }
+        };
     }
-}
+};

@@ -22,6 +22,6 @@ module.exports = {
                 super.decode();
                 this.pingID = this.__getLong();
             }
-        }
+        };
     }
-}
+};

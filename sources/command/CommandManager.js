@@ -49,6 +49,6 @@ module.exports = {
                 if(commandName[0] == '/') commandName = commandName.substring(1);
                 return commandName;
             }
-        }
+        };
     }
 };

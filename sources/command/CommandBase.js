@@ -11,6 +11,6 @@ module.exports = {
             getName(){
                 return this.commandName;
             }
-        }
+        };
     }
-}
+};

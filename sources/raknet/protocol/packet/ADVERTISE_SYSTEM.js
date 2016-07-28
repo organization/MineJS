@@ -9,6 +9,6 @@ module.exports = {
         class ADVERTISE_SYSTEM extends minejs.raknet.protocol.packet.UNCONNECTED_PONG{
             static get ID() { return 0x1c; }
             getID(){ return this.ID; }
-        }
+        };
     }
-}
+};
