@@ -568,7 +568,7 @@ module.exports = {
                             * @return {string}
                             */
                             case minejs.network.ProcessProtocol.MASTER_WORK_PUSH:
-                                try{ eval('(' + message[1] + ')')(); }catch(e){};
+                                try{ eval('(' + message[1] + ')')(); }catch(e){}
                                 break;
                         }
                     };
