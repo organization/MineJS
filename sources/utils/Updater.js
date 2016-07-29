@@ -30,6 +30,7 @@ module.exports = {
                     logger.info(String(lang.updater_now_outdated_version));
                     logger.info(String(lang.updater_now_version_and_new_version)
                         .replace('%old_version%', v_old).replace('%version%', v));
+                        this.version = v;
                     logger.info(lang.updater_you_can_use_update_command);
                 });
                 this.updater.on('update.downloaded', function() {
@@ -43,6 +44,9 @@ module.exports = {
                 this.updater.on('update.extracted', function() {
                     logger.info(lang.updater_update_complete);
                     logger.info(lang.updater_please_restart_app);
+                    let change_log = require('../../resources/changelog/changelog.json');
+                    logger.info(lang.change_log);
+                    eval("logger.info(change_log.\" + this.version + \");");
                 });
                 this.updater.on('download.start', function(name) {
                     logger.info(String(lang.updater_now_downloading).replace('%file%', name));
