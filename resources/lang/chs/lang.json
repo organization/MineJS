@@ -23,7 +23,7 @@
     "updater_please_restart_app": "请重启服务器以应用更改。",
     "updater_now_downloading": "正在下载: %file% ..",
     "updater_error_in_download": "下载时出错。",
-    "updater_error_in_update": "升级时出错。"
+    "updater_error_in_update": "升级时出错。",
     "updater_commit_name": "%message%(%name%)",
     "updater_commit_upload_time": "(上传于 %date%)"
 }
