@@ -5,7 +5,7 @@ module.exports = {
     onLoad : ()=>{
         minejs.permission.Permission = class Permission{
             static get DEFAULT_OP() { return "op"; }
-            static get DEFAULT_OP() { return "notop"; }
+            static get DEFAULT_NOT_OP() { return "notop"; }
             static get DEFAULT_TRUE() { return "true"; }
             static get DEFAULT_FALSE() { return "false"; }
             
