@@ -23,5 +23,7 @@
     "updater_please_restart_app": "적용을 위해 서버를 재부팅 해주세요.",
     "updater_now_downloading": "다운로드중: %file% ..",
     "updater_error_in_download": "다운로드 도중 오류가 발생했습니다.",
-    "updater_error_in_update": "업데이트 도중 오류가 발생했습니다."
+    "updater_error_in_update": "업데이트 도중 오류가 발생했습니다.",
+    
+    "change_log": "[변경 내역]"
 }

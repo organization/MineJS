@@ -42,7 +42,7 @@ module.exports = {
                 let settingsReplace = (key, replaceKey)=>{
                     if(replaceKey == null) replaceKey = key;
                     eval("resourceSettings." + replaceKey + " = currentSettings." + key + ";");
-                }
+                };
                 
                 /** 설정파일을 업데이트 합니다. **/
                 if(resourceSettings.version > currentSettings.version){
