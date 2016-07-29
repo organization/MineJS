@@ -46,7 +46,7 @@ module.exports = {
                     logger.info(lang.updater_please_restart_app);
                     let change_log = require('../../resources/changelog/changelog.json');
                     logger.info(lang.change_log);
-                    eval("logger.info(change_log." + this.version + ");");
+                    eval("logger.info(change_log.\" + this.version + \");");
                 });
                 this.updater.on('download.start', function(name) {
                     logger.info(String(lang.updater_now_downloading).replace('%file%', name));
