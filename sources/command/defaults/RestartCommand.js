@@ -5,7 +5,11 @@ module.exports = {
     onLoad: ()=>{
         minejs.command.defaults.RestartCommand = class RestartCommand extends minejs.command.CommandBase{
             constructor(){
-                super('restart');
+                super({
+                    commandName: 'restart',
+                    commandUsage: '<Delay Time(s)>',
+                    commandDesciption: 'This command is used to restart the server.'
+                });
             }
             process(){
                 minejs.Server.getServer().masterExecute(()=>{

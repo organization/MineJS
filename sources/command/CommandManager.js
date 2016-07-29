@@ -8,21 +8,26 @@ module.exports = {
             constructor(){
                 this.__commandMap = {};
                 this.__commandType = {};
+                this.__commandSettings = {};
             }
+            
             static getInstance(){
                 if(!__commandManagerInstance)
                     __commandManagerInstance = new this();
                 return __commandManagerInstance;
             }
-            registerCommand(commandName, process){
-                this.registerCommand(commandName, process, false);
+            
+            registerCommand(settings, process){
+                this.registerCommand(settings, process, false);
             }
-            registerCommand(commandName, process, type){
-                commandName = this.__slashRemove(commandName);
+            
+            registerCommand(settings, process, type){
+                let commandName = this.__slashRemove(settings.commandName);
                 commandName = commandName.toLowerCase();
     
                 this.__commandMap[commandName] = process;
                 this.__commandType[commandName] = type;
+                this.__commandSettings[commandName] = settings;
             }
             
             /** 한번만 실행되어야하는 명령어인지 확인합니다. **/
@@ -35,9 +40,10 @@ module.exports = {
                 var lang = minejs.Server.getServer().getLang();
                 commandName = this.__slashRemove(commandName);
                 commandName = commandName.toLowerCase();
+                
                 /** 등록된 명령어라면 실행하고 아니면 /help 명령어 사용을 유도합니다. **/
-                if(typeof(this.__commandMap[commandName]) == 'function'){
-                    this.__commandMap[commandName](args);
+                if(this.__commandMap[commandName] != null && typeof(this.__commandMap[commandName].process) == 'function'){
+                    this.__commandMap[commandName].process(args);
                 }else{
                     minejs.Server.getServer().getLogger().notice(lang.unknown_command, true);
                 }
@@ -48,6 +54,10 @@ module.exports = {
                 commandName = String(commandName);
                 if(commandName[0] == '/') commandName = commandName.substring(1);
                 return commandName;
+            }
+            
+            getCommandsDetail(){
+                return this.__commandSettings;
             }
         };
     }
