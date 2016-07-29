@@ -23,5 +23,7 @@
     "updater_please_restart_app": "Please reboot the server for the apply.",
     "updater_now_downloading": "Downloading: %file% ..",
     "updater_error_in_download": "The error occurred during download.",
-    "updater_error_in_update": "The error occurred during update."
+    "updater_error_in_update": "The error occurred during update.",
+    "updater_commit_name": "%message%(%name%)",
+    "updater_commit_upload_time": "(Uploaded on %date%)"
 }
