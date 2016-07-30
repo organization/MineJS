@@ -3,7 +3,6 @@
 /* global minejs */
 module.exports = {
     onLoad: () => {
-        minejs.loader.requireLoader("minejs.event.Cancellable");
         minejs.event.Event = class Event{
             constructor(isSupportCancellable) {
                 this.__eventName = null;
