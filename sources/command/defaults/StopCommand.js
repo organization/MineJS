@@ -6,9 +6,9 @@ module.exports = {
         minejs.command.defaults.StopCommand = class StopCommand extends minejs.command.CommandBase{
             constructor(){
                 super({
-                    commandName: 'stop',
-                    commandUsage: '<Delay Time(s)>',
-                    commandDesciption: 'This command is used to stop the server.'
+                    name: 'stop',
+                    usage: '<Delay Time(s)>',
+                    description: 'This command is used to stop the server.'
                 });
             }
             process(){

@@ -6,9 +6,9 @@ module.exports = {
         minejs.command.defaults.UpdateCommand = class UpdateCommand extends minejs.command.CommandBase{
             constructor(){
                 super({
-                    commandName: 'update',
-                    commandUsage: '<Delay Time>',
-                    commandDesciption: 'This command is used to update the server.'
+                    name: 'update',
+                    usage: '<Delay Time>',
+                    description: 'This command is used to update the server.'
                 });
             }
             process(){

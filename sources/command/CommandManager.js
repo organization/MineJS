@@ -22,7 +22,7 @@ module.exports = {
             }
             
             registerCommand(settings, process, type){
-                let commandName = this.__slashRemove(settings.commandName);
+                let commandName = this.__slashRemove(settings.name);
                 commandName = commandName.toLowerCase();
     
                 this.__commandMap[commandName] = process;

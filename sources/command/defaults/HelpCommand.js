@@ -6,9 +6,9 @@ module.exports = {
         minejs.command.defaults.HelpCommand = class HelpCommand extends minejs.command.CommandBase{
             constructor(){
                 super({
-                    commandName: 'help',
-                    commandUsage: '<Index>',
-                    commandDesciption: 'It displays a list of server commands.'
+                    name: 'help',
+                    usage: '<Index>',
+                    description: 'It displays a list of server commands.'
                 });
                 this.format = "%permissionDescription% /%commandName% %commandUsage%\r\n└ %commandDesciption%";
             }
@@ -20,9 +20,9 @@ module.exports = {
                 for(let key in details){
                     let detail = details[key];
                     logger.log(null, this.format
-                        .replace('%commandName%', detail.commandName)
-                        .replace('%commandUsage%', detail.commandUsage)
-                        .replace('%commandDesciption%', detail.commandDesciption)
+                        .replace('%commandName%', detail.name)
+                        .replace('%commandUsage%', detail.usage)
+                        .replace('%commandDesciption%', detail.description)
                     + '\r\n', null, true);
                 }
             }
