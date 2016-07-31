@@ -1,4 +1,4 @@
-'use strict';
+/* global minejs */
 
 var cluster = require('cluster');
 
@@ -170,9 +170,9 @@ function _masterIncomingMessagesHanlder(message) {
 			_getCacheKeys(message);
 			break;
 		case 'reset':
-		    clearInterval(purgeIntervalObj);
-	        _sendMessageToWorker(message);
-		    break;
+			clearInterval(purgeIntervalObj);
+			_sendMessageToWorker(message);
+			break;
 		default:
 			logger.warn('Received an invalid message type:', message.type);
 	}
@@ -211,7 +211,8 @@ if (cluster.isMaster) {
 	//	logger.log('------------------------------------------\n');
 	// }, 2000).unref();
 
-} else {
+}
+else {
 
 	process.on('message', _workerIncomingMessagesHandler);
 
@@ -247,8 +248,9 @@ function _read(key, callback) {
 			},
 			callback: callback
 		});
-	} else {
-	    _readCacheValue({
+	}
+	else {
+		_readCacheValue({
 			type: 'read',
 			requestParams: {
 				key: key
@@ -274,8 +276,9 @@ function _store(key, value, ttl, callback) {
 			},
 			callback: callback
 		});
-	} else {
-	    _storeCacheValue({
+	}
+	else {
+		_storeCacheValue({
 			type: 'store',
 			requestParams: {
 				key: key,
@@ -296,8 +299,9 @@ function _remove(key, callback) {
 			},
 			callback: callback
 		});
-	} else {
-	    _removeCacheValue({
+	}
+	else {
+		_removeCacheValue({
 			type: 'remove',
 			requestParams: {
 				key: key
@@ -313,8 +317,9 @@ function _clean(callback) {
 			type: 'clean',
 			callback: callback
 		});
-	} else {
-	    _cleanCache({
+	}
+	else {
+		_cleanCache({
 			type: 'clean',
 			callback: callback
 		});
@@ -327,8 +332,9 @@ function _size(callback) {
 			type: 'size',
 			callback: callback
 		});
-	} else {
-		setImmediate(callback,{
+	}
+	else {
+		setImmediate(callback, {
 			size: Object.keys(cache).length
 		});
 	}
@@ -338,8 +344,9 @@ function _reset(callback) {
 	if (cluster.isMaster) {
 		clearInterval(purgeIntervalObj);
 		setImmediate(callback);
-	} else {
-	    _sendMessageToMaster({
+	}
+	else {
+		_sendMessageToMaster({
 			type: 'reset',
 			callback: callback
 		});
@@ -352,29 +359,25 @@ function _keys(callback) {
 			type: 'keys',
 			callback: callback
 		});
-	} else {
-		setImmediate(callback,{
+	}
+	else {
+		setImmediate(callback, {
 			keys: Object.keys(cache)
 		});
 	}
 }
 
-/* global minejs*/
-module.exports = {
-	onLoad: ()=>{
-		minejs.database.Memored = class Memored{
-			static getData(){
-				return {
-					setup: _setup,
-					read: _read,
-					store: _store,
-					remove: _remove,
-					clean: _clean,
-					size: _size,
-					reset: _reset,
-					keys: _keys
-				};
-			}
+class Memored {
+	static getData() {
+		return {
+			setup: _setup,
+			read: _read,
+			store: _store,
+			remove: _remove,
+			clean: _clean,
+			size: _size,
+			reset: _reset,
+			keys: _keys
 		};
 	}
 };

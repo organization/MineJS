@@ -55,6 +55,8 @@ let init = () => {
          * OOP 형태로 노드 프로그램 소스파일 체계를
          * 관리할 수 있도록 돕는 프로그램 로더입니다.
          */
+
+        let Module = module.constructor;
         global.minejs.loader = {
 
             /**
@@ -80,39 +82,74 @@ let init = () => {
              * @param {string} prefix
              */
             treeLoader: (sourceFolderPath, originPath, prefix) => {
-                fs.readdirSync(sourceFolderPath).forEach(function (file) {
+                fs.readdirSync(sourceFolderPath).forEach(function(file) {
                     let filePath = path.join(sourceFolderPath, file);
                     let stat = fs.statSync(filePath);
-                    try{
+                    try {
                         let tree = sourceFolderPath.split(originPath)[1];
                         tree = prefix + tree.replace(new RegExp("/", 'g'), '.');
                         tree = tree.replace(/\\/g, '.');
                         tree = tree.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
-                        if(eval("!" + tree))
+                        if (eval("!" + tree))
                             eval(tree + " = {};");
                         if (stat.isDirectory())
                             global.minejs.loader.treeLoader(filePath, originPath, prefix);
-                    }catch(e){}
+                    }
+                    catch (e) {}
                 });
+            },
+
+            requireFromString: (tree, className, code, filePath) => {
+                try {
+                    code = 'module.exports={load:()=>{' + code + ';' + tree + '=' + className + ';}}';
+                    let paths = module.constructor._nodeModulePaths(path.dirname(filePath));
+                    let moduleBuild = new module.constructor(filePath, module.parent);
+
+                    moduleBuild.filename = filePath;
+                    moduleBuild.paths = [].concat(['prepend']).concat(paths).concat(['append']);
+                    moduleBuild._compile(code, filePath);
+
+                    let moduleInstance = moduleBuild.exports;
+                    if (moduleInstance == null || typeof(moduleInstance.load) != 'function') return;
+
+                    moduleInstance.load();
+                    global.minejs.loader.modules[filePath] = moduleInstance;
+                }
+                catch (e) {
+                    console.log('\r\n' + filePath + '\r\n\t' + e)
+                }
             },
 
             /**
              * @description
              * Load all the source files in the specified folder.
-             * 지정된 폴더안에 있는 모든 소스파일들을 로드해옵니다.
+             * 지정된 폴더 안에 있는 모든 소스파일들을 로드해옵니다.
              * @param {string} sourceFolderPath
              */
-            sourceLoader: sourceFolderPath => {
-                fs.readdirSync(sourceFolderPath).forEach(function (file) {
+            sourceLoader: (sourceFolderPath, originPath, prefix) => {
+                fs.readdirSync(sourceFolderPath).forEach(function(file) {
                     let filePath = path.join(sourceFolderPath, file);
                     let stat = fs.statSync(filePath);
-                    try{
+                    try {
                         if (stat.isFile()) {
-                            global.minejs.loader.modules[filePath] = require(filePath);
-                        } else {
-                            global.minejs.loader.sourceLoader(filePath);
+                            let tree = prefix + filePath.split(originPath)[1];
+                            tree = tree.replace(/\.js/gi, '');
+                            tree = tree.replace(new RegExp("/", 'g'), '.');
+                            tree = tree.replace(/\\/g, '.');
+                            
+                            let extensionCheck = file.split('.');
+                            if(extensionCheck.length < 2) return;
+                            if(extensionCheck[1].toLowerCase() != 'js') return;
+                            
+                            let targetClassName = file.replace(/\.js/gi, '');
+                            global.minejs.loader.requireFromString(tree, targetClassName,
+                                fs.readFileSync(filePath, 'utf8'), filePath);
                         }
-                    }catch(e){}
+                        else {
+                            global.minejs.loader.sourceLoader(filePath, originPath, prefix);
+                        }
+                    }
+                    catch (e) {}
                 });
             },
 
@@ -128,24 +165,24 @@ let init = () => {
                 let prefix = null;
                 let prefixCount = 0;
 
-                for(let checkCount = 0; checkCount < splitPath.length; checkCount++){
+                for (let checkCount = 0; checkCount < splitPath.length; checkCount++) {
                     let checkPrefix = "";
-                    for(let i = 0; i <= checkCount; i++){
-                        if(i != 0) checkPrefix += ".";
+                    for (let i = 0; i <= checkCount; i++) {
+                        if (i != 0) checkPrefix += ".";
                         checkPrefix += splitPath[i];
                     }
-                    if(global.minejs.loader.sources[checkPrefix] != null){
+                    if (global.minejs.loader.sources[checkPrefix] != null) {
                         prefix = checkPrefix;
                         prefixCount = checkCount;
                         break;
                     }
                 }
 
-                if(!prefix) return false;
+                if (!prefix) return false;
 
                 let requireAbsolutePath = "";
-                for(let key in splitPath)
-                    if(key > prefixCount) requireAbsolutePath += ("/" + splitPath[key]);
+                for (let key in splitPath)
+                    if (key > prefixCount) requireAbsolutePath += ("/" + splitPath[key]);
                 let path = global.minejs.loader.sources[prefix] + requireAbsolutePath;
 
                 /**
@@ -153,12 +190,14 @@ let init = () => {
                  * If the source is already loaded, not loaded.
                  * 이미 로드된 소스일 경우 로드하지 않습니다.
                  */
-                if(global.minejs.loader.modules[path] != null) return;
+                if (global.minejs.loader.modules[path] != null) return;
 
-                let preLoadModule = require(path);
-                if (typeof(preLoadModule.onInit) === 'function') preLoadModule.onInit();
-                if (typeof(preLoadModule.onLoad) === 'function') preLoadModule.onLoad();
-                global.minejs.loader.modules[path] = preLoadModule;
+                global.minejs.loader.requireFromString(requireSourcePath, splitPath[splitPath.length - 1],
+                    fs.readFileSync(path + '.js', 'utf8'), path + '.js');
+                //let preLoadModule = require(path);
+                //if (typeof(preLoadModule.onInit) === 'function') preLoadModule.onInit();
+                //if (typeof(preLoadModule.onLoad) === 'function') preLoadModule.onLoad();
+                //global.minejs.loader.modules[path] = preLoadModule;
                 return true;
             },
 
@@ -195,8 +234,8 @@ let init = () => {
              * @param {array} pidList
              */
             putPids: pidList => {
-                for(let key in pidList)
-                    if(!global.minejs.loader.pids[pidList[key]])
+                for (let key in pidList)
+                    if (!global.minejs.loader.pids[pidList[key]])
                         global.minejs.loader.pids[pidList[key]] = true;
             },
 
@@ -214,9 +253,9 @@ let init = () => {
              * 작동중인 워커 중에서, 랜덤하게 한 워커의 PID를 얻어옵니다.
              * @returns {integer}
              */
-            getRandomPid(){
+            getRandomPid() {
                 let pidList = global.minejs.loader.getPids();
-                if(!Array.isArray(pidList) || !pidList.length) return process.pid;
+                if (!Array.isArray(pidList) || !pidList.length) return process.pid;
 
                 let randomIndex = Math.floor(Math.random() * (pidList.length - 1));
                 return pidList[randomIndex];
@@ -249,7 +288,7 @@ let init = () => {
          * Load the source files.
          * 소스파일들을 불러옵니다.
          */
-        global.minejs.loader.sourceLoader(sourceFolder);
+        global.minejs.loader.sourceLoader(sourceFolder, sourceFolder, "minejs");
 
         /**
          * @description
@@ -277,25 +316,28 @@ let init = () => {
             new minejs.Server(__dirname, require(__dirname + '/settings.json'), restart);
         };
 
+        let isLangDataExist = false;
         /**
          * @description
          * Select the language to use on the server.
          * 서버에서 사용할 언어를 선택합니다.
          */
-        try{
+        try {
             let stat = fs.statSync(__dirname + '/settings.json');
-            start();
-        }catch(e){
-            try{
-            var langList = require(__dirname + "/resources/language-list.json");
-            }catch(e){
+            isLangDataExist = true;
+        }
+        catch (e) {
+            try {
+                var langList = require(__dirname + "/resources/language-list.json");
+            }
+            catch (e) {
                 tempLogger("Can't find /resources/language-list.json file.");
                 tempLogger("Program basic resources doesn't exist! failed statup!");
                 return;
             }
 
             tempLogger('Please select the language you want to use.');
-            for(let lang in langList) tempLogger(`${lang} (${langList[lang]})`);
+            for (let lang in langList) tempLogger(`${lang} (${langList[lang]})`);
 
             /**
              * @description
@@ -313,12 +355,13 @@ let init = () => {
              * When enter the determined language, load the language file.
              * 결정된 언어명이 입력되면 해당 언어파일을 불러옵니다.
              */
-            line.on('line', function (input) {
-                if(!langList[input]){
+            line.on('line', function(input) {
+                if (!langList[input]) {
                     tempLogger('These language is not support. please check up the list.\n');
                     tempLogger('Please select the language you want to use.');
-                    for(let lang in langList) tempLogger(`${lang} (${langList[lang]})`);
-                }else{
+                    for (let lang in langList) tempLogger(`${lang} (${langList[lang]})`);
+                }
+                else {
                     /**
                      * @description
                      * Generate Server UUID.
@@ -326,7 +369,7 @@ let init = () => {
                      */
                     let settings = require(__dirname + "/resources/lang/" + input + "/settings.json");
                     let lang = require(__dirname + "/resources/lang/" + input + "/lang.json");
-                    if(!settings.server_uuid)
+                    if (!settings.server_uuid)
                         settings.server_uuid = require('node-uuid').v4();
 
                     fs.writeFileSync(__dirname + '/settings.json', JSON.stringify(settings, null, 4), 'utf8');
@@ -336,6 +379,8 @@ let init = () => {
                 }
             });
         }
+
+        if (isLangDataExist) start();
     };
 
     /**
@@ -351,30 +396,32 @@ let init = () => {
          */
         let cp = require('child_process');
         let packageList = require(__dirname + '/package.json');
-    
+
         let notInstalledModules = [];
         let baseCache = {};
-        
-        for(let key in require.cache) baseCache[key] = true;
-        
-        for(let packageName in packageList.dependencies){
+
+        for (let key in require.cache) baseCache[key] = true;
+
+        for (let packageName in packageList.dependencies) {
             let packageVersion = packageList.dependencies[packageName];
             packageVersion = packageVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
             let loadTest;
             let loadVersion;
-            try{
+            try {
                 loadTest = require(packageName);
                 loadVersion = require(__dirname + `/node_modules/${packageName}/package.json`).version;
                 loadVersion = loadVersion.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
-                if(packageVersion != loadVersion) notInstalledModules.push(packageName);
-            }catch(e){
-                if(!loadTest) notInstalledModules.push(packageName);
+                if (packageVersion != loadVersion) notInstalledModules.push(packageName);
+            }
+            catch (e) {
+                if (!loadTest) notInstalledModules.push(packageName);
             }
         }
-        
-        for(let key in require.cache) if(!baseCache[key]) delete require.cache[key];
+
+        for (let key in require.cache)
+            if (!baseCache[key]) delete require.cache[key];
         baseCache = null;
-    
+
         /**
          * @description
          * After installing the modules to load the program.
@@ -383,12 +430,12 @@ let init = () => {
         let moduleCount = notInstalledModules.length;
         let modulesInstallChecker = body => {
             tempLogger(`Module installed: ${body}`);
-            if(--moduleCount == 0){
+            if (--moduleCount == 0) {
                 tempLogger('All modules prepared. MineJS now started..');
                 load();
             }
         };
-        
+
         /**
          * @description
          * If the node module is not ready then automatically
@@ -396,7 +443,7 @@ let init = () => {
          * 노드 모듈이 준비되어있지 않은 경우 노드모듈을
          * 자동으로 다운로드 및 설치한 후 서버를 켭니다.
          */
-        if(notInstalledModules.length > 0){
+        if (notInstalledModules.length > 0) {
             tempLogger(`MineJS new node module updates has detected! (total ${notInstalledModules.length})`);
             tempLogger("MineJS will be started in few seconds later\r\n");
 
@@ -404,7 +451,7 @@ let init = () => {
                 tempLogger(`Downloading module '${module}'...`);
 
                 cp.exec(`npm install ${module}`, (err, body) => {
-                    if(err){
+                    if (err) {
                         tempLogger('An error occurred while preparing a base module.');
                         tempLogger('Can not execute the program. The base module was not prepared.');
                         tempLogger(err);
@@ -417,8 +464,8 @@ let init = () => {
             });
         }
 
-        else if(needLoad) load();
-        else if(func != null) func();
+        else if (needLoad) load();
+        else if (func != null) func();
     };
 
     /**
