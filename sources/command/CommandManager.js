@@ -57,3 +57,5 @@ class CommandManager {
         return this.__commandSettings;
     }
 }
+
+minejs.command.CommandManager = CommandManager;

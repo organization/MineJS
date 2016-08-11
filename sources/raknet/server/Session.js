@@ -41,7 +41,7 @@ class Session {
     }
 
     //sendPacket(){
-    //    
+    //
     //}
 
     sendQueue() {
@@ -92,3 +92,5 @@ class Session {
         //
     }
 }
+
+minejs.raknet.server.Session = Session;

@@ -24,3 +24,5 @@ class UNCONNECTED_PING extends minejs.raknet.protocol.AcknowledgePacket {
         this.pingID = this.__getLong();
     }
 }
+
+minejs.raknet.protocol.packet.UNCONNECTED_PING = UNCONNECTED_PING;

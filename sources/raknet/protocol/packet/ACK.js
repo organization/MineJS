@@ -7,3 +7,5 @@ class ACK extends minejs.raknet.protocol.AcknowledgePacket {
         this.ID;
     }
 }
+
+minejs.raknet.protocol.packet.ACK = ACK;

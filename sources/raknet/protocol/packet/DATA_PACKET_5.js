@@ -7,3 +7,5 @@ class DATA_PACKET_5 extends minejs.raknet.protocol.DataPacket {
         return this.ID;
     }
 }
+
+minejs.raknet.protocol.packet.DATA_PACKET_5 = DATA_PACKET_5;

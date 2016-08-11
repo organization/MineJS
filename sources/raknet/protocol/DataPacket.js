@@ -47,3 +47,5 @@ class DataPacket extends minejs.raknet.protocol.Packet {
         return clone(this);
     }
 }
+
+minejs.raknet.protocol.DataPacket = DataPacket;

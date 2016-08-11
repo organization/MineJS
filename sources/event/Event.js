@@ -39,3 +39,5 @@ class Event {
         this._isCancelled = value;
     }
 }
+
+minejs.event.Event = Event;

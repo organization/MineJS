@@ -123,3 +123,5 @@ class EncapsulatedPacket {
         return clone(this);
     }
 }
+
+minejs.raknet.protocol.EncapsulatedPacket = EncapsulatedPacket;

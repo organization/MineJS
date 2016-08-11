@@ -48,3 +48,5 @@ class EventEmitter {
         return true;
     }
 }
+
+minejs.event.EventEmitter = EventEmitter;

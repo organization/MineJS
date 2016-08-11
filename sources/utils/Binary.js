@@ -272,3 +272,5 @@ class Binary {
         return copy;
     }
 }
+
+minejs.utils.Binary = Binary;

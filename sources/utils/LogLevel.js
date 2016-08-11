@@ -24,3 +24,5 @@ class LogLevel {
         return 0x07;
     }
 }
+
+minejs.utils.LogLevel = LogLevel;

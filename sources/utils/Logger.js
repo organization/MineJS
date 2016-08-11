@@ -10,3 +10,5 @@ class Logger {
     debug(message) {}
     log(level, message) {}
 }
+
+minejs.utils.Logger = Logger;

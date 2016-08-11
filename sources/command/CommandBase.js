@@ -29,3 +29,5 @@ class CommandBase {
         return this.__usage;
     }
 }
+
+minejs.command.CommandBase = CommandBase;

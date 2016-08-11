@@ -93,3 +93,5 @@ class ConsoleCommandSender extends minejs.command.CommandSender {
      */
     setOp(value) {}
 }
+
+minejs.command.ConsoleCommandSender = ConsoleCommandSender;

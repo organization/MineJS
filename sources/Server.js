@@ -1,5 +1,4 @@
 /* global minejs */
-
 /**
  * @description
  * Server class singleton instance is stored in this variable.
@@ -812,3 +811,5 @@ class Server {
         }
     }
 }
+
+minejs.Server = Server;

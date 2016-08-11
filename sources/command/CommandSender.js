@@ -32,3 +32,5 @@ class CommandSender extends minejs.permission.Permissible {
      */
     isPlayer() {}
 }
+
+minejs.command.CommandSender = CommandSender;

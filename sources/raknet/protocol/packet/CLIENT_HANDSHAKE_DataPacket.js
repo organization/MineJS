@@ -33,3 +33,5 @@ class CLIENT_HANDSHAKE_DataPacket extends minejs.raknet.protocol.Packet {
         this.sendPong = this.__getLong();
     }
 }
+
+minejs.raknet.protocol.packet.CLIENT_HANDSHAKE_DataPacket = CLIENT_HANDSHAKE_DataPacket;

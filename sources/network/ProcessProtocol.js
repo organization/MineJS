@@ -117,3 +117,5 @@ class ProcessProtocol {
         return 0x11;
     }
 }
+
+minejs.network.ProcessProtocol = ProcessProtocol;

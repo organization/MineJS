@@ -381,3 +381,5 @@ class Memored {
 		};
 	}
 };
+
+minejs.database.Memored = Memored;

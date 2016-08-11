@@ -41,3 +41,5 @@ class Permissible extends minejs.permission.ServerOperator {
      */
     getEffectivePermissions() {}
 }
+
+minejs.permission.Permissible = Permissible;

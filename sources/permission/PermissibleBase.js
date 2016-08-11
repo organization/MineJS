@@ -156,3 +156,5 @@ class PermissibleBase {
         return this._permissions;
     }
 }
+
+minejs.permission.PermissibleBase = PermissibleBase;

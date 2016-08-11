@@ -110,3 +110,5 @@ class PermissionAttachment {
         this._permissible.removeAttachment(this);
     }
 }
+
+minejs.permission.PermissionAttachment = PermissionAttachment;

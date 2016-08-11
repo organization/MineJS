@@ -19,3 +19,4 @@ class StopCommand extends minejs.command.CommandBase {
 }
 
 new StopCommand();
+minejs.command.defaults.StopCommand = StopCommand;

@@ -7,3 +7,5 @@ class UNCONNECTED_PING_OPEN_CONNECTIONS extends minejs.raknet.protocol.packet.UN
         return this.ID;
     }
 }
+
+minejs.raknet.protocol.packet.UNCONNECTED_PING_OPEN_CONNECTIONS = UNCONNECTED_PING_OPEN_CONNECTIONS;

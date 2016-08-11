@@ -29,3 +29,4 @@ class HelpCommand extends minejs.command.CommandBase {
 }
 
 new HelpCommand();
+minejs.command.defaults.HelpCommand = HelpCommand;

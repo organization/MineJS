@@ -7,3 +7,5 @@ class NACK extends minejs.raknet.protocol.AcknowledgePacket {
         return this.ID;
     }
 }
+
+minejs.raknet.protocol.packet.NACK = NACK;

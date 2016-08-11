@@ -26,3 +26,5 @@ class OPEN_CONNECTION_REQUEST_1 extends minejs.raknet.protocol.Packet {
         this.mtuSize = (this.__get().length + 18);
     }
 }
+
+minejs.raknet.protocol.packet.OPEN_CONNECTION_REQUEST_1 = OPEN_CONNECTION_REQUEST_1;

@@ -12,7 +12,9 @@ class BaseLang {
 
         baseLangInstance = this;
     }
-
+    /**
+     * @return {minejs.lang.BaseLang}
+     */
     static getInstance() {
         if (!baseLangInstance)
             new this();
@@ -109,3 +111,5 @@ class BaseLang {
         }
     }
 }
+
+minejs.lang.BaseLang = BaseLang;

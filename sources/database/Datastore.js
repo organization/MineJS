@@ -85,3 +85,5 @@ class Datastore {
         this._db.keys(callback);
     }
 }
+
+minejs.database.Datastore = Datastore;

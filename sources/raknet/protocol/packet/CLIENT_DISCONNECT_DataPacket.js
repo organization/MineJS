@@ -8,3 +8,5 @@ class CLIENT_DISCONNECT_DataPacket extends minejs.raknet.protocol.Packet {
         return this.ID;
     }
 }
+
+minejs.raknet.protocol.packet.CLIENT_DISCONNECT_DataPacket = CLIENT_DISCONNECT_DataPacket;

@@ -9,3 +9,5 @@ class ADVERTISE_SYSTEM extends minejs.raknet.protocol.packet.UNCONNECTED_PONG {
         return this.ID;
     }
 }
+
+minejs.raknet.protocol.packet.ADVERTISE_SYSTEM = ADVERTISE_SYSTEM;

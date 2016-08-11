@@ -18,3 +18,4 @@ class UpdateCommand extends minejs.command.CommandBase {
 }
 
 new UpdateCommand();
+minejs.command.defaults.UpdateCommand = UpdateCommand;

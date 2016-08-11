@@ -161,3 +161,5 @@ class TextFormat {
         return colors.indexOf(c) != -1;
     }
 }
+
+minejs.utils.TextFormat = TextFormat;

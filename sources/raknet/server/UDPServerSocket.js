@@ -33,3 +33,5 @@ class UDPServerSocket {
         process.send([minejs.network.ProcessProtocol.UDP_WRITE, buffer, source, port]);
     }
 }
+
+minejs.raknet.server.UDPServerSocket = UDPServerSocket;

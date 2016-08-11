@@ -29,3 +29,5 @@ class UNCONNECTED_PONG extends minejs.raknet.protocol.AcknowledgePacket {
         this.serverName = this.__getString();
     }
 }
+
+minejs.raknet.protocol.packet.UNCONNECTED_PONG = UNCONNECTED_PONG;

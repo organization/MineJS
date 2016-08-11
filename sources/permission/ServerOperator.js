@@ -17,3 +17,5 @@ class ServerOperator {
      */
     setOp(value) {}
 }
+
+minejs.permission.ServerOperator = ServerOperator;

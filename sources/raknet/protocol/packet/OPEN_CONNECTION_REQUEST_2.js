@@ -31,3 +31,5 @@ class OPEN_CONNECTION_REQUEST_2 extends minejs.raknet.protocol.Packet {
         this.clientID = this.__getLong();
     }
 }
+
+minejs.raknet.protocol.packet.OPEN_CONNECTION_REQUEST_2 = OPEN_CONNECTION_REQUEST_2;

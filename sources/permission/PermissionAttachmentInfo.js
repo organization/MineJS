@@ -41,3 +41,5 @@ class PermissionAttachmentInfo {
         return this._value;
     }
 }
+
+minejs.permission.PermissionAttachmentInfo = PermissionAttachmentInfo;

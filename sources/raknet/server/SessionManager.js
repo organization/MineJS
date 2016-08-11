@@ -333,3 +333,5 @@ class SessionManager {
             this.registerPacket(packetMap[key].ID, packetMap[key]);
     }
 }
+
+minejs.raknet.server.SessionManager = SessionManager;

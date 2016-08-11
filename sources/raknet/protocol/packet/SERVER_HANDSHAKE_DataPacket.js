@@ -41,3 +41,5 @@ class SERVER_HANDSHAKE_DataPacket extends minejs.raknet.protocol.Packet {
         super.decode();
     }
 }
+
+minejs.raknet.protocol.packet.SERVER_HANDSHAKE_DataPacket = SERVER_HANDSHAKE_DataPacket;

@@ -33,3 +33,5 @@ class OPEN_CONNECTION_REPLY_2 extends minejs.raknet.protocol.Packet {
         this.mtuSize = this.__getSignedShort();
     }
 }
+
+minejs.raknet.protocol.packet.OPEN_CONNECTION_REPLY_2 = OPEN_CONNECTION_REPLY_2;

@@ -102,3 +102,5 @@ class Updater {
         return updaterInstance;
     }
 }
+
+minejs.utils.Updater = Updater;

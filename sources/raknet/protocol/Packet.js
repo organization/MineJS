@@ -161,3 +161,5 @@ class Packet {
         return new this();
     }
 }
+
+minejs.raknet.protocol.Packet = Packet;

@@ -4,3 +4,5 @@ class PermissionRemovedExecutor {
      */
     attachmentRemoved(attachment) {}
 }
+
+minejs.permission.PermissionRemovedExecutor = PermissionRemovedExecutor;

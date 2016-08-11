@@ -28,3 +28,5 @@ class CLIENT_CONNECT_DataPacket extends minejs.raknet.protocol.Packet {
         this.useSecurity = this.__getByte() > 0;
     }
 }
+
+minejs.raknet.protocol.packet.CLIENT_CONNECT_DataPacket = CLIENT_CONNECT_DataPacket;

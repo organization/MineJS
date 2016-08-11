@@ -21,3 +21,5 @@ class PING_DataPacket extends minejs.raknet.protocol.Packet {
         this.pingID = this.__getLong();
     }
 }
+
+minejs.raknet.protocol.packet.PING_DataPacket = PING_DataPacket;

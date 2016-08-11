@@ -99,3 +99,5 @@ class AcknowledgePacket extends minejs.raknet.protocol.Packet {
         return clone(this);
     }
 }
+
+minejs.raknet.protocol.AcknowledgePacket = AcknowledgePacket;

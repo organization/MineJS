@@ -131,3 +131,5 @@ class Raknet {
         return 0x7f;
     }
 }
+
+minejs.raknet.Raknet = Raknet;

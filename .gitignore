@@ -1,5 +1,6 @@
-.gitignore
 dev
 log
 lang.json
 settings.json
+node_modules
+plugins

@@ -47,3 +47,5 @@ class EventPriority {
         return 5;
     }
 }
+
+minejs.event.EventPriority = EventPriority;

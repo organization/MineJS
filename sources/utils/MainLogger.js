@@ -11,7 +11,7 @@ class MainLogger extends minejs.utils.Logger {
          * @description
          * If already declaration logger
          * file name, Return the logger instance.
-         * 
+         *
          * 해당 파일명을 쓰는 로거가 이미
          * 선언되어 있으면 해당 로거 인스턴스를 반환합니다.
          */
@@ -160,7 +160,7 @@ class MainLogger extends minejs.utils.Logger {
          * @description
          * Redundancy check hash it is stored in this variable.
          * Using a hash check whether a duplicate message.
-         * 
+         *
          * 메시지가 여러 인스턴스에서 출력되서 마스터로 전될되나,
          * 한번만 출력되야하는 메시지의 경우 해시를 이용해서 메시지의
          * 중복여부를 가려냅니다. 중복검사용 해시가 이 변수에 저장됩니다.
@@ -341,7 +341,7 @@ class MainLogger extends minejs.utils.Logger {
              * Create hash using file name and code
              * line number to sent the message source.
              * And puts the hash value in needDuplicate variable.
-             * 
+             *
              * 메시지가 중복되지 않게 해달라는 요청이 있을경우
              * 해당 메시지를 전송한 소스파일의 이름과 줄을 해시화해서
              * 비교할 대상값으로 needDuplicate 값에 넣어 전달합니다.
@@ -356,7 +356,7 @@ class MainLogger extends minejs.utils.Logger {
                  * @description
                  * MD4 is the fastest to hash generate.
                  * MD4가 해시 생성에 더 빠릅니다.
-                 * 
+                 *
                  * @example
                  * http://stackoverflow.com/a/33618940/6382433
                  */
@@ -375,7 +375,7 @@ class MainLogger extends minejs.utils.Logger {
          * In this case can be omitted PID label individually.
          * (Because every instances sent that message)
          * So pid tag is replaced by 'INSTANCE'.
-         * 
+         *
          * 메시지를 중복하지 말라는 요청의 의미는
          * 모든 인스턴스에서 작동된 메시지가 중복되지 않게
          * 한번만 출력해달라는 의미입니다.
@@ -496,3 +496,5 @@ class MainLogger extends minejs.utils.Logger {
         }
     }
 }
+
+minejs.utils.MainLogger = MainLogger;

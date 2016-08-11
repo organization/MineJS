@@ -19,3 +19,4 @@ class RestartCommand extends minejs.command.CommandBase {
 }
 
 new RestartCommand();
+minejs.command.defaults.RestartCommand = RestartCommand;
