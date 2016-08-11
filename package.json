@@ -28,7 +28,7 @@
     "clone": "^1.0.2",
     "cluster": "^0.7.7",
     "crypto": "0.0.3",
-    "deploy-class": "^1.0.4",
+    "deploy-class": "^1.0.5",
     "external-ip": "^0.2.4",
     "fs": "0.0.2",
     "iconv-lite": "^0.4.13",
