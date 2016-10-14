@@ -1,5 +1,4 @@
 /* global minejs */
-
 class TextFormat {
     static get ESCAPE() {
         return '§'
@@ -86,7 +85,7 @@ class TextFormat {
         if (!removeFormat)
             removeFormat = true;
 
-        message = this.replaceAll(message,  String.fromCharCode(0x1b) + "[0-9;\\[\\(]+[Bm]", '');
+        message = this.replaceAll(message, String.fromCharCode(0x1b) + "[0-9;\\[\\(]+[Bm]", '');
         return removeFormat ? this.replaceAll(message, (this.ESCAPE + "[0123456789abcdefklmnor]"), '') : message;
     }
 

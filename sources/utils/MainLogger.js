@@ -102,6 +102,20 @@ class MainLogger extends minejs.utils.Logger {
 
         /**
          * @description
+         * If the log file name is not given, it creates a file name using the current time.
+         * 로그파일명이 주어지지 않았을 경우, 현재시간을 이용해 파일명을 생성합니다.
+         */
+        if (!logFile) logFile = require('iconv-lite').encode(String(timeFormat + '.log'), 'utf8');
+
+        /**
+         * @description
+         * If the log file path is not given, the log file will use the default path.
+         * 로그파일 경로가 주어지지 않을 경우 기본 로그파일 주소를 이용합니다.
+         */
+        if (!path) path = this.logDefaultPath;
+
+        /**
+         * @description
          * It creates a log folders on a given path.
          * 주어진 경로에 log폴더를 생성합니다.
          */
@@ -132,20 +146,6 @@ class MainLogger extends minejs.utils.Logger {
             minejs.Server.getServer().getFs().mkdirSync(logPath);
         }
         catch (e) {}
-
-        /**
-         * @description
-         * If the log file name is not given, it creates a file name using the current time.
-         * 로그파일명이 주어지지 않았을 경우, 현재시간을 이용해 파일명을 생성합니다.
-         */
-        if (!logFile) logFile = require('iconv-lite').encode(String(timeFormat + '.log'), 'utf8');
-
-        /**
-         * @description
-         * If the log file path is not given, the log file will use the default path.
-         * 로그파일 경로가 주어지지 않을 경우 기본 로그파일 주소를 이용합니다.
-         */
-        if (!path) path = this.logDefaultPath;
 
         /**
          * @description
