@@ -134,13 +134,13 @@ let init = () => {
                         if (stat.isFile()) {
                             let tree = prefix + filePath.split(originPath)[1];
                             tree = tree.replace(/\.js/gi, '');
-                            tree = tree.replace(new RegExp("/", 'g'), '.');
+                            tree = tree.replace(/\//, '.');
                             tree = tree.replace(/\\/g, '.');
                             
                             let extensionCheck = file.split('.');
                             if(extensionCheck.length < 2) return;
                             if(extensionCheck[1].toLowerCase() != 'js') return;
-                            
+
                             let targetClassName = file.replace(/\.js/gi, '');
                             global.minejs.loader.requireFromString(tree, targetClassName,
                                 fs.readFileSync(filePath, 'utf8'), filePath);

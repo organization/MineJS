@@ -34,7 +34,7 @@ class MainLogger extends minejs.utils.Logger {
         this.logDefaultPath = path;
 
         /**
-         * @Description
+         * @description
          * The string used as the output primary tag is stored in the variable.
          * 출력시 기본태그로 사용할 문자열이 이 변수에 저장됩니다.
          */
@@ -92,8 +92,8 @@ class MainLogger extends minejs.utils.Logger {
 
         /**
          * @description
-         * The date in the form of [2XXX:: 12 21] is stored in the variable as a string.
-         * [2XXX:12:21] 의 형태로 날짜가 문자열로 이 변수에 저장됩니다.
+         * The date in the form of [2XXX-12-21] is stored in the variable as a string.
+         * [2XXX-12-21] 의 형태로 날짜가 문자열로 이 변수에 저장됩니다.
          */
         let timeFormat = String();
         timeFormat += now.getFullYear();
