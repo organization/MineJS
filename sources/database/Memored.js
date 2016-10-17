@@ -66,6 +66,10 @@ function _getResultParamsValues(paramsObj) {
 }
 
 function _sendMessageToWorker(message) {
+    if(!message.workerPid) {
+        _masterIncomingMessagesHandler(message);
+        return;
+    }
 	var worker = _findWorkerByPid(message.workerPid);
 	worker.send(message);
 }
@@ -145,7 +149,7 @@ function _purgeCache() {
 	});
 }
 
-function _masterIncomingMessagesHanlder(message) {
+function _masterIncomingMessagesHandler(message) {
 	logger.log('Master received message:', message);
 
 	if (!message || message.channel !== 'memored') return false;
@@ -196,12 +200,12 @@ function _workerIncomingMessagesHandler(message) {
 if (cluster.isMaster) {
 
 	Object.keys(cluster.workers).forEach(function(workerId) {
-		cluster.workers[workerId].on('message', _masterIncomingMessagesHanlder);
+		cluster.workers[workerId].on('message', _masterIncomingMessagesHandler);
 	});
 
 	// Listen for new workers so we can listen to its messages
 	cluster.on('fork', function(worker) {
-		worker.on('message', _masterIncomingMessagesHanlder);
+		worker.on('message', _masterIncomingMessagesHandler);
 	});
 
 	// TODO: Only for testing purposes

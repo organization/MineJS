@@ -116,7 +116,7 @@ let init = () => {
                     global.minejs.loader.modules[filePath] = moduleInstance;
                 }
                 catch (e) {
-                    console.log('\r\n' + filePath + '\r\n\t' + e)
+                    console.log('\r\n' + filePath + '\r\n\t' + e);
                 }
             },
 
