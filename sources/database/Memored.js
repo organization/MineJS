@@ -384,6 +384,6 @@ class Memored {
 			keys: _keys
 		};
 	}
-};
+}
 
 minejs.database.Memored = Memored;
