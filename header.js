@@ -5,6 +5,9 @@
 /** @namespace minejs */
 var minejs = {
   Server: {},
+  block: {
+    Block: {}
+  },
   command: {
     CommandBase: {},
     CommandManager: {},
