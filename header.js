@@ -6,7 +6,7 @@
 var minejs = {
   Server: {},
   block: {
-    Block: {},
+    Block: {}
   },
   command: {
     CommandBase: {},
