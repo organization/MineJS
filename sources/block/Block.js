@@ -704,4 +704,4 @@ class Block {
     }
 }
 
-minejs.block = Block;
+minejs.block.Block = Block;
