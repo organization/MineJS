@@ -31,7 +31,7 @@ __MineJS is a server software for Minecraft : Pocket Edition, MineJS is based No
 
 -------------
 ### How to use MineJS?
-- Install Node JS 6.x.x -> https://nodejs.org/
+- Install Node JS 6.x.x or 7.x.x -> https://nodejs.org/
 - Download Project -> https://github.com/organization/MineJS/archive/master.zip
 - In project folder, open terminal and type `node mine`
 

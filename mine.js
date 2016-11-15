@@ -134,7 +134,7 @@ let init = () => {
                         if (stat.isFile()) {
                             let tree = prefix + filePath.split(originPath)[1];
                             tree = tree.replace(/\.js/gi, '');
-                            tree = tree.replace(/\//, '.');
+                            tree = tree.replace(new RegExp("/", 'g'), '.');
                             tree = tree.replace(/\\/g, '.');
                             
                             let extensionCheck = file.split('.');
