@@ -87,7 +87,7 @@ let init = () => {
                     let stat = fs.statSync(filePath);
                     try {
                         let tree = sourceFolderPath.split(originPath)[1];
-                        tree = prefix + tree.replace(new RegExp("/", 'g'), '.');
+                        tree = prefix + tree.replace(/\//g, '.');
                         tree = tree.replace(/\\/g, '.');
                         tree = tree.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
                         if (eval("!" + tree))
@@ -134,7 +134,7 @@ let init = () => {
                         if (stat.isFile()) {
                             let tree = prefix + filePath.split(originPath)[1];
                             tree = tree.replace(/\.js/gi, '');
-                            tree = tree.replace(new RegExp("/", 'g'), '.');
+                            tree = tree.replace(/\//g, '.');
                             tree = tree.replace(/\\/g, '.');
                             
                             let extensionCheck = file.split('.');
