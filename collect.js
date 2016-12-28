@@ -35,7 +35,7 @@ let hierarchyLoader = (sourceFolderPath, originPath, prefix) => {
             let extension = path.extname(tree);
             if (stat.isFile() && extension != '.js' && extension != '.jsx') return;
             tree = tree.replace(`${extension}`, '');
-            tree = prefix + tree.replace(new RegExp("/", 'g'), '.');
+            tree = prefix + tree.replace(/\//g, '.');
             tree = tree.replace(/\\/g, '.');
             tree = tree.replace(/[&\/\\#,+()$~%;@$^!'":*?<>{}]/g, '');
 
