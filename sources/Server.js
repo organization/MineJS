@@ -378,7 +378,7 @@ class Server {
              * It creates a worker as the number of CPU cores.
              * CPU 수 만큼 워커를 생성합니다.
              */
-            for (var i = 0; i < this.getOs().cpus().length; i++)
+            for (var i = 0; i !== this.getOs().cpus().length; ++i)
                 this.getCluster().fork();
 
             /**
@@ -517,7 +517,7 @@ class Server {
                                      * CPU 수 만큼 워커를 생성합니다.
                                      * @return {string}
                                      */
-                                    for (let i = 0; i < minejs.Server.getServer().getOs().cpus().length; i++)
+                                    for (let i = 0; i !== minejs.Server.getServer().getOs().cpus().length; ++i)
                                         minejs.Server.getServer().getCluster().fork();
                                 });
                             }
@@ -802,7 +802,8 @@ class Server {
                          */
                     case minejs.network.ProcessProtocol.WORKER_WORK_PUSH:
                         try {
-                            eval('(' + message[1] + ')')();
+                            //eval('(' + message[1] + ')')();
+                            ( new Function( message[1] ) )();
                         }
                         catch (e) {}
                         break;
