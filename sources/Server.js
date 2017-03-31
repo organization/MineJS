@@ -802,8 +802,7 @@ class Server {
                          */
                     case minejs.network.ProcessProtocol.WORKER_WORK_PUSH:
                         try {
-                            //eval('(' + message[1] + ')')();
-                            ( new Function( message[1] ) )();
+                            eval('(' + message[1] + ')')();
                         }
                         catch (e) {}
                         break;
