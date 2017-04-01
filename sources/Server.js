@@ -313,8 +313,7 @@ class Server {
             func();
         }
         else {
-            func = func.toString();
-            process.send([minejs.network.ProcessProtocol.MASTER_WORK_PUSH, func]);
+            process.send([minejs.network.ProcessProtocol.MASTER_WORK_PUSH, func.toString()]);
         }
     }
 
@@ -564,9 +563,8 @@ class Server {
                          * @return {string}
                          */
                     case minejs.network.ProcessProtocol.WORKER_WORK_PUSH:
-                        let func = message[1];
                         if (workerIndex > this.getOs().cpus().length) workerIndex = 1;
-                        minejs.Server.getServer().getWorker(workerIndex++).send([minejs.network.ProcessProtocol.WORKER_WORK_PUSH, func]);
+                        minejs.Server.getServer().getWorker(workerIndex++).send([minejs.network.ProcessProtocol.WORKER_WORK_PUSH, message[1]]);
                         break;
 
                         /**
@@ -605,8 +603,7 @@ class Server {
              * 콘솔 입력은 마스터에서만 구현됩니다.
              * @return {string}
              */
-            var readline = require('readline');
-            this.line = readline.createInterface({
+            this.line = require('readline').createInterface({
                 input: process.stdin,
                 output: process.stdout
             });
