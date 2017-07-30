@@ -370,8 +370,7 @@ let init = () => {
                     let settings = require(__dirname + "/resources/lang/" + input + "/settings.json");
                     let lang = require(__dirname + "/resources/lang/" + input + "/lang.json");
                     if (!settings.server_uuid)
-                        settings.server_uuid = require('node-uuid').v4();
-
+                        settings.server_uuid = require('uuid').v4();
                     fs.writeFileSync(__dirname + '/settings.json', JSON.stringify(settings, null, 4), 'utf8');
                     fs.writeFileSync(__dirname + '/lang.json', JSON.stringify(lang, null, 4), 'utf8');
                     line.close();

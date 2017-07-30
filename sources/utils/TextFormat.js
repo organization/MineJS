@@ -85,7 +85,7 @@ class TextFormat {
         if (!removeFormat)
             removeFormat = true;
 
-        message = this.replaceAll(message, String.fromCharCode(0x1b) + "[0-9;\\[\\(]+[Bm]", '');
+        message = this.replaceAll(message, String.fromCharCode(0x1b) + '[0-9;\\[\\(]+[Bm]', '');
         return removeFormat ? this.replaceAll(message, (this.ESCAPE + "[0123456789abcdefklmnor]"), '') : message;
     }
 
@@ -94,27 +94,27 @@ class TextFormat {
      */
     static toANSI(string) {
         string = this.replaceAll(string, TextFormat.BOLD, "");
-        string = this.replaceAll(string, TextFormat.OBFUSCATED, String.fromCharCode(0x1b) + "[8m");
-        string = this.replaceAll(string, TextFormat.ITALIC, String.fromCharCode(0x1b) + "[3m");
-        string = this.replaceAll(string, TextFormat.UNDERLINE, String.fromCharCode(0x1b) + "[4m");
-        string = this.replaceAll(string, TextFormat.STRIKETHROUGH, String.fromCharCode(0x1b) + "[9m");
-        string = this.replaceAll(string, TextFormat.RESET, String.fromCharCode(0x1b) + "[0m");
-        string = this.replaceAll(string, TextFormat.BLACK, String.fromCharCode(0x1b) + "[0;30m");
-        string = this.replaceAll(string, TextFormat.DARK_BLUE, String.fromCharCode(0x1b) + "[0;34m");
-        string = this.replaceAll(string, TextFormat.DARK_GREEN, String.fromCharCode(0x1b) + "[0;32m");
-        string = this.replaceAll(string, TextFormat.DARK_AQUA, String.fromCharCode(0x1b) + "[0;36m");
-        string = this.replaceAll(string, TextFormat.DARK_RED, String.fromCharCode(0x1b) + "[0;31m");
-        string = this.replaceAll(string, TextFormat.DARK_PURPLE, String.fromCharCode(0x1b) + "[0;35m");
-        string = this.replaceAll(string, TextFormat.GOLD, String.fromCharCode(0x1b) + "[0;33m");
-        string = this.replaceAll(string, TextFormat.GRAY, String.fromCharCode(0x1b) + "[0;37m");
-        string = this.replaceAll(string, TextFormat.DARK_GRAY, String.fromCharCode(0x1b) + "[30;1m");
-        string = this.replaceAll(string, TextFormat.BLUE, String.fromCharCode(0x1b) + "[34;1m");
-        string = this.replaceAll(string, TextFormat.GREEN, String.fromCharCode(0x1b) + "[32;1m");
-        string = this.replaceAll(string, TextFormat.AQUA, String.fromCharCode(0x1b) + "[36;1m");
-        string = this.replaceAll(string, TextFormat.RED, String.fromCharCode(0x1b) + "[31;1m");
-        string = this.replaceAll(string, TextFormat.LIGHT_PURPLE, String.fromCharCode(0x1b) + "[35;1m");
-        string = this.replaceAll(string, TextFormat.YELLOW, String.fromCharCode(0x1b) + "[33;1m");
-        string = this.replaceAll(string, TextFormat.WHITE, String.fromCharCode(0x1b) + "[37;1m");
+        string = this.replaceAll(string, TextFormat.OBFUSCATED, TextFormat.wrapAnsi('8'));
+        string = this.replaceAll(string, TextFormat.ITALIC, TextFormat.wrapAnsi('3'));
+        string = this.replaceAll(string, TextFormat.UNDERLINE, TextFormat.wrapAnsi('4'));
+        string = this.replaceAll(string, TextFormat.STRIKETHROUGH, TextFormat.wrapAnsi('9'));
+        string = this.replaceAll(string, TextFormat.RESET, TextFormat.wrapAnsi('0'));
+        string = this.replaceAll(string, TextFormat.BLACK, TextFormat.wrapAnsi('0;30'));
+        string = this.replaceAll(string, TextFormat.DARK_BLUE, TextFormat.wrapAnsi('0;34'));
+        string = this.replaceAll(string, TextFormat.DARK_GREEN, TextFormat.wrapAnsi('0;32'));
+        string = this.replaceAll(string, TextFormat.DARK_AQUA, TextFormat.wrapAnsi('0;36'));
+        string = this.replaceAll(string, TextFormat.DARK_RED, TextFormat.wrapAnsi('0;31'));
+        string = this.replaceAll(string, TextFormat.DARK_PURPLE, TextFormat.wrapAnsi('0;35'));
+        string = this.replaceAll(string, TextFormat.GOLD, TextFormat.wrapAnsi('0;33'));
+        string = this.replaceAll(string, TextFormat.GRAY, TextFormat.wrapAnsi('0;37'));
+        string = this.replaceAll(string, TextFormat.DARK_GRAY, TextFormat.wrapAnsi('30;1'));
+        string = this.replaceAll(string, TextFormat.BLUE, TextFormat.wrapAnsi('34;1'));
+        string = this.replaceAll(string, TextFormat.GREEN, TextFormat.wrapAnsi('32;1'));
+        string = this.replaceAll(string, TextFormat.AQUA, TextFormat.wrapAnsi('36;1'));
+        string = this.replaceAll(string, TextFormat.RED, TextFormat.wrapAnsi('31;1'));
+        string = this.replaceAll(string, TextFormat.LIGHT_PURPLE, TextFormat.wrapAnsi('35;1'));
+        string = this.replaceAll(string, TextFormat.YELLOW, TextFormat.wrapAnsi('33;1'));
+        string = this.replaceAll(string, TextFormat.WHITE, TextFormat.wrapAnsi('37;1'));
         return string;
     }
 
@@ -159,6 +159,13 @@ class TextFormat {
         c = String(c);
         let colors = "0123456789AaBbCcDdEeFf";
         return colors.indexOf(c) != -1;
+    }
+
+    /**
+     * @return {String}
+     */
+    static wrapAnsi(s) {
+        return'\u001b['+ s + 'm';
     }
 }
 
