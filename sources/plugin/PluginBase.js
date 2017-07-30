@@ -98,14 +98,21 @@ class PluginBase extends minejs.plugin.Plugin {
   }
 
   saveResource(filename, outputName, replace) {
-    this.getResource(filename).on('data', (chunk) => {
-      fs.writeFile(this._dataFolder+require('path').sep+outputName, chunk,(err) => {
-        if (err != null){
-          return false;
-        }
-      });
-      return true;
-    });
+    filename = this._dataFolder+require('path').sep+filename;
+
+    if (fs.existsSync(filename)) {
+      if (replace){
+        this.getResource(filename).on('data', (chunk) => {
+          fs.writeFile(this._dataFolder+require('path').sep+outputName, chunk,(err) => {
+            if (err != null){
+              return false;
+            }
+          });
+          return true;
+        });
+      }
+      return false;
+    }
   }
 
   saveResource(filename, replace) {
@@ -127,6 +134,41 @@ class PluginBase extends minejs.plugin.Plugin {
     if (!this.getConfig.save()) {
       this._logger.critical(`Couldn't save config to `+this._configFile);
     }
+  }
+
+  saveDefaultConfig() {
+    if (fs.existsSync(this.getResource)) {
+      this.saveResource('config.yml', false);
+    }
+  }
+
+  reloadConfig() {
+    this._config = new minejs.utils.Config(this._configFile);
+    let configStream = this.getResource('config.yml');
+
+    if (configStream != null) {
+      //TODO Generate Dump
+    }
+  }
+
+  getServer() {
+    return this._server;
+  }
+
+  getName() {
+    return this._description.getName();
+  }
+
+  getFullName() {
+    return this._description.getFullName();
+  }
+
+  _getFile() {
+    return this._file;
+  }
+
+  getPluginLoader() {
+    return this._loader;
   }
 
 }
