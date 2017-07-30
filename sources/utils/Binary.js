@@ -38,10 +38,10 @@ class Binary {
     }
 
     static readUUID(bytes) {
-        return require('node-uuid').unparse(bytes);
+        return require('uuid').unparse(bytes);
     }
     static writeUUID(uuid) {
-        return require('node-uuid').parse(uuid);
+        return require('uuid').parse(uuid);
     }
 
     static writeMetadata(metadata) {
