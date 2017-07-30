@@ -104,7 +104,7 @@ class PluginBase extends minejs.plugin.Plugin {
       if (replace){
         this.getResource(filename).on('data', (chunk) => {
           fs.writeFile(this._dataFolder + this._server.getSeparator() + outputName, chunk, (err) => {
-            if (err != null){
+            if (err !== null){
               return false;
             }
           });

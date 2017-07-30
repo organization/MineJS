@@ -10,6 +10,7 @@ var minejs = {
   },
   command: {
     CommandBase: {},
+    CommandExecutor: {},
     CommandManager: {},
     CommandSender: {},
     ConsoleCommandSender: {},
@@ -43,6 +44,12 @@ var minejs = {
     PermissionAttachmentInfo: {},
     PermissionRemovedExecutor: {},
     ServerOperator: {}
+  },
+  plugin: {
+    Plugin: {},
+    PluginBase: {},
+    PluginDescription: {},
+    PluginLogger: {}
   },
   raknet: {
     Raknet: {},
