@@ -8,6 +8,7 @@ minejs.loader.requireLoader('minejs.command.CommandExecutor');
 * minejs 플러그인의 인터페이스 입니다.
 */
 class Plugin extends minejs.command.CommandExecutor {
+  constructor(){}
   /**
   * @description
   * Use to init MineJS plugin, array, database connection and variable
