@@ -98,12 +98,12 @@ class PluginBase extends minejs.plugin.Plugin {
   }
 
   saveResource(filename, outputName, replace) {
-    filename = this._dataFolder+require('path').sep+filename;
+    filename = this._dataFolder + this._server.getSeparator() + filename;
 
     if (fs.existsSync(filename)) {
       if (replace){
         this.getResource(filename).on('data', (chunk) => {
-          fs.writeFile(this._dataFolder + require('path').sep + outputName, chunk, (err) => {
+          fs.writeFile(this._dataFolder + this._server.getSeparator() + outputName, chunk, (err) => {
             if (err != null){
               return false;
             }

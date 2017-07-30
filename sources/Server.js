@@ -260,6 +260,16 @@ class Server {
     getSettings() {
         return this._settings;
     }
+    
+    /**
+     * @description
+     * It returns OS file separator.
+     * OS의 파일 구분자를 반환합니다.
+     * @return {string}
+     */
+     getSeparator() {
+         return this.getPath().sep;
+     }
 
     /**
      * @description
@@ -328,7 +338,7 @@ class Server {
         this._restart = restart;
         this.restartFlag = false;
 
-        this._lang = require(this._datapath + '/lang.json');
+        this._lang = require(this._datapath + this.getSeparator() + 'lang.json');
         var lang = this._lang;
 
         this.consoleSender = new minejs.command.ConsoleCommandSender();
