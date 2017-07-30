@@ -31,13 +31,13 @@ class Plugin extends minejs.command.CommandExecutor {
   * @description
   * Use to free open things and finish actions,
   * Close Resource
-  * 메모리정리 및 끝내기, 자원종료애 사용합니다.
+  * 메모리정리 및 끝내기, 자원종료에 사용합니다.
   */
   onDisable(){}
   /**
   * @description
   * Use to check if plugin is disabled
-  * 플러그인이 비활성화 되었는지 확입, 비활성화(true)
+  * 플러그인이 비활성화 되었는지 확인, 비활성화(true)
   * @return {boolean}
   */
   isDisabled(){}
@@ -50,7 +50,7 @@ class Plugin extends minejs.command.CommandExecutor {
   */
   getDescription(){}
   /**
-  * @return {WriteStream}
+  * @return {ReadStream}
   */
   getResource(filename){}
   /**
