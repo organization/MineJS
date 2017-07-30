@@ -121,10 +121,10 @@ class PluginBase extends minejs.plugin.Plugin {
 
   saveResource(filename) {
     return saveResource(filename, false);
-    if (this._config == null) {
   }
 
   getConfig() {
+    if (this._config == null) {
       this.reloadConfig();
     }
     return this._config;
