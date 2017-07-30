@@ -12,6 +12,8 @@
     
     "IP_Address": "IP Address: ",
     
+    "couldnt_save_config": "Couldn't save config to %s", 
+    
     "unknown_command": "Unknown command. Try /help for a list of commands.",
     
     "updater_now_latest_version": "This is the latest version. (%version%)",

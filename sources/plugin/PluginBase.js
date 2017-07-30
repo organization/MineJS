@@ -1,7 +1,7 @@
 const fs = require('fs');
 /* global minejs */
 minejs.loader.requireLoader('minejs.plugin.Plugin');
-minejs.loader.requireLoader('minejs.plugin.PluginLogger')
+minejs.loader.requireLoader('minejs.plugin.PluginLogger');
 
 class PluginBase extends minejs.plugin.Plugin {
   constructor() {
@@ -26,16 +26,16 @@ class PluginBase extends minejs.plugin.Plugin {
   /**
   * @description
   * Enables this plugin.
-  * if you nedd to disable this plugin, you should call setEnable(false);
+  * if you need to disable this plugin, you should call setEnable(false);
   * @param {boolean} bool
   */
   setEnable(bool) {
-    if (this._isEnabled != bool) {
+    if (this._isEnabled !== bool) {
       this._isEnabled = bool;
       if (this._isEnabled) {
-        onEnable();
-      }else{
-        onDisable();
+        this.onEnable();
+      } else {
+        this.onDisable();
       }
     }
   }
@@ -64,7 +64,7 @@ class PluginBase extends minejs.plugin.Plugin {
       this._description = description;
       this._dataFolder = dataFolder;
       this._file = file;
-      this._configFile = this._dataFolder+require('path').sep+'config.yml';
+      this._configFile = this._dataFolder + require('path').sep + 'config.yml';
       this._logger = new minejs.plugin.PluginLogger(this);
     }
   }
@@ -79,10 +79,10 @@ class PluginBase extends minejs.plugin.Plugin {
 
   getCommand(name) {
     let command = this._server.getPluginCommand(name);
-    if (command == null || command.getPlugin() != this) {
+    if (command === null || command.getPlugin() !== this) {
       command = this._server.getPluginCommand(this._description.getName().toLowerCase() + ':' + name);
     }
-    if (command != null && command.getPlugin() == this) {
+    else if (command !== null && command.getPlugin() === this) {
       return command;
     } else {
       return null;
@@ -103,7 +103,7 @@ class PluginBase extends minejs.plugin.Plugin {
     if (fs.existsSync(filename)) {
       if (replace){
         this.getResource(filename).on('data', (chunk) => {
-          fs.writeFile(this._dataFolder+require('path').sep+outputName, chunk,(err) => {
+          fs.writeFile(this._dataFolder + require('path').sep + outputName, chunk, (err) => {
             if (err != null){
               return false;
             }
@@ -116,15 +116,15 @@ class PluginBase extends minejs.plugin.Plugin {
   }
 
   saveResource(filename, replace) {
-    return saveResource(filename, filename, replace);
+    return this.saveResource(filename, filename, replace);
   }
 
   saveResource(filename) {
-    return saveResource(filename, false);
-    if (this._config == null) {
+    return this.saveResource(filename, false);
   }
 
   getConfig() {
+    if (this._config === null) {
       this.reloadConfig();
     }
     return this._config;
@@ -132,7 +132,7 @@ class PluginBase extends minejs.plugin.Plugin {
 
   saveConfig() {
     if (!this.getConfig.save()) {
-      this._logger.critical(`Couldn't save config to `+this._configFile);
+      this._logger.critical(this._server.getUtil().format(this._server.getLang().couldnt_save_config, this._configFile));
     }
   }
 
@@ -146,7 +146,7 @@ class PluginBase extends minejs.plugin.Plugin {
     this._config = new minejs.utils.Config(this._configFile);
     let configStream = this.getResource('config.yml');
 
-    if (configStream != null) {
+    if (configStream !== null) {
       //TODO Generate Dump
     }
   }

@@ -12,6 +12,8 @@
     
     "IP_Address": "IP 地址: ",
     
+    "couldnt_save_config": "Couldn't save config to %s", 
+    
     "unknown_command": "未知命令。尝试使用 /help 命令查看所有帮助。",
     
     "updater_now_latest_version": "已经是最新版本。(%version%)",
