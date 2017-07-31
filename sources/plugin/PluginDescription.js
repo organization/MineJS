@@ -34,7 +34,7 @@ class PluginDescription {
     this._website = json.website !== null?json.website:null;
     this._description = json.description !== null?json.description:null;
     this._prefix = json.prefix !== null?json.prefix:null;
-    this._order;//TODO: 나도 모르겠음.
+    this._order; //TODO: 나도 모르겠음.
     if (json.author !== null) {
       this._authors.push(json.author);
     }
