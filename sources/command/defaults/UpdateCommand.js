@@ -2,6 +2,7 @@
 class UpdateCommand extends minejs.command.CommandBase {
     constructor() {
         super({
+            permissionDescription: 'Default',
             name: 'update',
             usage: '<Delay Time>',
             description: 'This command is used to update the server.'

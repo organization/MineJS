@@ -2,6 +2,7 @@
 class HelpCommand extends minejs.command.CommandBase {
     constructor() {
         super({
+            permissionDescription: 'Default',
             name: 'help',
             usage: '<Index>',
             description: 'It displays a list of server commands.'
@@ -16,6 +17,7 @@ class HelpCommand extends minejs.command.CommandBase {
         for (let key in details) {
             let detail = details[key];
             logger.log(null, this.format
+                .replace('%permissionDescription%', minejs.utils.TextFormat.GREEN + '[' + detail.permissionDescription + ']' + minejs.utils.TextFormat.WHITE)
                 .replace('%commandName%', detail.name)
                 .replace('%commandUsage%', detail.usage)
                 .replace('%commandDesciption%', detail.description) +

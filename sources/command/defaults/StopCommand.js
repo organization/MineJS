@@ -2,6 +2,7 @@
 class StopCommand extends minejs.command.CommandBase {
     constructor() {
         super({
+            permissionDescription: 'Default',
             name: 'stop',
             usage: '<Delay Time(s)>',
             description: 'This command is used to stop the server.'

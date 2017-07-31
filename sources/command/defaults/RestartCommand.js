@@ -2,6 +2,7 @@
 class RestartCommand extends minejs.command.CommandBase {
     constructor() {
         super({
+            permissionDescription: 'Default',
             name: 'restart',
             usage: '<Delay Time(s)>',
             description: 'This command is used to restart the server.'
