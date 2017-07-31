@@ -8,8 +8,8 @@ class CommandExecutor {
      * @param {array} args
      * 
      * @return {boolean}
-	 */
-	 onCommand(sender, command, label, args) {}
+     */
+     onCommand(sender, command, label, args) {}
 }
 
 minejs.command.CommandExecutor = CommandExecutor;

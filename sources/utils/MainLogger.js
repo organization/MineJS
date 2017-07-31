@@ -331,8 +331,8 @@ class MainLogger extends minejs.utils.Logger {
             }
         }
 
-        if (level == minejs.utils.LogLevel.DEBUG && !this.logDebug) return;
-        if (tag == null) tag = this.tag;
+        if (level === minejs.utils.LogLevel.DEBUG && !this.logDebug) return;
+        if (tag === null) tag = this.tag;
 
         if (minejs.Server.getServer().getCluster().isWorker) {
             /**

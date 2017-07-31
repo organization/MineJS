@@ -1,3 +1,4 @@
+/* global minejs */
 class PermissionRemovedExecutor {
     /**
      * @param {minejs.permission.PermissionAttachment} attachment

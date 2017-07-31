@@ -1,3 +1,4 @@
+/* global minejs */
 class PermissionAttachmentInfo {
     /**
      * @param {minejs.permission.Permissible} permissible

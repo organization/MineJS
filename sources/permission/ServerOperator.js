@@ -1,3 +1,4 @@
+/* global minejs */
 class ServerOperator {
     /**
      * @description
