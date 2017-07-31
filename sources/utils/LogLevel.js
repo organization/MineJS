@@ -1,3 +1,4 @@
+/* global minejs */
 class LogLevel {
     static get EMERGENCY() {
         return 0x00;

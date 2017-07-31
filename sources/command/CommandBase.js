@@ -2,9 +2,7 @@
 
 class CommandBase {
     constructor(settings) {
-        if (!settings) return false;
-        if (!settings.name) return false;
-        if (!settings.description) return false;
+        if (!settings || !settings.name || !settings.description) return false;
         if (!settings.usage) settings.usage = '';
 
         this._name = settings.name;

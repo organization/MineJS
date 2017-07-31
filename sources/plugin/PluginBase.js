@@ -1,7 +1,5 @@
 const fs = require('fs');
 /* global minejs */
-minejs.loader.requireLoader('minejs.plugin.Plugin');
-minejs.loader.requireLoader('minejs.plugin.PluginLogger');
 
 class PluginBase extends minejs.plugin.Plugin {
   constructor() {
@@ -64,7 +62,7 @@ class PluginBase extends minejs.plugin.Plugin {
       this._description = description;
       this._dataFolder = dataFolder;
       this._file = file;
-      this._configFile = this._dataFolder + require('path').sep + 'config.yml';
+      this._configFile = this._dataFolder + this._server.getSeparator + 'config.yml';
       this._logger = new minejs.plugin.PluginLogger(this);
     }
   }

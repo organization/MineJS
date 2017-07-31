@@ -1,7 +1,6 @@
 /* global minejs */
 class PluginDescription {
-  constructor() {
-  }
+  constructor() {}
 }
 
 minejs.plugin.PluginDescription = PluginDescription;
