@@ -20,28 +20,28 @@ class PluginDescription {
   loadJson(json) {
     this._name = json.name.replaceAll(/[^A_Za-z0-9 _.-]/, '');
     if (this._name === null) {
-      //TODO: Throws error
+      throw "Invalid PluginDescription name";
     }
     this._name = this._name.replace(" ", "_");
     this._version = json.version;
     this._main = json.main;
     this._api = json.api;
 
-    this._commands = json.command !== null?json.commands:null;
-    this._depend = json.depend !== null?json.depend:null;
-    this._softDepend = json.softdepend !== null?json.softdepend:null;
-    this._loadBefore = json.loadbefore !== null?json.loadbefore:null;
-    this._website = json.website !== null?json.website:null;
-    this._description = json.description !== null?json.description:null;
-    this._prefix = json.prefix !== null?json.prefix:null;
-    this._order; //TODO: 나도 모르겠음.
+    this._commands = json.command !== null ? json.commands : null;
+    this._depend = json.depend !== null ? json.depend : null;
+    this._softDepend = json.softdepend !== null ? json.softdepend : null;
+    this._loadBefore = json.loadbefore !== null ? json.loadbefore : null;
+    this._website = json.website !== null ? json.website : null;
+    this._description = json.description !== null ? json.description : null;
+    this._prefix = json.prefix !== null ? json.prefix : null;
+    this._order = parseInt(json.load); //TODO: 나도 모르겠음.
     if (json.author !== null) {
       this._authors.push(json.author);
     }
     if (json.authors !== null){
       this._authors = this._authors.concat(json.authors);
     }
-    this._permissions = json.permissions !== null?json.permissions:null;
+    this._permissions = json.permissions !== null ? json.permissions : null;
   }
 
   getFullName() {
