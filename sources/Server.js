@@ -202,7 +202,7 @@ class Server {
             workers[count++] = this.getCluster().workers[key];
 
         let target = workers[index];
-        if (target == null) {
+        if (!target) {
             for (let key in this.getCluster().workers) {
                 target = this.getCluster().workers[key];
                 break;
