@@ -352,7 +352,7 @@ class Server {
         if (this.getCluster().isMaster) {
             this.getLogger().tag = "MASTER";
             this.getLogger().notice(lang.minejs_has_activated);
-			this.getLogger().notice(lang.master_pid + process.pid);
+            this.getLogger().notice(lang.master_pid + process.pid);
 
             /**
              * @description

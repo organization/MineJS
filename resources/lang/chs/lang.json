@@ -4,9 +4,9 @@
     
     "minejs_has_activated": "MineJS 已经启动",
     "minejs_has_deactivated": "MineJS 已经关闭",
-	
-	"master_pid": "MASTER's PID : ",
-    
+
+    "master_pid": "MASTER's PID : ",
+
     "instance_is_started": "实例已开启",
     "instance_deactivated": "实例已关闭",
     "instance_all_activated": "总共 %count% 个实例已被开启。",
