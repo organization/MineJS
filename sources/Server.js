@@ -672,7 +672,7 @@ class Server {
              * @return {string}
              */
             this.udpSocket.on('message', (msg, rinfo) => {
-                if (msg === null || rinfo.address === null || rinfo.port === null) return;
+                if (!msg || !rinfo.address || !rinfo.port) return;
                 let balancedWorkerIndex = 1;
                 if (!sessionLoadBalance[rinfo.address + ':' + rinfo.port]) {
                     if (workerIndex > this.getOs().cpus().length) workerIndex = 1;
