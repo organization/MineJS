@@ -464,7 +464,7 @@ let init = () => {
         }
 
         else if (needLoad) load();
-        else if (func != null) func();
+        else if (func !== null) func();
     };
 
     /**

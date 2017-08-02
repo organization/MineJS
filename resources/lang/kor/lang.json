@@ -2,8 +2,10 @@
     "version": "1",
     "_1": "MineJS를 위한 언어 구성 파일입니다.",
     
-    "minejs_has_activated": "MineJS를 활성화했습니다.: ",
+    "minejs_has_activated": "MineJS를 활성화했습니다.",
     "minejs_has_deactivated": "MineJS가 비활성화되었습니다.",
+	
+	"master_pid": "MASTER의 프로세스 ID : ",
     
     "instance_is_started": "인스턴스가 시작되었습니다.",
     "instance_deactivated": "인스턴스가 비활성화되었습니다.",

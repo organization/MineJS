@@ -2,8 +2,10 @@
     "version": "1",
     "_1": "The language configuration file for MineJS.",
     
-    "minejs_has_activated": "MineJS has activated: ",
+    "minejs_has_activated": "MineJS has activated",
     "minejs_has_deactivated": "MineJS has deactivated",
+	
+	"master_pid": "MASTER's PID : ",
     
     "instance_is_started": "instance is started",
     "instance_deactivated": "instance deactivated",

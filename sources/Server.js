@@ -202,7 +202,7 @@ class Server {
             workers[count++] = this.getCluster().workers[key];
 
         let target = workers[index];
-        if (target == null) {
+        if (target === null) {
             for (let key in this.getCluster().workers) {
                 target = this.getCluster().workers[key];
                 break;
@@ -351,7 +351,8 @@ class Server {
          */
         if (this.getCluster().isMaster) {
             this.getLogger().tag = "MASTER";
-            this.getLogger().notice(lang.minejs_has_activated + process.pid);
+            this.getLogger().notice(lang.minejs_has_activated);
+			this.getLogger().notice(lang.master_pid + process.pid);
 
             /**
              * @description
@@ -514,8 +515,8 @@ class Server {
 
                         let count = 0;
                         for (let workerPidCheckOnly in workerPids) count++;
-                        if (count == 0) {
-                            if (this.restartFlag == true) {
+                        if (count === 0) {
+                            if (this.restartFlag) {
                                 workerPids = {};
                                 minejs.loader.pids = {};
                                 onlineWorkerCount = 0;
@@ -671,7 +672,7 @@ class Server {
              * @return {string}
              */
             this.udpSocket.on('message', (msg, rinfo) => {
-                if (msg == null || rinfo.address == null || rinfo.port == null) return;
+                if (msg === null || rinfo.address === null || rinfo.port === null) return;
                 let balancedWorkerIndex = 1;
                 if (!sessionLoadBalance[rinfo.address + ':' + rinfo.port]) {
                     if (workerIndex > this.getOs().cpus().length) workerIndex = 1;
