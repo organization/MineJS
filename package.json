@@ -29,7 +29,7 @@
     "cluster": "^0.7.7",
     "crypto": "0.0.3",
     "deploy-class": "^1.0.7",
-    "external-ip": "^0.2.4",
+    "external-ip": "^2.3.1",
     "fs": "0.0.2",
     "iconv-lite": "^0.6.2",
     "int-bits": "^1.0.0",
